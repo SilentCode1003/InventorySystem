@@ -1,0 +1,307 @@
+const mysql = require("mysql");
+const model = require("../model/cablingmodel");
+require("dotenv").config();
+const crypt = require("./cryptography");
+
+let password = "";
+crypt.Decrypter(process.env._PASSWORD_CABLING, (err, result) => {
+  if (err) throw err;
+
+  password = result;
+  console.log(`${result}`);
+});
+
+const connection = mysql.createConnection({
+  host: process.env._HOST_CABLING,
+  user: process.env._USER_CABLING,
+  password: password,
+  database: process.env._DATABASE_CABLING,
+});
+
+crypt.Encrypter("#Ebedaf19dd0d", (err, result) => {
+  if (err) console.error("Error: ", err);
+
+  console.log(result);
+});
+
+// crypt.Decrypter('f6a3287039d0d75cb83cb29d35b3dfcb', (err, result) => {
+//     if (err) console.error('Error: ', err);
+
+//     console.log(`${result}`);
+// });
+
+exports.CheckConnection = () => {
+  connection.connect((err) => {
+    if (err) {
+      console.error("Error connection to MYSQL databases: ", err);
+      return;
+    }
+    console.log("MySQL database connection established successfully!");
+  });
+};
+
+exports.InsertMultiple = async (stmt, todos) => {
+  try {
+    connection.connect((err) => {
+      return err;
+    });
+    // console.log(`statement: ${stmt} data: ${todos}`);
+
+    connection.query(stmt, [todos], (err, results, fields) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`Row inserted: ${results.affectedRows}`);
+
+      return 1;
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.Select = (sql, table, callback) => {
+  try {
+    connection.connect((err) => {
+      return err;
+    });
+    connection.query(sql, (error, results, fields) => {
+      // console.log(results);
+
+      if (error) {
+        callback(error, null);
+      }
+
+      if (table == "MasterItem") {
+        callback(null, model.MasterItem(results));
+      }
+
+      if (table == "MasterItemPrice") {
+        callback(null, model.MasterItemPrice(results));
+      }
+
+      if (table == "MasterItemUnit") {
+        callback(null, model.MasterItemUnit(results));
+      }
+
+      if (table == "MasterStock") {
+        callback(null, model.MasterStock(results));
+      }
+
+      if (table == "MasterTool") {
+        callback(null, model.MasterTool(results));
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.StoredProcedure = (sql, data, callback) => {
+  try {
+    connection.query(sql, data, (error, results, fields) => {
+      if (error) {
+        callback(error.message, null);
+      }
+      callback(null, results[0]);
+    });
+  } catch (error) {
+    callback(error, null);
+  }
+};
+
+exports.StoredProcedureResult = (sql, callback) => {
+  try {
+    connection.query(sql, (error, results, fields) => {
+      if (error) {
+        callback(error.message, null);
+      }
+      callback(null, results[0]);
+    });
+  } catch (error) {
+    callback(error, null);
+  }
+};
+
+exports.Update = async (sql, callback) => {
+  try {
+    connection.query(sql, (error, results, fields) => {
+      if (error) {
+        callback(error, null);
+      }
+      // console.log('Rows affected:', results.affectedRows);
+
+      callback(null, `Rows affected: ${results.affectedRows}`);
+    });
+  } catch (error) {
+    callback(error, null);
+  }
+};
+
+exports.UpdateMultiple = async (sql, data, callback) => {
+  try {
+    connection.query(sql, data, (error, results, fields) => {
+      if (error) {
+        callback(error, null);
+      }
+      // console.log('Rows affected:', results.affectedRows);
+
+      callback(null, `Rows affected: ${results.affectedRows}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.CloseConnect = () => {
+  connection.end();
+};
+
+exports.Insert = (stmt, todos, callback) => {
+  try {
+    connection.connect((err) => {
+      return err;
+    });
+    // console.log(`statement: ${stmt} data: ${todos}`);
+
+    connection.query(stmt, [todos], (err, results, fields) => {
+      if (err) {
+        callback(err, null);
+      }
+      // callback(null, `Row inserted: ${results}`);
+      callback(null, `Row inserted: ${results.affectedRows}`);
+      // console.log(`Row inserted: ${results.affectedRows}`);
+    });
+  } catch (error) {
+    callback(error, null);
+  }
+};
+
+exports.SelectResult = (sql, callback) => {
+  try {
+    connection.connect((err) => {
+      return err;
+    });
+    connection.query(sql, (error, results, fields) => {
+      // console.log(results);
+
+      if (error) {
+        callback(error, null);
+      }
+
+      callback(null, results);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.InsertTable = (tablename, data, callback) => {
+  if (tablename == "master_item") {
+    let sql = `INSERT INTO master_item(
+        mi_brand,
+        mi_description,
+        mi_status,
+        mi_createdby,
+        mi_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "master_item_unit") {
+    let sql = `INSERT INTO master_item_unit(
+        miu_itemcode,
+        miu_unit,
+        miu_status,
+        miu_createdby,
+        miu_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "master_item_price") {
+    let sql = `INSERT INTO master_item_price(
+        mip_itemcode,
+        mip_price,
+        mip_status,
+        mip_createdby,
+        mip_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "master_tool") {
+    let sql = `INSERT INTO master_tool(
+        mt_tag,
+        mt_serial,
+        mt_description,
+        mt_status,
+        mt_createdby,
+        mt_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "master_stock_max_min") {
+    let sql = `INSERT INTO master_stock_max_min(
+        msxn_itemcode,
+        msxn_minimum,
+        msxn_maximum,
+        msxn_status,
+        msxn_createdby,
+        msxn_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+};
+
+exports.isDataExist = (sql, tablename) => {
+  return new Promise((resolve, reject) => {
+    this.Select(sql, tablename, (err, result) => {
+      if (err) reject(err);
+
+      if (result.length != 0) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    });
+  });
+};
+
+exports.isSingleDataExist = (sql, tablename, callback) => {
+  this.Select(sql, tablename, (err, result) => {
+    if (err) callback(err, null);
+
+    if (result.length != 0) {
+      callback(null, true);
+    } else {
+      callback(null, false);
+    }
+  });
+};
