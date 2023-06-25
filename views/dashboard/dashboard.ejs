@@ -1,0 +1,216 @@
+<!-- Modal -->
+<div
+  class="modal fade bd-example-modal-lg"
+  id="allowanceModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-keyboard="false"
+  data-backdrop="static"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Allowance</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="col-lg-12">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label" for="mu_password"
+                    >Employee ID</label
+                  >
+                  <input
+                    id="employeeidmodal"
+                    name="employeeidmodal"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter new allowance here"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label" for="mu_password">Allowance</label>
+                  <input
+                    id="allowancemodal"
+                    name="allowancemodal"
+                    type="text"
+                    class="form-control number-validator"
+                    placeholder="Enter new allowance here"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times" aria-hidden="true"></i> Close
+        </button>
+        <button
+          type="button"
+          id="saveBtn"
+          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+        >
+          <i class="fa fa-check" aria-hidden="true"></i> Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Begin PCreated by Content -->
+<div class="container-fluid">
+  <!-- PCreated by Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-3">
+    <h1 class="page-title">Allowance</h1>
+  </div>
+  <!-- Content Row -->
+  <div class="row mb-2">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div id="cablingrequest">
+                <div class="card border-left-warning shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+                        >
+                          CABLING EQUIPMENT REQUEST
+                        </div>
+                        <div
+                          id="cablingequipmentrequest"
+                          class="h5 mb-0 font-weight-bold text-gray-800"
+                        ></div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-store fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold table-title">Request Table</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="cabling-equipment-item-tbl"
+          width="100%"
+          cellspacing="10"
+        >
+          <thead>
+            <tr>
+              <th class="col-1 text-start">REQUEST ID</th>
+              <th class="col-3 text-center">DATE</th>
+              <th class="col-3 text-center">PERSONEL</th>
+              <th class="col-3 text-center">DETAILS</th>
+              <th class="col-3 text-center">REMARKS</th>
+              <th class="col-3 text-center">STATUS</th>
+              <th class="col-2 text-end">ACTIONS</th>
+            </tr>
+          </thead>
+
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold table-title">Stocks</h6>
+    </div>
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-lg-8">
+          <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+              class="card-header py-3 d-flex flex-row align-items-center justify-content-between chart-title"
+            >
+              <h6 class="m-0 font-weight-bold">Cabling Equipments Stocks</h6>
+              <div class="dropdown no-arrow">
+                <a
+                  class="dropdown-toggle"
+                  href="#"
+                  role="button"
+                  id="dropdownMenuLink"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                  aria-labelledby="dropdownMenuLink"
+                >
+                  <div class="dropdown-header">Actions:</div>
+                  <a class="dropdown-item" href="#">Generate Report</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">...</a>
+                </div>
+              </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="chart-bar chart-content">
+                <canvas id="myBarChart-cabling"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold table-title">Request Table</h6>
+          </div>
+          <div class="table-responsive">
+            <table
+              id="Cabling-Equipment_Tbl"
+              class="table table-bordered"
+              width="100%"
+              cellspacing="10"
+            >
+              <thead>
+                <th class="col-3 text-start">DESCRIPTION</th>
+                <th class="col-1 text-end"></thclass> TOTAL</th>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

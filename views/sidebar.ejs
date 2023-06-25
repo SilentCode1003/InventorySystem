@@ -1,0 +1,272 @@
+<ul
+  class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+  id="accordionSidebar"
+>
+  <!-- Sidebar - Brand -->
+  <a
+    class="sidebar-brand d-flex align-items-center justify-content-center"
+    href="#"
+  >
+    <div class="sidebar-brand-icon">
+      <img
+        src="/images/img/logo.jpg"
+        class="img-fluid"
+        alt="Responsive image"
+      />
+    </div>
+    <div class="sidebar-brand-text mx-3">Inventory System</div>
+  </a>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0" />
+
+  <!-- Nav Item - Dashboard -->
+  <li class="nav-item active">
+    <a class="nav-link" href="/">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a
+    >
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider" />
+
+  <!-- Heading -->
+  <div class="sidebar-heading">Control Panel</div>
+
+  <!-- Nav Item - PCreated bys Collapse Menu -->
+
+  <!-- Nav Item - Admin Control Panel Collapse Menu -->
+  <% if (roletype === 'Admin') { %>
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#collapseAdminControlPanel"
+      aria-expanded="true"
+      aria-controls="collapseAdminControlPanel"
+    >
+      <i class="fas fa-fw fa-database"></i>
+      <span>Masters</span>
+    </a>
+    <div
+      id="collapseAdminControlPanel"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Master type:</h6>
+        <a class="collapse-item" href="/roles">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span> Roles</span>
+        </a>
+        <a class="collapse-item" href="/position">
+          <i class="fa fa-street-view" aria-hidden="true"></i>
+          <span>Position</span>
+        </a>
+        <a class="collapse-item" href="/department">
+          <i class="fas fa-fw fa-sitemap"></i>
+          <span>Department</span>
+        </a>
+        <a class="collapse-item" href="/access">
+          <i class="fa fa-key" aria-hidden="true"></i>
+          <span>Access</span>
+        </a>
+        <a class="collapse-item" href="/employee">
+          <i class="fa fa-address-card" aria-hidden="true"></i>
+          <span>Employee</span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#collapseUtilities2"
+      aria-expanded="true"
+      aria-controls="collapseUtilities"
+    >
+      <i class="fa fa-user-cog" aria-hidden="true"></i>
+      <span>Authentication</span>
+    </a>
+    <div
+      id="collapseUtilities2"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="/user">
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          <span>User</span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+  <% } %>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider" />
+
+  <!-- Heading -->
+  <div class="sidebar-heading">Cabling Inventory</div>
+
+  <!-- Nav Item - Cabling Collapse Menu -->
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#collapseCablingMaster"
+      aria-expanded="true"
+      aria-controls="collapseUtilities"
+    >
+      <i class="fa fa-database" aria-hidden="true"></i>
+      <span>Masters</span>
+    </a>
+    <div
+      id="collapseCablingMaster"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Master:</h6>
+        <a class="collapse-item" href="/cablingitems">
+          <i class="fa fa-hammer" aria-hidden="true"></i>
+          <span>Item</span>
+        </a>
+        <a class="collapse-item" href="/cabligtools">
+          <i class="fa fa-wrench" aria-hidden="true"></i>
+          <span>Tools</span>
+        </a>
+        <a class="collapse-item" href="/cablingpersonels">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          <span>Personel</span>
+        </a>
+        <h6 class="collapse-header">Automation:</h6>
+        <a class="collapse-item" href="/stocks">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+          <span>Max & Min Stocks</span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Nav Item - Cabling Inventory Collapse Menu -->
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#collapseCablingInventory"
+      aria-expanded="true"
+      aria-controls="collapseCablingInventory"
+    >
+      <i class="fa fa-boxes" aria-hidden="true"></i>
+      <span>Inventory</span>
+    </a>
+    <div
+      id="collapseCablingInventory"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Items:</h6>
+        <a class="collapse-item" href="/cablingmaterials">
+          <i class="fa fa-hammer" aria-hidden="true"></i>
+          <span>Materials</span>
+        </a>
+        <a class="collapse-item" href="/cablingtools">
+          <i class="fa fa-wrench" aria-hidden="true"></i>
+          <span>Tools</span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Nav Item - Cabling Request Collapse Menu -->
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#collapseCablingRequest"
+      aria-expanded="true"
+      aria-controls="collapseCablingRequest"
+    >
+      <i class="fa fa-money-check" aria-hidden="true"></i>
+      <span>Request</span>
+    </a>
+    <div
+      id="collapseCablingRequest"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Items:</h6>
+        <a class="collapse-item" href="/requestmaterials">
+          <i class="fa fa-hammer" aria-hidden="true"></i>
+          <span>Materials</span>
+        </a>
+        <a class="collapse-item" href="/requesttools">
+          <i class="fa fa-wrench" aria-hidrden="true"></i>
+          <span>Tools</span>
+        </a>
+        <a class="collapse-item" href="/requestpurchaseorder">
+          <i class="fa fa-receipt" aria-hidden="true"></i>
+          <span>Purchase Order</span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Nav Item - Cabling Reports Collapse Menu -->
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#collapseCablingReports"
+      aria-expanded="true"
+      aria-controls="collapseCablingReports"
+    >
+      <i class="fa fa-chart-bar" aria-hidden="true"></i>
+      <span>Reports</span>
+    </a>
+    <div
+      id="collapseCablingReports"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Options:</h6>
+        <a class="collapse-item" href="/reportmaterials">
+          <i class="fa fa-hammer" aria-hidden="true"></i>
+          <span>Materials</span>
+        </a>
+        <a class="collapse-item" href="/reportpurchaseorder">
+          <i class="fa fa-receipt" aria-hidden="true"></i>
+          <span>Purchase Order</span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider" />
+
+  <!-- Sidebar Toggler (Sidebar) -->
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div>
+</ul>
