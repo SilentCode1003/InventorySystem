@@ -12,7 +12,8 @@ router.get("/", function (req, res, next) {
     title: req.session.title,
     fullname: req.session.fullname,
     roletype: req.session.roletype,
-    accesstype: req.session.accesstype,
+    position: req.session.position,
+    department: req.session.department,
   });
 });
 

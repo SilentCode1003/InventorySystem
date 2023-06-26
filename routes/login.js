@@ -8,10 +8,11 @@ const crypt = require("./repository/cryptography");
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("login", {
-    title:  req.session.title,
+    title: req.session.title,
     fullname: req.session.fullname,
     roletype: req.session.roletype,
-    accesstype: req.session.accesstype,
+    position: req.session.position,
+    department: req.session.department,
   });
 });
 
@@ -42,11 +43,13 @@ router.post("/authentication", (req, res) => {
           req.session.fullname = result[0].fullname;
           req.session.roletype = result[0].roletype;
           req.session.accesstype = result[0].accesstype;
+          req.session.department = result[0].department;
+          req.session.position = result[0].position;
           req.session.title = process.env._TITLE;
 
           res.json({
             msg: "success",
-          }).next;
+          });
         } else {
           return res.json({
             msg: "incorrect",

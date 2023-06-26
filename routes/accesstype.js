@@ -12,7 +12,8 @@ router.get("/", function (req, res, next) {
     title: req.session.title,
     fullname: req.session.fullname,
     roletype: req.session.roletype,
-    accesstype: req.session.accesstype,
+    position: req.session.position,
+    department: req.session.department,
   });
 });
 
@@ -56,13 +57,58 @@ router.post("/save", (req, res) => {
     let master_access_type = [];
 
     master_access_type.push([accesstypename, status, createdby, createddate]);
-    mysql.InsertTable("master_access_type", master_access_type, (err, result) => {
+    mysql.InsertTable(
+      "master_access_type",
+      master_access_type,
+      (err, result) => {
+        if (err) console.error("Error: ", err);
+
+        console.log(result);
+        res.json({
+          msg: "success",
+        });
+      }
+    );
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
+router.post("/edit", (req, res) => {
+  try {
+    let accesstypenamemodal = req.body.accesstypenamemodal;
+    let accesstypecode = req.body.accesstypecode;
+
+    let data = [accesstypenamemodal, accesstypecode];
+
+    let sql_Update = `UPDATE master_access_type 
+                     SET mat_accesstypename = ?
+                     WHERE mat_accesstypecode = ?`;
+
+    let sql_check = `SELECT * FROM master_access_type WHERE mat_accesstypecode='${accesstypecode}'`;
+
+    console.log(data);
+
+    mysql.Select(sql_check, "MasterAccessType", (err, result) => {
       if (err) console.error("Error: ", err);
 
-      console.log(result);
-      res.json({
-        msg: "success",
-      });
+      if (result.length != 1) {
+        return res.json({
+          msg: "notexist",
+        });
+      } else {
+        mysql.UpdateMultiple(sql_Update, data, (err, result) => {
+          if (err) console.error("Error: ", err);
+
+          console.log(result);
+
+          res.json({
+            msg: "success",
+          });
+        });
+      }
     });
   } catch (error) {
     res.json({
@@ -71,71 +117,31 @@ router.post("/save", (req, res) => {
   }
 });
 
-
-router.post('/edit', (req, res) => {
+router.post("/status", (req, res) => {
   try {
-      let accesstypenamemodal = req.body.accesstypenamemodal;
-      let accesstypecode = req.body.accesstypecode;
-      
-      let data = [accesstypenamemodal, accesstypecode];
-       
-      let sql_Update = `UPDATE master_access_type 
-                     SET mat_accesstypename = ?
-                     WHERE mat_accesstypecode = ?`;
-      
-      let sql_check = `SELECT * FROM master_access_type WHERE mat_accesstypecode='${accesstypecode}'`;
+    let accesstypecode = req.body.accesstypecode;
+    let status =
+      req.body.status == dictionary.GetValue(dictionary.ACT())
+        ? dictionary.GetValue(dictionary.INACT())
+        : dictionary.GetValue(dictionary.ACT());
+    let data = [status, accesstypecode];
 
-      console.log(data);
-
-      mysql.Select(sql_check, 'MasterAccessType', (err, result) => {
-          if (err) console.error('Error: ', err);
-
-          if (result.length != 1) {
-              return res.json({
-                  msg: 'notexist'
-              });
-          } else {
-              mysql.UpdateMultiple(sql_Update, data, (err, result) => {
-                  if (err) console.error('Error: ', err);
-
-                  console.log(result);
-
-                  res.json({
-                      msg: 'success',
-                  });
-              });
-          }
-      });
-  } catch (error) {
-      res.json({
-          msg: error
-      });
-  }
-});
-
-router.post('/status', (req, res) => {
-  try {
-      let accesstypecode = req.body.accesstypecode;
-      let status = req.body.status == dictionary.GetValue(dictionary.ACT()) ? dictionary.GetValue(dictionary.INACT()): dictionary.GetValue(dictionary.ACT());
-      let data = [status, accesstypecode];
-
-      let sql_Update = `UPDATE master_access_type 
+    let sql_Update = `UPDATE master_access_type 
                      SET mat_status = ?
                      WHERE mat_accesstypecode = ?`;
 
-      console.log(data);
+    console.log(data);
 
-      mysql.UpdateMultiple(sql_Update, data, (err, result) => {
-          if (err) console.error('Error: ', err);
+    mysql.UpdateMultiple(sql_Update, data, (err, result) => {
+      if (err) console.error("Error: ", err);
 
-          res.json({
-              msg: 'success',
-          });
-      });
-      
-  } catch (error) {
       res.json({
-          msg: error
+        msg: "success",
       });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
   }
 });

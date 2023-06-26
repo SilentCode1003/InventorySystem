@@ -7,11 +7,14 @@ router.get("/", isAuthAdminUser, function (req, res, next) {
     title: req.session.title,
     fullname: req.session.fullname,
     roletype: req.session.roletype,
-    accesstype: req.session.accesstype,
+    position: req.session.position,
+    department: req.session.department,
   });
 });
 
 function isAuthAdminUser(req, res, next) {
+  console.log(req.session.roletype);
+
   if (req.session.roletype == "Admin" || req.session.roletype == "User") {
     next();
   } else {

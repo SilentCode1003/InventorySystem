@@ -27,7 +27,7 @@
       <span>Dashboard</span></a
     >
   </li>
-
+  <% if (roletype === 'Admin') { %>
   <!-- Divider -->
   <hr class="sidebar-divider" />
 
@@ -37,7 +37,7 @@
   <!-- Nav Item - PCreated bys Collapse Menu -->
 
   <!-- Nav Item - Admin Control Panel Collapse Menu -->
-  <% if (roletype === 'Admin') { %>
+
   <li class="nav-item">
     <a
       class="nav-link collapsed"
@@ -58,7 +58,7 @@
     >
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Master type:</h6>
-        <a class="collapse-item" href="/roles">
+        <a class="collapse-item" href="/roletype">
           <i class="fa fa-users" aria-hidden="true"></i>
           <span> Roles</span>
         </a>
@@ -70,7 +70,7 @@
           <i class="fas fa-fw fa-sitemap"></i>
           <span>Department</span>
         </a>
-        <a class="collapse-item" href="/access">
+        <a class="collapse-item" href="/accesstype">
           <i class="fa fa-key" aria-hidden="true"></i>
           <span>Access</span>
         </a>
@@ -101,7 +101,7 @@
       data-parent="#accordionSidebar"
     >
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="/user">
+        <a class="collapse-item" href="/users">
           <i class="fa fa-calendar" aria-hidden="true"></i>
           <span>User</span>
         </a>
@@ -109,13 +109,21 @@
     </div>
   </li>
 
-  <% } %>
-
+  <% } %> <% if (roletype === 'Admin' || roletype === 'User' && department ===
+  'Cabling') { %>
   <!-- Divider -->
   <hr class="sidebar-divider" />
 
   <!-- Heading -->
   <div class="sidebar-heading">Cabling Inventory</div>
+
+  <!-- Nav Item - Cabling Dashboard Collapse Menu -->
+  <li class="nav-item active">
+    <a class="nav-link" href="/cabling">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a
+    >
+  </li>
 
   <!-- Nav Item - Cabling Collapse Menu -->
   <li class="nav-item">
@@ -261,7 +269,7 @@
       </div>
     </div>
   </li>
-
+  <% } %>
   <!-- Divider -->
   <hr class="sidebar-divider" />
 
