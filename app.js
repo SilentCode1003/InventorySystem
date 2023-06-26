@@ -13,6 +13,7 @@ var departmentRouter = require("./routes/department");
 var positionRouter = require("./routes/position");
 var accesstypeRouter = require("./routes/accesstype");
 var roletypeRouter = require("./routes/roletype");
+var cablingdashboardRouter = require("./routes/cablingdashboard");
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use("/department", departmentRouter);
 app.use("/position", positionRouter);
 app.use("/accesstype", accesstypeRouter);
 app.use("/roletype", roletypeRouter);
+app.use("/cablingdashboard", cablingdashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
