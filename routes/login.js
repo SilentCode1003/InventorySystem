@@ -1,14 +1,14 @@
 var express = require("express");
 var router = express.Router();
+require("dotenv").config();
 
-const mysql = require("./repository/payrolldb");
-const helper = require("./repository/customhelper");
-const dictionary = require("./repository/dictionary");
+const mysql = require("./repository/admindb");
 const crypt = require("./repository/cryptography");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("login", {
+    title:  req.session.title,
     fullname: req.session.fullname,
     roletype: req.session.roletype,
     accesstype: req.session.accesstype,
@@ -42,6 +42,7 @@ router.post("/authentication", (req, res) => {
           req.session.fullname = result[0].fullname;
           req.session.roletype = result[0].roletype;
           req.session.accesstype = result[0].accesstype;
+          req.session.title = process.env._TITLE;
 
           res.json({
             msg: "success",

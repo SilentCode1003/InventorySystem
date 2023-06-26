@@ -1,9 +1,94 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+const mysql = require("./repository/admindb");
+const crypt = require("./repository/cryptography");
+const dictionary = require("./repository/dictionary");
+const helper = require("./repository/customhelper");
+
+/* GET home page. */
+router.get("/", function (req, res, next) {
+  res.render("users", {
+    title: req.session.title,
+    fullname: req.session.fullname,
+    roletype: req.session.roletype,
+    accesstype: req.session.accesstype,
+  });
 });
 
+function isAuthAdminUser(req, res, next) {
+  if (req.session.roletype == "Admin" || req.session.roletype == "User") {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+}
+
 module.exports = router;
+
+router.get("/load", (req, res) => {
+  try {
+    let sql = `select * from master_user`;
+
+    mysql.Select(sql, "MasterUser", (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      console.log(result);
+
+      res.json({
+        msg: "success",
+        data: result,
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
+router.post("/save", (req, res) => {
+  try {
+    let fullname = req.body.fullname;
+    let username = req.body.username;
+    let password = req.body.password;
+    let roletype = req.body.roletype;
+    let position = req.body.position;
+    let accesstype = req.body.accesstype;
+    let department = req.body.department;
+    let status = dictionary.GetValue(dictionary.ACT());
+    let createdby = "DEV42";
+    let createddate = helper.GetCurrentDatetime();
+    let master_user = [];
+
+    crypt.Encrypter(password, (err, encrypted) => {
+      if (err) console.error("Error: ", err);
+
+      master_user.push([
+        fullname,
+        username,
+        encrypted,
+        accesstype,
+        roletype,
+        position,
+        department,
+        status,
+        createdby,
+        createddate,
+      ]);
+
+      mysql.InsertTable("master_user", master_user, (err, result) => {
+        if (err) console.error("Error: ", err);
+        console.log(result);
+
+        res.json({
+          msg: "success",
+        });
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});

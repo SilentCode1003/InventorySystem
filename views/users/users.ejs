@@ -1,0 +1,167 @@
+<!-- Begin PCreated by Content -->
+<div class="container-fluid">
+  <!-- PCreated by Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-3">
+    <h1 class="page-title">Users Info</h1>
+  </div>
+  <!-- Content Row -->
+  <div class="row mb-2">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <label class="form-label" for="fullname">Fullname</label>
+              <input
+                id="fullname"
+                name="fullname"
+                type="text"
+                class="form-control"
+                placeholder="Enter Fullname"
+                aria-label="fullname"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <label class="form-label" for="username">Username</label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                class="form-control"
+                placeholder="Enter username"
+                aria-label="username"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="password">Password</label>
+              <input
+                id="password"
+                name="password"
+                minlength="8"
+                type="password"
+                class="form-control"
+                placeholder="Enter password"
+                aria-label="password"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <label class="form-label" for="rolelist">Role</label>
+              <select
+                class="entry-input form-control mb-2"
+                name="rolelist"
+                id="rolelist"
+              >
+                <option value="">- - - Select Role - - -</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="positionlist">Position</label>
+              <select
+                class="entry-input form-control"
+                name="positionlist"
+                id="positionlist"
+              >
+                <option value="">- - - Select Position - - -</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <label class="form-label" for="accesstypelist">Access Type</label>
+              <select
+                class="entry-input form-control mb-2"
+                name="accesstypelist"
+                id="accesstypelist"
+              >
+                <option value="">- - - Select Role - - -</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="departmentlist">Department</label>
+              <select
+                class="entry-input form-control"
+                name="departmentlist"
+                id="departmentlist"
+              >
+                <option value="">- - - Select Position - - -</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 text-center mt-1">
+              <button
+                id="addBtn"
+                name="addBtn"
+                class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
+              >
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <h6 class="m-0 font-weight-bold table-title">DataTables Example</h6>
+        </div>
+        <div class="col-md-6">
+          <input
+            id="search"
+            name="search"
+            type="text"
+            class="form-control"
+            placeholder="Search Fullname"
+            aria-label="search"
+            aria-describedby="basic-addon1"
+          />
+        </div>
+        <div class="card-body">
+          <div class="table-responsive-sm">
+            <table
+              class="table table-bordered table-sm"
+              id="users-table"
+              width="100%"
+              cellspacing="10"
+            >
+              <thead>
+                <tr>
+                  <th class="col-1 text-start">USER CODE</th>
+                  <th class="col-2 text-center">FULLNAME</th>
+                  <th class="col-2 text-center">USERNAME</th>
+                  <th class="col-2 text-center">PASSWORD</th>
+                  <th class="col-2 text-center">ROLE TYPE</th>
+                  <th class="col-2 text-center">POSITION</th>
+                  <th class="col-2 text-center">ACCESS TYPE</th>
+                  <th class="col-2 text-center">DEPARTMENT</th>
+                  <th class="col-2 text-center">STATUS</th>
+                  <th class="col-2 text-center">CREATED BY</th>
+                  <th class="col-2 text-center">CREATED DATE</th>
+                  <th class="col-1 text-end">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

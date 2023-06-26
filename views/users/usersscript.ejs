@@ -1,0 +1,433 @@
+<script>
+  $(document).ready(function () {
+    let usercode = "";
+    let status = "";
+
+    LoadTable();
+    LoadList();
+    LoadListModal();
+
+    $("#users-table tbody").on("click", "tr", function () {
+      var dataRow = [];
+      $(this)
+        .closest("tr")
+        .find("td")
+        .each(function () {
+          dataRow.push($(this).text());
+        });
+      console.log(dataRow);
+      usercode = dataRow[0];
+      status = dataRow[6];
+    });
+
+    $(document).on("click", "#addBtn", function () {
+      let fullname = $("#fullname").val();
+      let username = $("#username").val();
+      let password = $("#password").val();
+      let roletype = $("#roletypelist").val();
+      let accesstype = $("#accesstypelist").val();
+      let department = $("#departmentlist").val();
+      let position = $("#positionlist").val();
+
+      var message = "";
+
+      if (fullname == "") {
+        message += "FULLNAME ";
+      }
+      if (username == "") {
+        message += "USERNAME ";
+      }
+      if (password == "") {
+        message += "PASSWORD ";
+      }
+      if (roletype == "") {
+        message += "ROLE TYPE ";
+      }
+      if (accesstype == "") {
+        message += "ACCESS TYPE ";
+      }
+      if (department == "") {
+        message += "DEPARTMENT ";
+      }
+      if (position == "") {
+        message += "POSITION ";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/users/save",
+          data: {
+            fullname: fullname,
+            username: username,
+            password: password,
+            roletype: roletype,
+            accesstype: accesstype,
+            position: position,
+            department: department,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              success("Saved", "Successfully");
+            }
+
+            if (result.msg == "exist") {
+              warning("Exist", `${fullname} already exist!`);
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    $(document).on("click", "#saveBtn", function () {
+      let fullname = $("#fullnamemodal").val();
+      let username = $("#usernamemodal").val();
+      let password = $("#passwordmodal").val();
+      let roletype = $("#rolelistmodal").val();
+      let accesstype = $("#positionlistmodal").val();
+
+      var message = "";
+
+      if (fullname == "") {
+        message += "FULLNAME ";
+      }
+      if (username == "") {
+        message += "USERNAME ";
+      }
+      if (password == "") {
+        message += "PASSWORD ";
+      }
+      if (roletype == "") {
+        message += "ROLE ";
+      }
+      if (accesstype == "") {
+        message += "POSITION ";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/users/edit",
+          data: {
+            fullname: fullname,
+            username: username,
+            password: password,
+            roletype: roletype,
+            accesstype: accesstype,
+            usercode: usercode,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              success("Saved", "Successfully");
+            }
+
+            if (result.msg == "exist") {
+              warning("Exist", `${fullname} already exist!`);
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    //Edit get Row Details
+    $(document).on("click", "#editBtn", function () {
+      $("#usercodemodal").val(usercode);
+      $("#userModal").modal("show");
+      console.log(usercode);
+    });
+
+    //Status Update
+    $(document).on("click", "#activeBtn", function () {
+      console.log(usercode);
+      console.log(status);
+      $.ajax({
+        type: "POST",
+        url: "/users/status",
+        data: {
+          status: status,
+          usercode: usercode,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+
+          if (result.msg == "notexist") {
+            warning(`${usercode} does not exist!`);
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $(document).on("click", "#inactiveBtn", function () {
+      console.log(usercode);
+      console.log(status);
+      $.ajax({
+        type: "POST",
+        url: "/users/status",
+        data: {
+          status: status,
+          usercode: usercode,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+
+          if (result.msg == "notexist") {
+            warning(`${usercode} does not exist!`);
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $("#search").on("keyup", function () {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("users-table");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    });
+
+    //Load Lists
+    function LoadList() {
+      $.ajax({
+        type: "GET",
+        url: "/roletype/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.roletypename, item.roletypename);
+              $(options).html(item.roletypename);
+              $("#rolelist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "/position/load",
+        success: function (result) {
+          var data = result.data;
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.positionname, item.positionname);
+              $(options).html(item.positionname);
+              $("#positionlist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "/accesstype/load",
+        success: function (result) {
+          var data = result.data;
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.accesstypename, item.accesstypename);
+              $(options).html(item.accesstypename);
+              $("#accesstypelist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "/department/load",
+        success: function (result) {
+          var data = result.data;
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.departmentname, item.departmentname);
+              $(options).html(item.departmentname);
+              $("#departmentlist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+
+    function LoadListModal() {
+      $.ajax({
+        type: "GET",
+        url: "/roles/load",
+        success: function (result) {
+          var data = result.data;
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.rolename, item.rolename);
+              $(options).html(item.rolename);
+              $("#rolelistmodal").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "/position/load",
+        success: function (result) {
+          var data = result.data;
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.positionname, item.positionname);
+              $(options).html(item.positionname);
+              $("#positionlistmodal").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+
+    function LoadTable() {
+      $("#users-table").DataTable({
+        destroy: true,
+        processing: true,
+        serverSide: true,
+        paging: false,
+        searching: false,
+        info: false,
+        scrollY: 400,
+        scrollCollapse: true,
+        serverMethod: "GET",
+        ajax: {
+          url: "/users/load",
+          dataSrc: (json) => {
+            var finalData = [];
+            var data = json.data;
+            $.each(data, (key, item) => {
+              var action = "";
+              var status = item.status;
+
+              if (status == "ACTIVE") {
+                action =
+                  '<button class="edit-btn btn btn-outline-primary" id="editBtn" data-toggle="modal" data-target="#userModal">EDIT</button> <button class="inactive-btn btn btn-outline-primary" id="inactiveBtn">INACTIVE</button>';
+              }
+              if (status == "INACTIVE") {
+                action =
+                  '<button class="edit-btn btn btn-outline-primary" id="editBtn" data-toggle="modal" data-target="#userModal">EDIT</button> <button class="active-btn btn btn-outline-primary" id="activeBtn">ACTIVE</button>';
+              }
+
+              finalData.push({
+                usercode: item.usercode,
+                fullname: item.fullname,
+                username: item.username,
+                password: item.password,
+                roletype: item.roletype,
+                position: item.position,
+                accesstype: item.accesstype,
+                department: item.department,
+                status: item.status,
+                createdby: item.createdby,
+                createddate: item.createddate,
+                action: action,
+              });
+            });
+
+            return finalData;
+          },
+        },
+        columnDefs: [
+          {
+            targets: 1,
+            className: "td-indent",
+          },
+        ],
+        columns: [
+          {
+            data: "usercode",
+          },
+          {
+            data: "fullname",
+          },
+          {
+            data: "username",
+          },
+          {
+            data: "password",
+          },
+          {
+            data: "roletype",
+          },
+          {
+            data: "position",
+          },
+          {
+            data: "accesstype",
+          },
+          {
+            data: "department",
+          },
+          {
+            data: "status",
+          },
+          {
+            data: "createdby",
+          },
+          {
+            data: "createddate",
+          },
+          {
+            data: "action",
+          },
+        ],
+        initComplete: function () {},
+      });
+    }
+  });
+</script>
