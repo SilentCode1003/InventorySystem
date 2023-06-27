@@ -91,6 +91,10 @@ exports.Select = (sql, table, callback) => {
       if (table == "MasterTool") {
         callback(null, model.MasterTool(results));
       }
+
+      if (table == "MasterBrand") {
+        callback(null, model.MasterBrand(results));
+      }
     });
   } catch (error) {
     console.log(error);
@@ -270,6 +274,21 @@ exports.InsertTable = (tablename, data, callback) => {
         msxn_status,
         msxn_createdby,
         msxn_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "master_brand") {
+    let sql = `INSERT INTO master_brand(
+        mb_brandname,
+        mb_status,
+        mb_createdby,
+        mb_createddate) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {

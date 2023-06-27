@@ -84,3 +84,19 @@ exports.MasterStock = (data) => {
 
   return dataResult;
 };
+
+exports.MasterBrand = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      brandcode: key.mb_brandcode,
+      brandname: key.mb_brandname,
+      status: key.mb_status,
+      createdby: key.mb_createdby,
+      createddate: key.mb_createddate,
+    });
+  });
+
+  return dataResult;
+};
