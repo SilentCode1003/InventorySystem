@@ -304,6 +304,8 @@ exports.isDataExist = (sql, tablename) => {
     this.Select(sql, tablename, (err, result) => {
       if (err) reject(err);
 
+      console.log(result);
+
       if (result.length != 0) {
         resolve(true);
       } else {

@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-const mysql = require("./repository/admindb");
+const mysql = require("./repository/cablingdb");
 const crypt = require("./repository/cryptography");
 const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
@@ -51,20 +51,75 @@ router.get("/load", (req, res) => {
 router.post("/save", (req, res) => {
   try {
     let itemdescription = req.body.itemdescription;
-    let brand = req.body.brand;
+    let brandname = req.body.brandname;
     let status = dictionary.GetValue(dictionary.ACT());
     let createdby = "DEV42";
     let createddate = helper.GetCurrentDatetime();
     let master_item = [];
 
-    master_item.push([itemdescription, brand, status, createdby, createddate]);
-    mysql.InsertTable("master_item", master_item, (err, result) => {
+    let sql_exist = `select * from master_item where mi_brand='${brandname}' and mi_description='${itemdescription}'`;
+    mysql.Select(sql_exist, "MasterItem", (err, result) => {
       if (err) console.error("Error: ", err);
 
       console.log(result);
-      res.json({
-        msg: "success",
-      });
+
+      if (result.length != 0) {
+        return res.json({
+          msg: "exist",
+        });
+      } else {
+        let sql_check = `select * from master_brand where mb_brandname='${brandname}'`;
+        mysql
+          .isDataExist(sql_check, "MasterBrand")
+          .then((result) => {
+            console.log(result);
+
+            if (result) {
+              master_item.push([
+                brandname,
+                itemdescription,
+                status,
+                createdby,
+                createddate,
+              ]);
+              mysql.InsertTable("master_item", master_item, (err, result) => {
+                if (err) console.error("Error: ", err);
+
+                console.log(result);
+                res.json({
+                  msg: "success",
+                });
+              });
+            } else {
+              let master_brand = [];
+
+              master_brand.push([brandname, status, createdby, createddate]);
+              mysql.InsertTable("master_brand", master_brand, (err, result) => {
+                if (err) console.error("Error: ", err);
+                console.log(result);
+
+                master_item.push([
+                  brandname,
+                  itemdescription,
+                  status,
+                  createdby,
+                  createddate,
+                ]);
+                mysql.InsertTable("master_item", master_item, (err, result) => {
+                  if (err) console.error("Error: ", err);
+
+                  console.log(result);
+                  res.json({
+                    msg: "success",
+                  });
+                });
+              });
+            }
+          })
+          .catch((error) => {
+            return res.json({ msg: error });
+          });
+      }
     });
   } catch (error) {
     res.json({
@@ -76,12 +131,14 @@ router.post("/save", (req, res) => {
 router.post("/edit", (req, res) => {
   try {
     let itemdescriptionmodal = req.body.itemdescriptionmodal;
+    let brandlistmodal = req.body.brandlistmodal;
     let itemcode = req.body.itemcode;
 
-    let data = [itemdescriptionmodal, itemcode];
+    let data = [brandlistmodal, itemdescriptionmodal, itemcode];
 
     let sql_Update = `UPDATE master_item 
-                     SET mi_departmentname = ?
+                     SET mi_brand = ?,
+                     mi_description = ?
                      WHERE mi_itemcode = ?`;
 
     let sql_check = `SELECT * FROM master_item WHERE mi_itemcode='${itemcode}'`;

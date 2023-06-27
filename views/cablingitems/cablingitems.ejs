@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div
   class="modal fade bd-example-modal-lg"
-  id="departmentModal"
+  id="cablingitemsModal"
   tabindex="-1"
   role="dialog"
   aria-labelledby="exampleModalLabel"
@@ -12,7 +12,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Departments</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Cabling Items</h5>
       </div>
       <div class="modal-body">
         <div class="row mb-2">
@@ -20,15 +20,15 @@
             <div class="card-body">
               <div class="row mb-2">
                 <div class="col-md-12">
-                  <label class="form-label" for="departmentcode"
-                    >Department Code</label
+                  <label class="form-label" for="itemcodemodal"
+                    >Item Code</label
                   >
                   <input
-                    id="departmentcode"
-                    name="departmentcode"
+                    id="itemcodemodal"
+                    name="itemcodemodal"
                     type="text"
                     class="form-control"
-                    placeholder="Enter new department"
+                    placeholder="Enter new item code"
                     aria-label="fullname"
                     aria-describedby="basic-addon1"
                     disabled
@@ -37,18 +37,36 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <label class="form-label" for="departmentnamemodal"
-                    >Department Name</label
+                  <label class="form-label" for="itemdescriptionmodal"
+                    >Item Description</label
                   >
                   <input
-                    id="departmentnamemodal"
-                    name="departmentnamemodal"
+                    id="itemdescriptionmodal"
+                    name="itemdescriptionmodal"
                     type="text"
                     class="form-control"
-                    placeholder="Enter new department"
+                    placeholder="Enter new item description"
                     aria-label="fullname"
                     aria-describedby="basic-addon1"
                   />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label" for="brandlistmodal"
+                    >Brand Name</label
+                  >
+                  <input
+                    class="entry-input form-control mb-2"
+                    list="brandnamelistmodal"
+                    id="brandlistmodal"
+                    name="fruit"
+                  />
+
+                  <datalist id="brandnamelistmodal">
+                    <option value=""></option>
+                  </datalist>
                 </div>
               </div>
             </div>
@@ -112,7 +130,7 @@
             />
 
             <datalist id="brandnamelist">
-              <summary>Click to toggle</summary>
+              <option value=""></option>
             </datalist>
 
             <!-- <label class="form-label" for="brandlist">Brand</label>
@@ -177,7 +195,7 @@
           <tr>
             <th class="col-1 text-start">Code</th>
             <th class="col-3 text-center">Brand</th>
-            <th class="col-3 text-center">Name</th>
+            <th class="col-3 text-center">Description</th>
             <th class="col-1 text-center">Status</th>
             <th class="col-3 text-center">Created by</th>
             <th class="col-3 text-center">Created date</th>

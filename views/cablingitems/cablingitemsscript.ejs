@@ -1,10 +1,11 @@
 <script>
   $(document).ready(function () {
-    let departmentcode = "";
+    let itemcode = "";
     let status = "";
 
     LoadTable();
     LoadList();
+    LoadModalList();
 
     $("#cablingitems-dataTable tbody").on("click", "tr", function () {
       var dataRow = [];
@@ -15,24 +16,28 @@
           dataRow.push($(this).text());
         });
       console.log(dataRow);
-      departmentcode = dataRow[0];
-      status = dataRow[2];
+      itemcode = dataRow[0];
+      status = dataRow[3];
     });
 
     $(document).on("click", "#editBtn", function () {
-      $("#departmentcode").val(departmentcode);
-      $("#departmentModal").modal("show");
-      console.log(departmentcode);
+      $("#itemcodemodal").val(itemcode);
+      $("#cablingitemsModal").modal("show");
+      console.log(itemcode);
     });
 
     $(document).on("click", "#addBtn", function () {
-      let departmentname = $("#departmentname").val();
-      let brand = $("#brandlist").val();
+      let itemdescription = $("#itemdescription").val();
+      let brandname = $("#brandlist").val();
 
       var message = "";
 
-      if (departmentname == "") {
-        message += "Department Name";
+      if (itemdescription == "") {
+        message += "ITEM DESCRIPTION ";
+      }
+
+      if (brandname == "") {
+        message += "BRAND NAME";
       }
 
       if (message != "") {
@@ -40,9 +45,10 @@
       } else {
         $.ajax({
           type: "POST",
-          url: "/department/save",
+          url: "/cablingitems/save",
           data: {
-            departmentname: departmentname,
+            itemdescription: itemdescription,
+            brandname: brandname,
           },
           success: function (result) {
             if (result.msg == "success") {
@@ -51,7 +57,7 @@
             }
 
             if (result.msg == "exist") {
-              warning("Exist", `${departmentname} has already registered!`);
+              warning("Exist", `${itemdescription} has already registered!`);
             }
           },
           error: function (err) {
@@ -63,12 +69,17 @@
 
     //Edit Update
     $(document).on("click", "#saveBtn", function () {
-      let departmentnamemodal = $("#departmentnamemodal").val();
+      let itemdescriptionmodal = $("#itemdescriptionmodal").val();
+      let brandlistmodal = $("#brandlistmodal").val();
 
       var message = "";
 
-      if (departmentnamemodal == "") {
-        message += "ROLENAME ";
+      if (itemdescriptionmodal == "") {
+        message += "ITEM DESCRIPTION ";
+      }
+
+      if (brandlistmodal == "") {
+        message += "BRAND NAME ";
       }
 
       if (message != "") {
@@ -76,10 +87,11 @@
       } else {
         $.ajax({
           type: "POST",
-          url: "/department/edit",
+          url: "/cablingitems/edit",
           data: {
-            departmentnamemodal: departmentnamemodal,
-            departmentcode: departmentcode,
+            itemdescriptionmodal: itemdescriptionmodal,
+            brandlistmodal: brandlistmodal,
+            itemcode: itemcode,
           },
           success: function (result) {
             if (result.msg == "success") {
@@ -88,7 +100,7 @@
             }
 
             if (result.msg == "exist") {
-              warning("Exist", `${departmentnamemodal} already exist!`);
+              warning("Exist", `${itemdescriptionmodal} already exist!`);
             }
           },
           error: function (err) {
@@ -100,14 +112,14 @@
 
     //Status Update
     $(document).on("click", "#activeBtn", function () {
-      console.log(departmentcode);
+      console.log(itemcode);
       console.log(status);
       $.ajax({
         type: "POST",
-        url: "/department/status",
+        url: "/cablingitems/status",
         data: {
           status: status,
-          departmentcode: departmentcode,
+          itemcode: itemcode,
         },
         success: function (result) {
           if (result.msg == "success") {
@@ -116,7 +128,7 @@
           }
 
           if (result.msg == "notexist") {
-            warning(`${departmentcode} does not exist!`);
+            warning(`${itemcode} does not exist!`);
           }
         },
         error: function (err) {
@@ -126,14 +138,14 @@
     });
 
     $(document).on("click", "#inactiveBtn", function () {
-      console.log(departmentcode);
+      console.log(itemcode);
       console.log(status);
       $.ajax({
         type: "POST",
-        url: "/department/status",
+        url: "/cablingitems/status",
         data: {
           status: status,
-          departmentcode: departmentcode,
+          itemcode: itemcode,
         },
         success: function (result) {
           if (result.msg == "success") {
@@ -142,7 +154,7 @@
           }
 
           if (result.msg == "notexist") {
-            warning(`${departmentcode} does not exist!`);
+            warning(`${itemcode} does not exist!`);
           }
         },
         error: function (err) {
@@ -155,10 +167,10 @@
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("search");
       filter = input.value.toUpperCase();
-      table = document.getElementById("department-dataTable");
+      table = document.getElementById("cablingitems-dataTable");
       tr = table.getElementsByTagName("tr");
       for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
+        td = tr[i].getElementsByTagName("td")[2];
         if (td) {
           txtValue = td.textContent || td.innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -194,11 +206,11 @@
 
               if (status == "ACTIVE") {
                 action =
-                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#departmentModal">EDIT</button> <button id="inactiveBtn" class="btn btn-outline-primary" name="inactiveBtn">INACTIVE</button>';
+                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingitemsModal">EDIT</button> <button id="inactiveBtn" class="btn btn-outline-primary" name="inactiveBtn">INACTIVE</button>';
               }
               if (status == "INACTIVE") {
                 action =
-                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#departmentModal">EDIT</button> <button id="activeBtn" class="btn btn-outline-primary" name="activeBtn">ACTIVE</button>';
+                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingitemsModal">EDIT</button> <button id="activeBtn" class="btn btn-outline-primary" name="activeBtn">ACTIVE</button>';
               }
 
               finalData.push({
@@ -246,7 +258,29 @@
               var options = new Option(item.brandname, item.brandname);
               $(options).html(item.brandname);
               // $("#fruits").append(options);
-              $("#brandnamelist").html(options);
+              $("#brandnamelist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+
+    function LoadModalList() {
+      $.ajax({
+        type: "GET",
+        url: "/brand/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.brandname, item.brandname);
+              $(options).html(item.brandname);
+              // $("#fruits").append(options);
+              $("#brandnamelistmodal").append(options);
             }
           });
         },
