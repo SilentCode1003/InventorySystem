@@ -1,0 +1,295 @@
+<script>
+  $(document).ready(function () {
+    let itemunitcode = "";
+    let status = "";
+
+    LoadTable();
+    LoadList();
+    LoadModalList();
+
+    $("#cablingitemunits-dataTable tbody").on("click", "tr", function () {
+      var dataRow = [];
+      $(this)
+        .closest("tr")
+        .find("td")
+        .each(function () {
+          dataRow.push($(this).text());
+        });
+      console.log(dataRow);
+      itemunitcode = dataRow[0];
+      status = dataRow[3];
+    });
+
+    $(document).on("click", "#editBtn", function () {
+      $("#itemunitcodemodal").val(itemunitcode);
+      $("#cablingitemunitsModal").modal("show");
+      console.log(itemunitcode);
+    });
+
+    $(document).on("click", "#addBtn", function () {
+      let unitdescription = $("#unitdescription").val();
+      let itemname = $("#itemlist").val();
+
+      console.log(`${unitdescription} ${itemname}`);
+
+      var message = "";
+
+      if (unitdescription == "") {
+        message += "UNIT DESCRIPTION ";
+      }
+
+      if (itemname == "") {
+        message += "ITEM NAME";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/cablingitemunits/save",
+          data: {
+            unitdescription: unitdescription,
+            itemname: itemname,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              success("Saved", "Successfully");
+            }
+
+            if (result.msg == "exist") {
+              warning("Exist", `${unitdescription} has already registered!`);
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    //Edit Update
+    $(document).on("click", "#saveBtn", function () {
+      let unitdescriptionmodal = $("#unitdescriptionmodal").val();
+      let itemlistmodal = $("#itemlistmodal").val();
+
+      var message = "";
+
+      if (unitdescriptionmodal == "") {
+        message += "ITEM DESCRIPTION ";
+      }
+
+      if (itemlistmodal == "") {
+        message += "BRAND NAME ";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/cablingitemunits/edit",
+          data: {
+            unitdescriptionmodal: unitdescriptionmodal,
+            itemlistmodal: itemlistmodal,
+            itemunitcode: itemunitcode,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              success("Saved", "Successfully");
+            }
+
+            if (result.msg == "exist") {
+              warning("Exist", `${unitdescriptionmodal} already exist!`);
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    //Status Update
+    $(document).on("click", "#activeBtn", function () {
+      console.log(itemunitcode);
+      console.log(status);
+      $.ajax({
+        type: "POST",
+        url: "/cablingitemunits/status",
+        data: {
+          status: status,
+          itemunitcode: itemunitcode,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+
+          if (result.msg == "notexist") {
+            warning(`${itemunitcode} does not exist!`);
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $(document).on("click", "#inactiveBtn", function () {
+      console.log(itemunitcode);
+      console.log(status);
+      $.ajax({
+        type: "POST",
+        url: "/cablingitemunits/status",
+        data: {
+          status: status,
+          itemunitcode: itemunitcode,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+
+          if (result.msg == "notexist") {
+            warning(`${itemunitcode} does not exist!`);
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $("#search").on("keyup", function () {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("cablingitemunits-dataTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    });
+
+    function LoadTable() {
+      $("#cablingitemunits-dataTable").DataTable({
+        destroy: true,
+        processing: true,
+        serverSide: true,
+        paging: false,
+        searching: false,
+        info: false,
+        scrollY: 400,
+        scrollCollapse: true,
+        serverMethod: "GET",
+        ajax: {
+          url: "/cablingitemunits/load",
+          dataSrc: (json) => {
+            var finalData = [];
+            var data = json.data;
+
+            console.log(data);
+            $.each(data, (key, item) => {
+              var action = "";
+              var status = item.status;
+
+              if (status == "ACTIVE") {
+                action =
+                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingitemunitsModal">EDIT</button> <button id="inactiveBtn" class="btn btn-outline-primary" name="inactiveBtn">INACTIVE</button>';
+              }
+              if (status == "INACTIVE") {
+                action =
+                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingitemunitsModal">EDIT</button> <button id="activeBtn" class="btn btn-outline-primary" name="activeBtn">ACTIVE</button>';
+              }
+
+              finalData.push({
+                itemunitcode: item.itemunitcode,
+                itemcode: item.itemcode,
+                unit: item.unit,
+                status: item.status,
+                createdby: item.createdby,
+                createddate: item.createddate,
+                action: action,
+              });
+            });
+
+            return finalData;
+          },
+        },
+        columnDefs: [
+          {
+            targets: 1,
+            className: "td-indent",
+          },
+        ],
+        columns: [
+          { data: "itemunitcode" },
+          { data: "itemcode" },
+          { data: "unit" },
+          { data: "status" },
+          { data: "createdby" },
+          { data: "createddate" },
+          { data: "action" },
+        ],
+        initComplete: function () {},
+      });
+    }
+
+    function LoadList() {
+      $.ajax({
+        type: "GET",
+        url: "/cablingitems/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.description, item.description);
+              $(options).html(item.description);
+              // $("#fruits").append(options);
+              $("#itemnamelist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+
+    function LoadModalList() {
+      $.ajax({
+        type: "GET",
+        url: "/brand/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.description, item.description);
+              $(options).html(item.description);
+              // $("#fruits").append(options);
+              $("#itemlistmodal").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+  });
+</script>
