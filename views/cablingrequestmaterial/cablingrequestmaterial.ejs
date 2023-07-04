@@ -1,0 +1,271 @@
+<!-- Modal -->
+<div
+  class="modal fade bd-example-modal-lg"
+  id="cablingrequestsubmitModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-keyboard="false"
+  data-backdrop="static"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Requester Information
+        </h5>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="col-lg-12">
+            <div class="card-body">
+              <div class="row mb-2">
+                <div class="col-md-12">
+                  <label class="form-label" for="requestdate"
+                    >Request Date</label
+                  >
+                  <input
+                    class="entry-input form-control mb-2"
+                    id="requestdate"
+                    name="requestdate"
+                    type="date"
+                    data-field="date"
+                    readonly
+                  />
+                  <div id="dtbox"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label" for="personel">Personel</label>
+                  <input
+                    class="entry-input form-control mb-2"
+                    list="personellist"
+                    id="personel"
+                    name="personel"
+                  />
+
+                  <datalist id="personellist">
+                    <option value=""></option>
+                  </datalist>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label" for="storelist">Store</label>
+                  <input
+                    class="entry-input form-control mb-2"
+                    list="storenamelist"
+                    id="storelist"
+                    name="storelist"
+                  />
+
+                  <datalist id="storenamelist">
+                    <option value=""></option>
+                  </datalist>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label" for="typelist">Type</label>
+                  <input
+                    class="entry-input form-control mb-2"
+                    list="typenamelist"
+                    id="typelist"
+                    name="typelist"
+                  />
+
+                  <datalist id="typenamelist">
+                    <option value=""></option>
+                  </datalist>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times" aria-hidden="true"></i> Close
+        </button>
+        <button
+          type="button"
+          id="saveBtn"
+          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+        >
+          <i class="fa fa-check" aria-hidden="true"></i> Request
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PCreated by Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-3">
+  <h1 class="page-title">Request Material</h1>
+</div>
+<!-- Content Row -->
+<div class="row mb-2">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label class="form-label" for="quantity">Quantity</label>
+            <input
+              id="quantity"
+              name="quantity"
+              type="number"
+              class="form-control"
+              placeholder="Enter Quantity"
+              aria-label="quantity"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label class="form-label" for="itemlist">Description</label>
+            <input
+              class="entry-input form-control mb-2"
+              list="itemnamelist"
+              id="itemlist"
+              name="items"
+            />
+
+            <datalist id="itemnamelist">
+              <option value=""></option>
+            </datalist>
+
+            <!-- <label class="form-label" for="brandlist">Brand</label>
+            <select
+              class="entry-input form-control mb-2 selectpicker"
+              data-live-search="true"
+              name="brandlist"
+              id="brandlist"
+            >
+              <option value="">- - - Select Brand - - -</option>
+            </select> -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 text-center mt-1">
+            <button
+              id="addBtn"
+              name="addBtn"
+              class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
+            >
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Requestlist Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <h6 class="m-0 font-weight-bold table-title">Request List Table</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="cablingrequestmateriallist-dataTable"
+        width="100%"
+        cellspacing="10"
+      >
+        <thead class="table-dark">
+          <tr>
+            <th class="col-1 text-start">Brand</th>
+            <th class="col-3 text-center">Description</th>
+            <th class="col-2 text-center">Count</th>
+            <th class="col-1 text-center">Unit/s</th>
+            <th class="col-2 text-end">Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="cablingrequestbody-datatable" class="table-light"></tbody>
+      </table>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 text-center mt-1">
+        <button
+          id="submitBtn"
+          name="submitBtn"
+          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <h6 class="m-0 font-weight-bold table-title">Request Table</h6>
+      </div>
+      <div class="col-md-6">
+        <input
+          id="search"
+          name="search"
+          type="text"
+          class="form-control"
+          placeholder="Search Item Description"
+          aria-label="search"
+          aria-describedby="basic-addon1"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="cablingrequestmaterial-dataTable"
+        width="100%"
+        cellspacing="10"
+      >
+        <thead class="table-dark">
+          <tr>
+            <th class="col-1 text-start">ID</th>
+            <th class="col-3 text-center">Request By</th>
+            <th class="col-3 text-center">Date</th>
+            <th class="col-3 text-center">Details</th>
+            <th class="col-3 text-center">Remarks</th>
+            <th class="col-1 text-center">Status</th>
+            <th class="col-3 text-center">Created by</th>
+            <th class="col-3 text-center">Created date</th>
+            <th class="col-1 text-end">Action</th>
+          </tr>
+        </thead>
+
+        <tbody class="table-light"></tbody>
+      </table>
+    </div>
+  </div>
+</div>

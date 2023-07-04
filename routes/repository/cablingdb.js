@@ -95,6 +95,14 @@ exports.Select = (sql, table, callback) => {
       if (table == "MasterBrand") {
         callback(null, model.MasterBrand(results));
       }
+
+      if (table == "RequestEquipmentDetail") {
+        callback(null, model.RequestEquipmentDetail(results));
+      }
+
+      if (table == "CablingPersonel") {
+        callback(null, model.CablingPersonel(results));
+      }
     });
   } catch (error) {
     console.log(error);
@@ -289,6 +297,21 @@ exports.InsertTable = (tablename, data, callback) => {
         mb_status,
         mb_createdby,
         mb_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "cabling_personel") {
+    let sql = `INSERT INTO cabling_personel(
+        cp_personel,
+        cp_status,
+        cp_createdby,
+        cp_createddate) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {
