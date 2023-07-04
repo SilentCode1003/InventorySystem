@@ -254,3 +254,19 @@ exports.CablingPersonel = (data) => {
 
   return dataResult;
 };
+
+exports.CablingRequestType = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      typecode: key.crt_typecode,
+      typename: key.crt_typename,
+      status: key.crt_status,
+      createdby: key.crt_createdby,
+      createddate: key.crt_createddate,
+    });
+  });
+
+  return dataResult;
+};

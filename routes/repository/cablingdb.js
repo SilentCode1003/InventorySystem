@@ -103,6 +103,10 @@ exports.Select = (sql, table, callback) => {
       if (table == "CablingPersonel") {
         callback(null, model.CablingPersonel(results));
       }
+
+      if (table == "CablingRequestType") {
+        callback(null, model.CablingRequestType(results));
+      }
     });
   } catch (error) {
     console.log(error);
@@ -312,6 +316,21 @@ exports.InsertTable = (tablename, data, callback) => {
         cp_status,
         cp_createdby,
         cp_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "cabling_request_type") {
+    let sql = `INSERT INTO cabling_request_type(
+        crt_typename,
+        crt_status,
+        crt_createdby,
+        crt_createddate) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {
