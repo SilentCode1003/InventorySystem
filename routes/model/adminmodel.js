@@ -83,3 +83,19 @@ exports.MasterDepartment = (data) => {
 
   return dataResult;
 };
+
+exports.MasterStore = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      id: key.ms_id,
+      storename: key.ms_storename,
+      status: key.ms_status,
+      createdby: key.ms_createdby,
+      createddate: key.ms_createddate,
+    });
+  });
+
+  return dataResult;
+};

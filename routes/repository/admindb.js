@@ -91,6 +91,10 @@ exports.Select = (sql, table, callback) => {
       if (table == "MasterPosition") {
         callback(null, model.MasterPosition(results));
       }
+
+      if (table == "MasterStore") {
+        callback(null, model.MasterStore(results));
+      }
     });
   } catch (error) {
     console.log(error);
@@ -269,6 +273,21 @@ exports.InsertTable = (tablename, data, callback) => {
         md_status,
         md_createdby,
         md_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "master_store") {
+    let sql = `INSERT INTO master_store(
+        ms_storename,
+        ms_status,
+        ms_createdby,
+        ms_createddate) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {
