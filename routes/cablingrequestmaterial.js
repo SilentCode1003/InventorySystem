@@ -17,8 +17,8 @@ router.get("/", function (req, res, next) {
   });
 });
 
-function isAuthAdmiunUser(req, res, next) {
-  if (req.session.roletype == "Admiun" || req.session.roletype == "User") {
+function isAuthAdminUser(req, res, next) {
+  if (req.session.roletype == "Admin" || req.session.roletype == "User") {
     next();
   } else {
     res.redirect("/login");
@@ -33,12 +33,32 @@ router.get("/load", (req, res) => {
 
     mysql.Select(sql, "RequestEquipmentDetail", (err, result) => {
       if (err) console.error("Error: ", err);
+      let data = [];
+
+      result.forEach((key, item) => {
+        let detail = JSON.parse(key.detail);
+        var subdetail = "";
+        detail.forEach((subkey, subitem) => {
+          subdetail += `[${subkey.brand} ${subkey.description}] ${subkey.count} ${subkey.unit} </br>`;
+        });
+
+        data.push({
+          detailid: key.detailid,
+          requestby: key.requestby,
+          requestdate: key.requestdate,
+          detail: subdetail,
+          remarks: key.remarks,
+          status: key.status,
+          approvedby: key.approvedby,
+          approvedate: key.approvedate,
+        });
+      });
 
       console.log(result);
 
       res.json({
         msg: "success",
-        data: result,
+        data: data,
       });
     });
   } catch (error) {
@@ -50,14 +70,20 @@ router.get("/load", (req, res) => {
 
 router.post("/save", (req, res) => {
   try {
-    let unitdescription = req.body.unitdescription;
-    let itemname = req.body.itemname;
-    let status = dictionary.GetValue(dictionary.ACT());
-    let createdby = "DEV42";
-    let createddate = helper.GetCurrentDatetime();
+    let requestby = req.body.requestby;
+    let requestdate = req.body.requestdate;
+    let details = req.body.details;
+    let type = req.body.type;
+    let store = req.body.store;
+    let status = dictionary.GetValue(dictionary.REQ());
     let request_equipment_detail = [];
+    let remarks = `${store} - ${type}`;
 
-    let sql_exist = `select * from request_equipment_detail where miu_itemcode='${itemname}' and miu_unit='${unitdescription}'`;
+    let sql_exist = `select * from request_equipment_detail 
+        where red_requestby='${requestby}' 
+        and red_requestdate='${requestdate}' 
+        and red_detail='${details}'`;
+
     mysql.Select(sql_exist, "RequestEquipmentDetail", (err, result) => {
       if (err) console.error("Error: ", err);
 
@@ -65,16 +91,18 @@ router.post("/save", (req, res) => {
 
       if (result.length != 0) {
         return res.json({
-          msg: "exist",
+          msg: "duplicate",
         });
       } else {
         request_equipment_detail.push([
-          itemname,
-          unitdescription,
+          requestby,
+          requestdate,
+          details,
+          remarks,
           status,
-          createdby,
-          createddate,
         ]);
+
+        console.log(request_equipment_detail);
         mysql.InsertTable(
           "request_equipment_detail",
           request_equipment_detail,
@@ -105,11 +133,11 @@ router.post("/edit", (req, res) => {
     let data = [itemlistmodal, unitdescriptionmodal, itemunitcode];
 
     let sql_Update = `UPDATE request_equipment_detail 
-                     SET miu_itemcode = ?,
-                     miu_unit = ?
-                     WHERE miu_itemunitcode = ?`;
+                     SET red_itemcode = ?,
+                     red_unit = ?
+                     WHERE red_itemunitcode = ?`;
 
-    let sql_check = `SELECT * FROM request_equipment_detail WHERE miu_itemunitcode='${itemunitcode}'`;
+    let sql_check = `SELECT * FROM request_equipment_detail WHERE red_itemunitcode='${itemunitcode}'`;
 
     console.log(data);
 
@@ -149,8 +177,8 @@ router.post("/status", (req, res) => {
     let data = [status, itemunitcode];
 
     let sql_Update = `UPDATE request_equipment_detail 
-                     SET miu_status = ?
-                     WHERE miu_itemunitcode = ?`;
+                     SET red_status = ?
+                     WHERE red_itemunitcode = ?`;
 
     console.log(data);
 
@@ -175,7 +203,7 @@ router.post("/add", (req, res) => {
     mi_description as description,
     miu_unit as unit
     from master_item as mi
-    inner join master_item_unit as miu on mi_description = miu_itemcode
+    inner join master_item_unit as red on mi_description = miu_itemcode
     where mi_description = '${description}'`;
 
     mysql.SelectResult(sql, (err, result) => {

@@ -339,6 +339,22 @@ exports.InsertTable = (tablename, data, callback) => {
       callback(null, result);
     });
   }
+
+  if (tablename == "request_equipment_detail") {
+    let sql = `INSERT INTO request_equipment_detail(
+        red_requestby,
+        red_requestdate,
+        red_detail,
+        red_remarks,
+        red_status) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
 };
 
 exports.isDataExist = (sql, tablename) => {

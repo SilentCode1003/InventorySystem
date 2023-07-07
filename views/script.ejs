@@ -153,4 +153,8 @@
       }
     });
   });
+
+  function ClearTable(name) {
+    $(`#${name}`).find("tr:gt(0)").remove();
+  }
 </script>

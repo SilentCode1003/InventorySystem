@@ -276,6 +276,87 @@
       ).text(`${current_count}`);
     });
 
+    $(document).on("click", "#requestBtn", function () {
+      var requestby = $("#personel").val();
+      var requestdate = $("#requestdate").val();
+      var store = $("#storelist").val();
+      var type = $("#typelist").val();
+      var request_table = $("#cablingrequestmateriallist-dataTable tr");
+      var data_length = request_table.length;
+      var details = [];
+      var message = "";
+
+      console.log(data_length);
+
+      if (data_length != 1) {
+        if (requestby == "") {
+          message += "Request By ";
+        }
+
+        if (requestdate == "") {
+          message += "Request Date ";
+        }
+
+        if (store == "") {
+          message += "Store ";
+        }
+
+        if (type == "") {
+          message += "Type ";
+        }
+
+        if (message != "") {
+          warning("Empty", `Required field/s ${message}`);
+        } else {
+          for (x = 1; x < data_length; x++) {
+            var innerData = request_table[x].innerText;
+            innerData = innerData.split("\t");
+
+            details.push({
+              brand: innerData[0],
+              description: innerData[1],
+              count: innerData[2],
+              unit: innerData[3],
+            });
+          }
+
+          console.log(details);
+
+          var detail = JSON.stringify(details);
+
+          $.ajax({
+            type: "POST",
+            url: "/cablingrequestmaterial/save",
+            data: {
+              requestby: requestby,
+              requestdate: requestdate,
+              store: store,
+              type: type,
+              details: detail,
+            },
+            success: function (result) {
+              if (result.msg == "success") {
+                ClearTable("cablingrequestmateriallist-dataTable");
+                LoadTable();
+                success("Success", "Request Success!");
+              }
+              if (result.msg == "duplicate") {
+                warning(
+                  "Duplicate",
+                  "Duplicate detail request, if you want to add click EDIT button to edit request."
+                );
+              }
+            },
+            error: function (error) {
+              errormsg(error);
+            },
+          });
+        }
+      } else {
+        warning("Empty", "No Request");
+      }
+    });
+
     function LoadTable() {
       $("#cablingrequestmaterial-dataTable").DataTable({
         destroy: true,
@@ -298,13 +379,9 @@
               var action = "";
               var status = item.status;
 
-              if (status == "ACTIVE") {
+              if (status == "REQUEST") {
                 action =
-                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingrequestmaterialModal">EDIT</button> <button id="inactiveBtn" class="btn btn-outline-primary" name="inactiveBtn">INACTIVE</button>';
-              }
-              if (status == "INACTIVE") {
-                action =
-                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingrequestmaterialModal">EDIT</button> <button id="activeBtn" class="btn btn-outline-primary" name="activeBtn">ACTIVE</button>';
+                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingrequestmaterialModal">CANCEL</button> <button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingrequestmaterialModal">EDIT</button>';
               }
 
               finalData.push({
@@ -314,8 +391,8 @@
                 detail: item.detail,
                 remarks: item.remarks,
                 status: item.status,
-                createdby: item.createdby,
-                createddate: item.createddate,
+                approvedby: item.approvedby,
+                approvedate: item.approvedate,
                 action: action,
               });
             });
@@ -336,8 +413,8 @@
           { data: "detail" },
           { data: "remarks" },
           { data: "status" },
-          { data: "createdby" },
-          { data: "createddate" },
+          { data: "approvedby" },
+          { data: "approvedate" },
           { data: "action" },
         ],
         initComplete: function () {},
