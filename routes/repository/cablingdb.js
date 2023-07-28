@@ -107,6 +107,10 @@ exports.Select = (sql, table, callback) => {
       if (table == "CablingRequestType") {
         callback(null, model.CablingRequestType(results));
       }
+
+      if (table == "CablingProduct") {
+        callback(null, model.CablingProduct(results));
+      }
     });
   } catch (error) {
     console.log(error);
@@ -347,6 +351,22 @@ exports.InsertTable = (tablename, data, callback) => {
         red_detail,
         red_remarks,
         red_status) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "cabling_product") {
+    let sql = `INSERT INTO cabling_product(
+      cp_productserial,
+      cp_description,
+      cp_status,
+      cp_addedby,
+      cp_addeddate) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {

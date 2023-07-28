@@ -270,3 +270,19 @@ exports.CablingRequestType = (data) => {
 
   return dataResult;
 };
+
+exports.CablingProduct = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      productserial: key.cp_productserial,
+      description: key.cp_description,
+      status: key.cp_status,
+      addedby: key.cp_addedby,
+      addeddate: key.cp_addeddate,
+    });
+  });
+
+  return dataResult;
+};

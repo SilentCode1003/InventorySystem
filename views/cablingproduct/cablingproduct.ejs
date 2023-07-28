@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div
   class="modal fade bd-example-modal-lg"
-  id="personelModal"
+  id="cablingitemsModal"
   tabindex="-1"
   role="dialog"
   aria-labelledby="exampleModalLabel"
@@ -12,7 +12,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Departments</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Cabling Items</h5>
       </div>
       <div class="modal-body">
         <div class="row mb-2">
@@ -20,15 +20,15 @@
             <div class="card-body">
               <div class="row mb-2">
                 <div class="col-md-12">
-                  <label class="form-label" for="systemidmodal"
-                    >System ID</label
+                  <label class="form-label" for="itemcodemodal"
+                    >Item Code</label
                   >
                   <input
-                    id="systemidmodal"
-                    name="systemidmodal"
+                    id="itemcodemodal"
+                    name="itemcodemodal"
                     type="text"
                     class="form-control"
-                    placeholder="Enter new department"
+                    placeholder="Enter new item code"
                     aria-label="fullname"
                     aria-describedby="basic-addon1"
                     disabled
@@ -37,18 +37,36 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <label class="form-label" for="personelnamemodal"
-                    >Personel Name</label
+                  <label class="form-label" for="itemdescriptionmodal"
+                    >Item Description</label
                   >
                   <input
-                    id="personelnamemodal"
-                    name="personelnamemodal"
+                    id="itemdescriptionmodal"
+                    name="itemdescriptionmodal"
                     type="text"
                     class="form-control"
-                    placeholder="Enter new personel name"
-                    aria-label="personelnamemodal"
+                    placeholder="Enter new item description"
+                    aria-label="fullname"
                     aria-describedby="basic-addon1"
                   />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label" for="brandlistmodal"
+                    >Brand Name</label
+                  >
+                  <input
+                    class="entry-input form-control mb-2"
+                    list="brandnamelistmodal"
+                    id="brandlistmodal"
+                    name="fruit"
+                  />
+
+                  <datalist id="brandnamelistmodal">
+                    <option value=""></option>
+                  </datalist>
                 </div>
               </div>
             </div>
@@ -77,28 +95,45 @@
 
 <!-- PCreated by Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-3">
-  <h1 class="page-title">Cabling Personel</h1>
+  <h1 class="page-title">Cabling Products</h1>
 </div>
 <!-- Content Row -->
 <div class="row mb-2">
   <div class="col-lg-12">
     <div class="card">
       <div class="card-body">
-        <div class="row">
-          <label class="form-label" for="personelname">Personel Name</label>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label class="form-label" for="itemlist">Item Description</label>
             <input
-              id="personelname"
-              name="personelname"
+              class="entry-input form-control mb-2"
+              list="itemnamelist"
+              id="itemlist"
+              name="fruit"
+            />
+
+            <datalist id="itemnamelist">
+              <option value=""></option>
+            </datalist>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label class="form-label" for="itemserial">Item Serial</label>
+            <input
+              id="itemserial"
+              name="itemserial"
               type="text"
               class="form-control"
-              placeholder="Enter your personel name"
-              aria-label="personelname"
+              placeholder="Enter Item Serial"
+              aria-label="itemserial"
               aria-describedby="basic-addon1"
             />
           </div>
+        </div>
+
+        <div class="row">
           <div class="col-md-4 text-center mt-1">
             <button
               id="addBtn"
@@ -152,7 +187,7 @@
   <div class="card-header py-3">
     <div class="row mb-4">
       <div class="col-md-3">
-        <h6 class="m-0 font-weight-bold table-title">Personel Table</h6>
+        <h6 class="m-0 font-weight-bold table-title">Caling Item Table</h6>
       </div>
       <div class="col-md-6">
         <input
@@ -160,7 +195,7 @@
           name="search"
           type="text"
           class="form-control"
-          placeholder="Search Department Name"
+          placeholder="Search Item Description"
           aria-label="search"
           aria-describedby="basic-addon1"
         />
@@ -172,18 +207,18 @@
     <div class="table-responsive">
       <table
         class="table table-bordered"
-        id="personel-dataTable"
+        id="cablingproducts-dataTable"
         width="100%"
         cellspacing="10"
       >
         <thead class="table-dark">
           <tr>
-            <th class="col-1 text-start">ID</th>
-            <th class="col-3 text-center">Personel</th>
+            <th class="col-1 text-start">Serial</th>
+            <th class="col-3 text-center">Description</th>
             <th class="col-1 text-center">Status</th>
-            <th class="col-3 text-center">Created by</th>
-            <th class="col-3 text-center">Created date</th>
-            <th class="col-2 text-end">Action</th>
+            <th class="col-3 text-center">Added By</th>
+            <th class="col-2 text-center">Added Date</th>
+            <th class="col-1 text-end">Action</th>
           </tr>
         </thead>
 

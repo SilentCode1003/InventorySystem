@@ -1,0 +1,352 @@
+<script>
+  $(document).ready(function () {
+    let itemcode = "";
+    let status = "";
+
+    LoadTable();
+    LoadList();
+    //   LoadModalList();
+
+    $("#dtbox").DateTimePicker({
+      dateFormat: "yyyy-MM-dd",
+    });
+
+    $("#cablingrequestmaterial-dataTable tbody").on("click", "tr", function () {
+      var dataRow = [];
+      $(this)
+        .closest("tr")
+        .find("td")
+        .each(function () {
+          dataRow.push($(this).text());
+        });
+      // console.log(dataRow);
+      itemcode = dataRow[0];
+      status = dataRow[3];
+    });
+
+    let row_index = "";
+    let current_count = 0;
+    let current_brand = "";
+    let current_description = "";
+    let current_row_index = "";
+    let current_row = "";
+    $("#cablingrequestbody-datatable").on("click", "tr", function () {
+      var dataRow = [];
+      row_index = this;
+      current_row_index = $(this).index();
+      current_row = $(this).closest("tr");
+      $(this)
+        .closest("tr")
+        .find("td")
+        .each(function () {
+          dataRow.push($(this).text());
+        });
+      // console.log(dataRow);
+
+      current_brand = dataRow[0];
+      current_description = dataRow[1];
+      current_count = parseFloat(dataRow[2]);
+    });
+
+    $(document).on("click", "#submitBtn", function () {
+      $("#cablingrequestsubmitModal").modal("show");
+    });
+
+    $(document).on("click", "#addBtn", function () {
+      let description = $("#itemlist").val();
+      let serial = $("#itemserial").val();
+      var message = "";
+
+      if (description == "") {
+        message += "DESCRIPTION ";
+      }
+
+      if (serial == "") {
+        message += "SERIAL ";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/cablingproduct/save",
+          data: {
+            description: description,
+            serial: serial,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              success("Saved", "Successfully");
+            }
+
+            if (result.msg == "exist") {
+              warning("Exist", `${description}[${serial}] has already registered!`);
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    //Edit Update
+    $(document).on("click", "#saveBtn", function () {
+      let itemdescriptionmodal = $("#itemdescriptionmodal").val();
+      let brandlistmodal = $("#brandlistmodal").val();
+
+      var message = "";
+
+      if (itemdescriptionmodal == "") {
+        message += "ITEM DESCRIPTION ";
+      }
+
+      if (brandlistmodal == "") {
+        message += "BRAND NAME ";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/cablingrequestmaterial/edit",
+          data: {
+            itemdescriptionmodal: itemdescriptionmodal,
+            brandlistmodal: brandlistmodal,
+            itemcode: itemcode,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              success("Saved", "Successfully");
+            }
+
+            if (result.msg == "exist") {
+              warning("Exist", `${itemdescriptionmodal} already exist!`);
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    //Status Update
+    $(document).on("click", "#activeBtn", function () {
+      console.log(itemcode);
+      console.log(status);
+      $.ajax({
+        type: "POST",
+        url: "/cablingrequestmaterial/status",
+        data: {
+          status: status,
+          itemcode: itemcode,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+
+          if (result.msg == "notexist") {
+            warning(`${itemcode} does not exist!`);
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $(document).on("click", "#inactiveBtn", function () {
+      console.log(itemcode);
+      console.log(status);
+      $.ajax({
+        type: "POST",
+        url: "/cablingrequestmaterial/status",
+        data: {
+          status: status,
+          itemcode: itemcode,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+
+          if (result.msg == "notexist") {
+            warning(`${itemcode} does not exist!`);
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $("#search").on("keyup", function () {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("cablingrequestmaterial-dataTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    });
+
+    function LoadTable() {
+      $("#cablingproducts-dataTable").DataTable({
+        destroy: true,
+        processing: true,
+        serverSide: true,
+        paging: false,
+        searching: false,
+        info: false,
+        scrollY: 400,
+        scrollCollapse: true,
+        serverMethod: "GET",
+        ajax: {
+          url: "/cablingproduct/load",
+          dataSrc: (json) => {
+            var finalData = [];
+            var data = json.data;
+
+            console.log(data);
+            $.each(data, (key, item) => {
+              var action = "";
+              var status = item.status;
+
+              if (status == "REQUEST") {
+                action =
+                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingrequestmaterialModal">CANCEL</button> <button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingrequestmaterialModal">EDIT</button>';
+              }
+
+              finalData.push({
+                productserial: item.productserial,
+                description: item.description,
+                status: item.status,
+                addedby: item.addedby,
+                addeddate: item.addeddate,
+                action: action,
+              });
+            });
+
+            return finalData;
+          },
+        },
+        columnDefs: [
+          {
+            targets: 1,
+            className: "td-indent",
+          },
+        ],
+        columns: [
+          { data: "productserial" },
+          { data: "description" },
+          { data: "status" },
+          { data: "addedby" },
+          { data: "addeddate" },
+          { data: "action" },
+        ],
+        initComplete: function () {},
+      });
+    }
+
+    function LoadList() {
+      $.ajax({
+        type: "GET",
+        url: "/cablingitems/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.description, item.description);
+              $(options).html(item.description);
+              // $("#fruits").append(options);
+              $("#itemnamelist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+
+    function LoadModalList() {
+      $.ajax({
+        type: "GET",
+        url: "/cablingpersonel/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.personel, item.personel);
+              $(options).html(item.personel);
+              // $("#fruits").append(options);
+              $("#personellist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "/store/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.storename, item.storename);
+              $(options).html(item.storename);
+              // $("#fruits").append(options);
+              $("#storenamelist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "/cablingrequesttype/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.typename, item.typename);
+              $(options).html(item.typename);
+              // $("#fruits").append(options);
+              $("#typenamelist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+  });
+</script>
