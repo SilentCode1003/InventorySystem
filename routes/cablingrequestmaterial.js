@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 const mysql = require("./repository/cablingdb");
+const admin = require("./repository/admindb");
 const crypt = require("./repository/cryptography");
 const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
@@ -76,14 +77,53 @@ router.post("/save", (req, res) => {
     let type = req.body.type;
     let store = req.body.store;
     let status = dictionary.GetValue(dictionary.REQ());
+    let master_store_status = dictionary.GetValue(dictionary.ACT());
     let request_equipment_detail = [];
     let remarks = `${store} - ${type}`;
-
+    let createdby = req.session.fullname;
+    let createddate = helper.GetCurrentDatetime();
+    let master_store = [];
+    let cabling_request_type = [];
     let sql_exist = `select * from request_equipment_detail 
         where red_requestby='${requestby}' 
         and red_requestdate='${requestdate}' 
         and red_detail='${details}'`;
 
+    //STORE
+    let check_master_store = `select * from master_store where ms_storename='${store}'`;
+    admin.Select(check_master_store, "MasterStore", (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      if (result.length != 0) {
+      } else {
+        master_store.push([store, master_store_status, createdby, createddate]);
+
+        admin.InsertTable("master_store", master_store, (err, result) => {
+          if (err) console.error("Error: ", err);
+
+          console.log(result);
+        });
+      }
+    });
+
+    //TYPE
+    let check_cabling_request_type = `select * from cabling_request_type where crt_typename='${store}'`;
+    mysql.Select(check_cabling_request_type, "CablingRequestType", (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      if (result.length != 0) {
+      } else {
+        cabling_request_type.push([type, master_store_status, createdby, createddate]);
+
+        mysql.InsertTable("cabling_request_type", cabling_request_type, (err, result) => {
+          if (err) console.error("Error: ", err);
+
+          console.log(result);
+        });
+      }
+    });
+
+    //REQUEST
     mysql.Select(sql_exist, "RequestEquipmentDetail", (err, result) => {
       if (err) console.error("Error: ", err);
 
