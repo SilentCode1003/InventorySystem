@@ -53,7 +53,7 @@ router.post("/save", (req, res) => {
     let unitdescription = req.body.unitdescription;
     let itemname = req.body.itemname;
     let status = dictionary.GetValue(dictionary.ACT());
-    let createdby = "DEV42";
+    let createdby = req.session.fullname;
     let createddate = helper.GetCurrentDatetime();
     let master_item_unit = [];
 

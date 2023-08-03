@@ -5,6 +5,7 @@ const mysql = require("./repository/cablingdb");
 const crypt = require("./repository/cryptography");
 const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
+const { MasterItemModel } = require("./model/modelclass");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -50,10 +51,11 @@ router.get("/load", (req, res) => {
 
 router.post("/save", (req, res) => {
   try {
-    let itemdescription = req.body.itemdescription;
+    let description = req.body.description;
     let brandname = req.body.brandname;
+    let itemcount = req.body.itemcount;
     let status = dictionary.GetValue(dictionary.ACT());
-    let createdby = "DEV42";
+    let createdby = req.session.fullname;
     let createddate = helper.GetCurrentDatetime();
     let master_item = [];
 
@@ -191,6 +193,47 @@ router.post("/status", (req, res) => {
 
       res.json({
         msg: "success",
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
+router.post("/getitem", (req, res) => {
+  try {
+    let brand = req.body.brand;
+    let cabling_item = [];
+    let sql = `select * from master_item where mi_brand='${brand}'`;
+
+    mysql.Select(sql, "MasterItem", (err, result) => {
+      if (err) console.error("Error: ", err);
+      let clean_no_duplicate = helper.removeDuplicateSets(result);
+      let masterItemModel = clean_no_duplicate.map(
+        (data) =>
+          new MasterItemModel(
+            data["itemcode"],
+            data["brand"],
+            data["description"],
+            data["status"],
+            data["createdby"],
+            data["createddate"]
+          )
+      );
+
+      masterItemModel.forEach((item, index) => {
+        cabling_item.push({
+          description: item.description,
+          status: item.status,
+        });
+      });
+
+      console.log(cabling_item);
+
+      res.json({
+        data: cabling_item,
       });
     });
   } catch (error) {

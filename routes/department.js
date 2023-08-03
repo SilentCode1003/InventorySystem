@@ -52,7 +52,7 @@ router.post("/save", (req, res) => {
   try {
     let departmentname = req.body.departmentname;
     let status = dictionary.GetValue(dictionary.ACT());
-    let createdby = "DEV42";
+    let createdby = req.session.fullname;
     let createddate = helper.GetCurrentDatetime();
     let master_department = [];
 
@@ -72,71 +72,72 @@ router.post("/save", (req, res) => {
   }
 });
 
-
-router.post('/edit', (req, res) => {
+router.post("/edit", (req, res) => {
   try {
-      let departmentnamemodal = req.body.departmentnamemodal;
-      let departmentcode = req.body.departmentcode;
-      
-      let data = [departmentnamemodal, departmentcode];
-       
-      let sql_Update = `UPDATE master_department 
+    let departmentnamemodal = req.body.departmentnamemodal;
+    let departmentcode = req.body.departmentcode;
+
+    let data = [departmentnamemodal, departmentcode];
+
+    let sql_Update = `UPDATE master_department 
                      SET md_departmentname = ?
                      WHERE md_departmentcode = ?`;
-      
-      let sql_check = `SELECT * FROM master_department WHERE md_departmentcode='${departmentcode}'`;
 
-      console.log(data);
+    let sql_check = `SELECT * FROM master_department WHERE md_departmentcode='${departmentcode}'`;
 
-      mysql.Select(sql_check, 'MasterDepartment', (err, result) => {
-          if (err) console.error('Error: ', err);
+    console.log(data);
 
-          if (result.length != 1) {
-              return res.json({
-                  msg: 'notexist'
-              });
-          } else {
-              mysql.UpdateMultiple(sql_Update, data, (err, result) => {
-                  if (err) console.error('Error: ', err);
+    mysql.Select(sql_check, "MasterDepartment", (err, result) => {
+      if (err) console.error("Error: ", err);
 
-                  console.log(result);
+      if (result.length != 1) {
+        return res.json({
+          msg: "notexist",
+        });
+      } else {
+        mysql.UpdateMultiple(sql_Update, data, (err, result) => {
+          if (err) console.error("Error: ", err);
 
-                  res.json({
-                      msg: 'success',
-                  });
-              });
-          }
-      });
+          console.log(result);
+
+          res.json({
+            msg: "success",
+          });
+        });
+      }
+    });
   } catch (error) {
-      res.json({
-          msg: error
-      });
+    res.json({
+      msg: error,
+    });
   }
 });
 
-router.post('/status', (req, res) => {
+router.post("/status", (req, res) => {
   try {
-      let departmentcode = req.body.departmentcode;
-      let status = req.body.status == dictionary.GetValue(dictionary.ACT()) ? dictionary.GetValue(dictionary.INACT()): dictionary.GetValue(dictionary.ACT());
-      let data = [status, departmentcode];
+    let departmentcode = req.body.departmentcode;
+    let status =
+      req.body.status == dictionary.GetValue(dictionary.ACT())
+        ? dictionary.GetValue(dictionary.INACT())
+        : dictionary.GetValue(dictionary.ACT());
+    let data = [status, departmentcode];
 
-      let sql_Update = `UPDATE master_department 
+    let sql_Update = `UPDATE master_department 
                      SET md_status = ?
                      WHERE md_departmentcode = ?`;
 
-      console.log(data);
+    console.log(data);
 
-      mysql.UpdateMultiple(sql_Update, data, (err, result) => {
-          if (err) console.error('Error: ', err);
+    mysql.UpdateMultiple(sql_Update, data, (err, result) => {
+      if (err) console.error("Error: ", err);
 
-          res.json({
-              msg: 'success',
-          });
-      });
-      
-  } catch (error) {
       res.json({
-          msg: error
+        msg: "success",
       });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
   }
 });

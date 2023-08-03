@@ -52,7 +52,7 @@ router.post("/save", (req, res) => {
   try {
     let roletypename = req.body.roletypename;
     let status = dictionary.GetValue(dictionary.ACT());
-    let createdby = "DEV42";
+    let createdby = req.session.fullname;
     let createddate = helper.GetCurrentDatetime();
     let master_role_type = [];
 

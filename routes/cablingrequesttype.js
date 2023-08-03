@@ -52,7 +52,7 @@ router.post("/save", (req, res) => {
   try {
     let typename = req.body.typename;
     let status = dictionary.GetValue(dictionary.ACT());
-    let createdby = "DEV42";
+    let createdby = req.session.fullname;
     let createddate = helper.GetCurrentDatetime();
     let cabling_request_type = [];
 

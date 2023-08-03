@@ -1,0 +1,337 @@
+<script>
+  $(document).ready(function () {
+    let itemcode = "";
+    let status = "";
+
+    LoadTable();
+    LoadList();
+    //   LoadModalList();
+
+    $("#cablingmaterial-dataTable tbody").on("click", "tr", function () {
+      var dataRow = [];
+      $(this)
+        .closest("tr")
+        .find("td")
+        .each(function () {
+          dataRow.push($(this).text());
+        });
+      console.log(dataRow);
+      itemcode = dataRow[0];
+      status = dataRow[7];
+    });
+
+    $(document).on("click", "#editBtn", function () {
+      $("#itemcodemodal").val(itemcode);
+      $("#cablingmaterialModal").modal("show");
+      console.log(itemcode);
+    });
+
+    $(document).on("click", "#addBtn", function () {
+      let description = $("#description").val();
+      let brandname = $("#brandlist").val();
+      let itemcount = $("#itemcount").val();
+
+      var message = "";
+
+      if (description == "") {
+        message += "ITEM DESCRIPTION ";
+      }
+
+      if (brandname == "") {
+        message += "BRAND NAME ";
+      }
+
+      if (brandname == "") {
+        message += "ITEM COUNT ";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/cablingmaterial/save",
+          data: {
+            description: description,
+            brandname: brandname,
+            itemcount: itemcount,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              success("Success", "Added successfully!");
+            }
+
+            if (result.msg == "update") {
+              LoadTable();
+              success("Success", "Update successfully!");
+            }
+
+            if (result.msg == "exist") {
+              warning("Exist", `${itemdescription} has already registered!`);
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    //Edit Update
+    $(document).on("click", "#saveBtn", function () {
+      let itemdescriptionmodal = $("#itemdescriptionmodal").val();
+      let brandlistmodal = $("#brandlistmodal").val();
+
+      var message = "";
+
+      if (itemdescriptionmodal == "") {
+        message += "ITEM DESCRIPTION ";
+      }
+
+      if (brandlistmodal == "") {
+        message += "BRAND NAME ";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/cablingmaterial/edit",
+          data: {
+            itemdescriptionmodal: itemdescriptionmodal,
+            brandlistmodal: brandlistmodal,
+            itemcode: itemcode,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              success("Saved", "Successfully");
+            }
+
+            if (result.msg == "exist") {
+              warning("Exist", `${itemdescriptionmodal} already exist!`);
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    //Status Update
+    $(document).on("click", "#activeBtn", function () {
+      console.log(itemcode);
+      console.log(status);
+      $.ajax({
+        type: "POST",
+        url: "/cablingmaterial/status",
+        data: {
+          status: status,
+          itemcode: itemcode,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+
+          if (result.msg == "notexist") {
+            warning(`${itemcode} does not exist!`);
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $(document).on("click", "#inactiveBtn", function () {
+      console.log(itemcode);
+      console.log(status);
+      $.ajax({
+        type: "POST",
+        url: "/cablingmaterial/status",
+        data: {
+          status: status,
+          itemcode: itemcode,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+
+          if (result.msg == "notexist") {
+            warning(`${itemcode} does not exist!`);
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $("#search").on("keyup", function () {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("cablingmaterial-dataTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    });
+
+    $(document).on("change", "#brandlist", function () {
+      var brand = $("#brandlist").val();
+      $("#descriptionlist").empty();
+      $.ajax({
+        type: "POST",
+        url: "/cablingitems/getitem",
+        data: {
+          brand: brand,
+        },
+        success: function (result) {
+          var data = result.data;
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.description, item.description);
+              $(options).html(item.description);
+              $("#descriptionlist").append(options);
+            }
+          });
+        },
+        error: function (error) {
+          errormsg(error);
+        },
+      });
+    });
+
+    function LoadTable() {
+      $("#cablingmaterial-dataTable").DataTable({
+        destroy: true,
+        processing: true,
+        serverSide: true,
+        paging: false,
+        searching: false,
+        info: false,
+        scrollY: 400,
+        scrollCollapse: true,
+        serverMethod: "GET",
+        ajax: {
+          url: "/cablingmaterial/load",
+          dataSrc: (json) => {
+            var finalData = [];
+            var data = json.data;
+
+            console.log(data);
+            $.each(data, (key, item) => {
+              var action = "";
+              var status = item.status;
+
+              if (status == "ACTIVE") {
+                action =
+                  '<button id="inactiveBtn" class="btn btn-outline-primary" name="inactiveBtn">INACTIVE</button>';
+              }
+              if (status == "INACTIVE") {
+                action =
+                  '<button id="activeBtn" class="btn btn-outline-primary" name="activeBtn">ACTIVE</button>';
+              }
+
+              finalData.push({
+                itemcode: item.itemcode,
+                brand: item.itembrand,
+                description: item.itemdescription,
+                stocks: item.stocks,
+                updatestocks: item.updatestocks,
+                updateby: item.updateby,
+                updatedate: item.updatedate,
+                status: item.status,
+                createdby: item.createdby,
+                createddate: item.createddate,
+                action: action,
+              });
+            });
+
+            return finalData;
+          },
+        },
+        columnDefs: [
+          {
+            targets: 1,
+            className: "td-indent",
+          },
+        ],
+        columns: [
+          { data: "itemcode" },
+          { data: "brand" },
+          { data: "description" },
+          { data: "stocks" },
+          { data: "updatestocks" },
+          { data: "updateby" },
+          { data: "updatedate" },
+          { data: "status" },
+          { data: "createdby" },
+          { data: "createddate" },
+          { data: "action" },
+        ],
+        initComplete: function () {},
+      });
+    }
+
+    function LoadList() {
+      $.ajax({
+        type: "GET",
+        url: "/brand/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.brandname, item.brandname);
+              $(options).html(item.brandname);
+              // $("#fruits").append(options);
+              $("#brandnamelist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+
+    function LoadModalList() {
+      $.ajax({
+        type: "GET",
+        url: "/brand/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.brandname, item.brandname);
+              $(options).html(item.brandname);
+              // $("#fruits").append(options);
+              $("#brandnamelistmodal").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+  });
+</script>

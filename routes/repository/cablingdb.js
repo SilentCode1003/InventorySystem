@@ -111,6 +111,14 @@ exports.Select = (sql, table, callback) => {
       if (table == "CablingProduct") {
         callback(null, model.CablingProduct(results));
       }
+
+      if (table == "InventoryItem") {
+        callback(null, model.InventoryItem(results));
+      }
+
+      if (table == "InventoryLogs") {
+        callback(null, model.InventoryLogs(results));
+      }
     });
   } catch (error) {
     console.log(error);

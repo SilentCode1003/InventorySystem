@@ -296,7 +296,7 @@ exports.InventoryItem = (data) => {
       itembrand: key.ii_itembrand,
       itemdescription: key.ii_itemdescription,
       stocks: key.ii_stocks,
-      update_stocks: key.ii_update_stocks,
+      updatestocks: key.ii_update_stocks,
       updateby: key.ii_updateby,
       updatedate: key.ii_updatedate,
       status: key.ii_status,

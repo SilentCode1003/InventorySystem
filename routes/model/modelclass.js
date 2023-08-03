@@ -1,3 +1,14 @@
+class MasterItemModel {
+  constructor(itemcode, brand, description, status, createdby, createddate) {
+    this.itemcode = itemcode;
+    this.brand = brand;
+    this.description = description;
+    this.status = status;
+    this.createdby = createdby;
+    this.createddate = createddate;
+  }
+}
+
 class CablingProductModel {
   constructor(productserial, description, status, addedby, addeddate) {
     this.productserial = productserial;
@@ -53,6 +64,7 @@ class InventoryLogsModel {
 }
 
 module.exports = {
+  MasterItemModel,
   CablingProductModel,
   CablingPersonelModel,
   InventoryItemModel,
