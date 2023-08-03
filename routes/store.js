@@ -50,13 +50,13 @@ router.get("/load", (req, res) => {
 
 router.post("/save", (req, res) => {
   try {
-    let positionname = req.body.positionname;
+    let storename = req.body.storename;
     let status = dictionary.GetValue(dictionary.ACT());
     let createdby = req.session.fullname;
     let createddate = helper.GetCurrentDatetime();
     let master_store = [];
 
-    master_store.push([positionname, status, createdby, createddate]);
+    master_store.push([storename, status, createdby, createddate]);
     mysql.InsertTable("master_store", master_store, (err, result) => {
       if (err) console.error("Error: ", err);
 
@@ -73,17 +73,18 @@ router.post("/save", (req, res) => {
 });
 
 router.post("/edit", (req, res) => {
+  //no yet set
   try {
     let positionnamemodal = req.body.positionnamemodal;
-    let positioncode = req.body.positioncode;
+    let storecode = req.body.storecode;
 
-    let data = [positionnamemodal, positioncode];
+    let data = [positionnamemodal, storecode];
 
     let sql_Update = `UPDATE master_store 
-                     SET mp_positionname = ?
-                     WHERE mp_positioncode = ?`;
+                     SET ms_positionname = ?
+                     WHERE ms_storecode = ?`;
 
-    let sql_check = `SELECT * FROM master_store WHERE mp_positioncode='${positioncode}'`;
+    let sql_check = `SELECT * FROM master_store WHERE ms_storecode='${storecode}'`;
 
     console.log(data);
 
@@ -115,16 +116,16 @@ router.post("/edit", (req, res) => {
 
 router.post("/status", (req, res) => {
   try {
-    let positioncode = req.body.positioncode;
+    let storecode = req.body.storecode;
     let status =
       req.body.status == dictionary.GetValue(dictionary.ACT())
         ? dictionary.GetValue(dictionary.INACT())
         : dictionary.GetValue(dictionary.ACT());
-    let data = [status, positioncode];
+    let data = [status, storecode];
 
     let sql_Update = `UPDATE master_store 
-                     SET mp_status = ?
-                     WHERE mp_positioncode = ?`;
+                     SET ms_status = ?
+                     WHERE ms_id = ?`;
 
     console.log(data);
 
