@@ -51,9 +51,8 @@ router.get("/load", (req, res) => {
 
 router.post("/save", (req, res) => {
   try {
-    let description = req.body.description;
+    let itemdescription = req.body.itemdescription;
     let brandname = req.body.brandname;
-    let itemcount = req.body.itemcount;
     let status = dictionary.GetValue(dictionary.ACT());
     let createdby = req.session.fullname;
     let createddate = helper.GetCurrentDatetime();
