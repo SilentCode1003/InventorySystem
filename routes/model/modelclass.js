@@ -1,3 +1,4 @@
+//#region SQL Models
 class MasterItemModel {
   constructor(itemcode, brand, description, status, createdby, createddate) {
     this.itemcode = itemcode;
@@ -62,6 +63,18 @@ class InventoryLogsModel {
     this.date = date;
   }
 }
+//#endregion
+
+//#region Data Models
+class RequestMaterialModel {
+  constructor(brand, description, count, unit) {
+    this.brand = brand;
+    this.description = description;
+    this.count = count;
+    this.unit = unit;
+  }
+}
+//#endregion
 
 module.exports = {
   MasterItemModel,
@@ -69,4 +82,5 @@ module.exports = {
   CablingPersonelModel,
   InventoryItemModel,
   InventoryLogsModel,
+  RequestMaterialModel,
 };

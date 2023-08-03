@@ -6,6 +6,7 @@ const admin = require("./repository/admindb");
 const crypt = require("./repository/cryptography");
 const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
+const { RequestMaterialModel } = require("./model/modelclass");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -88,8 +89,7 @@ router.post("/save", (req, res) => {
         where red_requestby='${requestby}' 
         and red_requestdate='${requestdate}' 
         and red_detail='${details}'`;
-
-    //STORE
+    //#region STORE
     let check_master_store = `select * from master_store where ms_storename='${store}'`;
     admin.Select(check_master_store, "MasterStore", (err, result) => {
       if (err) console.error("Error: ", err);
@@ -105,25 +105,40 @@ router.post("/save", (req, res) => {
         });
       }
     });
+    //#endregion
 
-    //TYPE
+    //#region TYPE
     let check_cabling_request_type = `select * from cabling_request_type where crt_typename='${store}'`;
-    mysql.Select(check_cabling_request_type, "CablingRequestType", (err, result) => {
-      if (err) console.error("Error: ", err);
+    mysql.Select(
+      check_cabling_request_type,
+      "CablingRequestType",
+      (err, result) => {
+        if (err) console.error("Error: ", err);
 
-      if (result.length != 0) {
-      } else {
-        cabling_request_type.push([type, master_store_status, createdby, createddate]);
+        if (result.length != 0) {
+        } else {
+          cabling_request_type.push([
+            type,
+            master_store_status,
+            createdby,
+            createddate,
+          ]);
 
-        mysql.InsertTable("cabling_request_type", cabling_request_type, (err, result) => {
-          if (err) console.error("Error: ", err);
+          mysql.InsertTable(
+            "cabling_request_type",
+            cabling_request_type,
+            (err, result) => {
+              if (err) console.error("Error: ", err);
 
-          console.log(result);
-        });
+              console.log(result);
+            }
+          );
+        }
       }
-    });
+    );
+    //#endregion
 
-    //REQUEST
+    //#region REQUEST
     mysql.Select(sql_exist, "RequestEquipmentDetail", (err, result) => {
       if (err) console.error("Error: ", err);
 
@@ -157,6 +172,7 @@ router.post("/save", (req, res) => {
         );
       }
     });
+    //#endregion
   } catch (error) {
     res.json({
       msg: error,
@@ -239,21 +255,53 @@ router.post("/status", (req, res) => {
 router.post("/add", (req, res) => {
   try {
     let description = req.body.description;
+    let quantity = req.body.quantity;
     let sql = `select mi_brand as brand,
-    mi_description as description,
-    miu_unit as unit
-    from master_item as mi
-    inner join master_item_unit as red on mi_description = miu_itemcode
-    where mi_description = '${description}'`;
+        mi_description as description,
+        miu_unit as unit,
+        ifnull(ii_stocks, 0) as stocks
+        from master_item as mi
+        inner join master_item_unit as red on mi_description = miu_itemcode
+        left join inventory_item as ii on mi_description = ii_itemdescription
+        where mi_description = '${description}'`;
 
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.error(err);
 
-      console.log(result);
+      let jsonData = helper.ConvertToJson(result);
+      let requestMaterialModel = jsonData.map(
+        (data) =>
+          new RequestMaterialModel(
+            data["brand"],
+            data["description"],
+            data["stocks"],
+            data["unit"]
+          )
+      );
 
-      res.json({
-        msg: "success",
-        data: result,
+      console.log(requestMaterialModel);
+
+      requestMaterialModel.forEach((item, index) => {
+        let current_count = isNaN(parseFloat(item.count))
+          ? 0
+          : parseFloat(item.count);
+        let request_count = parseFloat(quantity);
+
+        console.log(`${current_count} ${request_count}`);
+
+        if (current_count < request_count) {
+          return res.json({
+            msg: "insufficient",
+            data: requestMaterialModel,
+          });
+        } else {
+          console.log(result);
+
+          return res.json({
+            msg: "success",
+            data: result,
+          });
+        }
       });
     });
   } catch (error) {

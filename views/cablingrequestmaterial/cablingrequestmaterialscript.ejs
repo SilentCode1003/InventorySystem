@@ -89,8 +89,13 @@
           url: "/cablingrequestmaterial/add",
           data: {
             description: description,
+            quantity: quantity,
           },
           success: function (result) {
+            var data = result.data;
+
+            console.log(result.msg);
+
             if (result.msg == "success") {
               var data = result.data;
 
@@ -112,7 +117,7 @@
                 BRAND.innerHTML = item.brand;
                 row.appendChild(BRAND);
 
-                DESCRIPTION.innerHTML = item.description;
+                DESCRIPTION.innerHTML = description;
                 row.appendChild(DESCRIPTION);
 
                 COUNT.innerHTML = quantity;
@@ -133,6 +138,13 @@
 
             if (result.msg == "exist") {
               warning("Exist", `${itemdescription} has already registered!`);
+            }
+
+            if (result.msg == "insufficient") {
+              warning(
+                "Insufficient",
+                `${description} has ${data[0].count} ${data[0].unit}`
+              );
             }
           },
           error: function (err) {
@@ -322,7 +334,7 @@
 
           console.log(details);
 
-          var detail = JSON.stringify(details);
+          // var detail = JSON.stringify(details);
 
           $.ajax({
             type: "POST",
@@ -332,7 +344,7 @@
               requestdate: requestdate,
               store: store,
               type: type,
-              details: detail,
+              details: details,
             },
             success: function (result) {
               if (result.msg == "success") {
