@@ -286,3 +286,40 @@ exports.CablingProduct = (data) => {
 
   return dataResult;
 };
+
+exports.InventoryItem = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      itemcode: key.ii_itemcode,
+      itembrand: key.ii_itembrand,
+      itemdescription: key.ii_itemdescription,
+      stocks: key.ii_stocks,
+      update_stocks: key.ii_update_stocks,
+      updateby: key.ii_updateby,
+      updatedate: key.ii_updatedate,
+      status: key.ii_status,
+      createdby: key.ii_createdby,
+      createddate: key.ii_createddate,
+    });
+  });
+
+  return dataResult;
+};
+
+exports.InventoryLogs = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      logid: key.il_logid,
+      type: key.il_type,
+      description: key.il_description,
+      user: key.il_user,
+      date: key.il_date,
+    });
+  });
+
+  return dataResult;
+};

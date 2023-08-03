@@ -8,4 +8,53 @@ class CablingProductModel {
   }
 }
 
-module.exports = { CablingProductModel };
+class CablingPersonelModel {
+  constructor(personel, status, createdby, createddate) {
+    this.personel = personel;
+    this.status = status;
+    this.createdby = createdby;
+    this.createddate = createddate;
+  }
+}
+
+class InventoryItemModel {
+  constructor(
+    itemcode,
+    itembrand,
+    itemdescription,
+    stocks,
+    updatestocks,
+    updateby,
+    updatedate,
+    status,
+    createdby,
+    createddate
+  ) {
+    this.itemcode = itemcode;
+    this.itembrand = itembrand;
+    this.itemdescription = itemdescription;
+    this.stocks = stocks;
+    this.updatestocks = updatestocks;
+    this.updateby = updateby;
+    this.updatedate = updatedate;
+    this.status = status;
+    this.createdby = createdby;
+    this.createddate = createddate;
+  }
+}
+
+class InventoryLogsModel {
+  constructor(type, description, user, date) {
+    this.type = type;
+    this.description = description;
+    this.user = user;
+    this.date = date;
+  }
+}
+
+module.exports = {
+  CablingProductModel,
+  CablingPersonelModel,
+  InventoryItemModel,
+  InventoryLogsModel,
+};

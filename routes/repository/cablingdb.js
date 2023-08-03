@@ -375,6 +375,42 @@ exports.InsertTable = (tablename, data, callback) => {
       callback(null, result);
     });
   }
+
+  if (tablename == "inventory_item") {
+    let sql = `INSERT INTO inventory_item(
+          ii_itemcode,
+          ii_itembrand,
+          ii_itemdescription,
+          ii_stocks,
+          ii_update_stocks,
+          ii_updateby,
+          ii_updatedate,
+          ii_status,
+          ii_createdby,
+          ii_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "inventory_logs") {
+    let sql = `INSERT INTO inventory_logs(
+          il_type,
+          il_description,
+          il_user,
+          il_date) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
 };
 
 exports.isDataExist = (sql, tablename) => {

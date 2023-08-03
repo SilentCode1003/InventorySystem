@@ -5,6 +5,7 @@ const mysql = require("./repository/cablingdb");
 const crypt = require("./repository/cryptography");
 const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
+const { CablingPersonelModel } = require("./model/modelclass");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -134,6 +135,86 @@ router.post("/status", (req, res) => {
       res.json({
         msg: "success",
       });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
+router.post("/excelsave", (req, res) => {
+  try {
+    let data = req.body.data;
+    let status = dictionary.GetValue(dictionary.ACT());
+    let createdby = req.session.fullname;
+    let createddate = helper.GetCurrentDatetime();
+    let cabling_personel = [];
+    let count = 0;
+    let dup_data = "";
+    let isDuplicate = false;
+
+    data = JSON.parse(data);
+    let data_length = data.length;
+
+    data.forEach((key, item) => {
+      var personel = key.personel;
+      var sql_check = `select * from cabling_personel where cp_personel='${personel}'`;
+      mysql.isSingleDataExist(
+        sql_check,
+        "CablingPersonel",
+        (err, isduplicate) => {
+          if (err) console.error("Error: ", err);
+
+          if (isduplicate) {
+            isDuplicate = isduplicate;
+            dup_data += `${personel}]`;
+          } else {
+            cabling_personel.push([personel, status, createdby, createddate]);
+          }
+
+          count += 1;
+          if (data_length == count) {
+            // console.log(cabling_personel);
+            let clean_no_duplicate =
+              helper.removeDuplicateSets(cabling_personel);
+            let cablingPersonelModel = clean_no_duplicate.map(
+              (data) =>
+                new CablingPersonelModel(data[0], data[1], data[2], data[3])
+            );
+            let refine_cabling_personel = [];
+
+            cablingPersonelModel.forEach((personel, index) => {
+              refine_cabling_personel.push([
+                personel.personel,
+                personel.status,
+                personel.createdby,
+                personel.createddate,
+              ]);
+            });
+
+            if (isDuplicate) {
+              return res.json({
+                msg: "exist",
+                data: dup_data,
+              });
+            }
+
+            mysql.InsertTable(
+              "cabling_personel",
+              refine_cabling_personel,
+              (err, result) => {
+                if (err) console.error("Error: ", err);
+
+                console.log(result);
+                return res.json({
+                  msg: "success",
+                });
+              }
+            );
+          }
+        }
+      );
     });
   } catch (error) {
     res.json({
