@@ -18,6 +18,8 @@ router.get("/", function (req, res, next) {
   });
 });
 
+
+
 function isAuthAdminUser(req, res, next) {
   if (req.session.roletype == "Admin" || req.session.roletype == "User") {
     next();

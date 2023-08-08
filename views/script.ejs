@@ -157,4 +157,14 @@
   function ClearTable(name) {
     $(`#${name}`).find("tr:gt(0)").remove();
   }
+
+  function ConvertToCurrency(val) {
+    return `₱ ${parseFloat(val)
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
+  }
+
+  function RemoveCurrencyFormatting(val) {
+    return val.replace(/[^\d.-]/g, "");
+  }
 </script>

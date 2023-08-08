@@ -1,0 +1,326 @@
+<script>
+  $(document).ready(function () {
+    let itemcode = "";
+    let status = "";
+    let itemdescription = "";
+    let itemprice = "";
+
+    LoadTable();
+    LoadList();
+    // LoadModalList();
+
+    $("#cablingitemprice-dataTable tbody").on("click", "tr", function () {
+      var dataRow = [];
+      $(this)
+        .closest("tr")
+        .find("td")
+        .each(function () {
+          dataRow.push($(this).text());
+        });
+      console.log(dataRow);
+      itemcode = dataRow[0];
+      itemdescription = dataRow[1];
+      itemprice = dataRow[2];
+      status = dataRow[3];
+    });
+
+    $(document).on("click", "#editBtn", function () {
+      $("#itempricemodal").val(RemoveCurrencyFormatting(itemprice));
+      $("#itemcodemodal").val(itemcode);
+      $("#cablingitempriceModal").modal("show");
+      console.log(itemcode);
+    });
+
+    $(document).on("click", "#addBtn", function () {
+      let price = $("#itemprice").val();
+      let brandname = $("#brandlist").val();
+      let description = $("#itemlist").val();
+
+      var message = "";
+
+      if (price == "") {
+        message += "Item Price ";
+      }
+
+      if (brandname == "") {
+        message += "Item Brand";
+      }
+
+      if (description == "") {
+        message += "Item Description";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/cablingitemprice/save",
+          data: {
+            itemprice: price,
+            description: description,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              success("Saved", "Successfully");
+            }
+
+            if (result.msg == "exist") {
+              warning("Exist", `${description} has already registered!`);
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    //Edit Update
+    $(document).on("click", "#saveBtn", function () {
+      let itempricemodal = $("#itempricemodal").val();
+      let itempricecode = $("#itemcodemodal").val();
+
+      var message = "";
+
+      if (itempricemodal == "") {
+        message += "Item Price ";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/cablingitemprice/edit",
+          data: {
+            itempricemodal: itempricemodal,
+            itempricecode: itempricecode,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              success("Saved", "Successfully");
+            }
+
+            if (result.msg == "exist") {
+              warning("Exist", `${itemdescriptionmodal} already exist!`);
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    //Status Update
+    $(document).on("click", "#activeBtn", function () {
+      console.log(itemcode);
+      console.log(status);
+      $.ajax({
+        type: "POST",
+        url: "/cablingitemprice/status",
+        data: {
+          status: status,
+          itemcode: itemcode,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+
+          if (result.msg == "notexist") {
+            warning(`${itemcode} does not exist!`);
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $(document).on("click", "#inactiveBtn", function () {
+      console.log(itemcode);
+      console.log(status);
+      $.ajax({
+        type: "POST",
+        url: "/cablingitemprice/status",
+        data: {
+          status: status,
+          itemcode: itemcode,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+
+          if (result.msg == "notexist") {
+            warning(`${itemcode} does not exist!`);
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $("#search").on("keyup", function () {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("cablingitemprice-dataTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    });
+
+    $("#brandlist").on("change", function () {
+      var brandname = $("#brandlist").val();
+      $("#itemdescriptionlist").empty();
+
+      console.log(brandname);
+
+      $.ajax({
+        type: "POST",
+        url: "/cablingitems/getitem",
+        data: { brand: brandname },
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.description, item.description);
+              $(options).html(item.description);
+              // $("#fruits").append(options);
+              $("#itemdescriptionlist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    function LoadTable() {
+      $("#cablingitemprice-dataTable").DataTable({
+        destroy: true,
+        processing: true,
+        serverSide: true,
+        paging: false,
+        searching: false,
+        info: false,
+        scrollY: 400,
+        scrollCollapse: true,
+        serverMethod: "GET",
+        ajax: {
+          url: "/cablingitemprice/load",
+          dataSrc: (json) => {
+            var finalData = [];
+            var data = json.data;
+
+            console.log(data);
+            $.each(data, (key, item) => {
+              var action = "";
+              var status = item.status;
+
+              if (status == "ACTIVE") {
+                action =
+                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingitempriceModal">EDIT PRICE</button> <button id="inactiveBtn" class="btn btn-outline-primary" name="inactiveBtn">INACTIVE</button>';
+              }
+              if (status == "INACTIVE") {
+                action =
+                  '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingitempriceModal">EDIT PRICE</button> <button id="activeBtn" class="btn btn-outline-primary" name="activeBtn">ACTIVE</button>';
+              }
+
+              finalData.push({
+                itempricecode: item.itempricecode,
+                itemcode: item.itemcode,
+                price: ConvertToCurrency(item.price),
+                status: item.status,
+                createdby: item.createdby,
+                createddate: item.createddate,
+                action: action,
+              });
+            });
+
+            return finalData;
+          },
+        },
+        columnDefs: [
+          {
+            targets: 1,
+            className: "td-indent",
+          },
+        ],
+        columns: [
+          { data: "itempricecode" },
+          { data: "itemcode" },
+          { data: "price" },
+          { data: "status" },
+          { data: "createdby" },
+          { data: "createddate" },
+          { data: "action" },
+        ],
+        initComplete: function () {},
+      });
+    }
+
+    function LoadList() {
+      $.ajax({
+        type: "GET",
+        url: "/brand/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.brandname, item.brandname);
+              $(options).html(item.brandname);
+              // $("#fruits").append(options);
+              $("#brandnamelist").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+
+    function LoadModalList() {
+      $.ajax({
+        type: "GET",
+        url: "/brand/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              var options = new Option(item.brandname, item.brandname);
+              $(options).html(item.brandname);
+              // $("#fruits").append(options);
+              $("#brandnamelistmodal").append(options);
+            }
+          });
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+  });
+</script>
