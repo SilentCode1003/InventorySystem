@@ -39,6 +39,7 @@ exports.MasterItemPrice = (data) => {
     dataResult.push({
       itempricecode: key.mip_itempricecode,
       itemcode: key.mip_itemcode,
+      barcode: key.mip_barcode,
       price: key.mip_price,
       status: key.mip_status,
       createdby: key.mip_createdby,

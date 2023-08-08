@@ -266,6 +266,7 @@ exports.InsertTable = (tablename, data, callback) => {
   if (tablename == "master_item_price") {
     let sql = `INSERT INTO master_item_price(
         mip_itemcode,
+        mip_barcode,
         mip_price,
         mip_status,
         mip_createdby,

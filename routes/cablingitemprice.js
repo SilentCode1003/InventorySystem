@@ -51,6 +51,7 @@ router.get("/load", (req, res) => {
 router.post("/save", (req, res) => {
   try {
     let itemprice = req.body.itemprice;
+    let barcode = req.body.barcode;
     let description = req.body.description;
     let status = dictionary.GetValue(dictionary.ACT());
     let createdby = req.session.fullname;
@@ -59,6 +60,7 @@ router.post("/save", (req, res) => {
 
     master_item_price.push([
       description,
+      barcode,
       itemprice,
       status,
       createdby,
