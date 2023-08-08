@@ -17,8 +17,8 @@ router.get("/", function (req, res, next) {
   });
 });
 
-function isAuthAdmiunUser(req, res, next) {
-  if (req.session.roletype == "Admiun" || req.session.roletype == "User") {
+function isAuthAdminUser(req, res, next) {
+  if (req.session.roletype == "Admin" || req.session.roletype == "User") {
     next();
   } else {
     res.redirect("/login");
@@ -53,7 +53,7 @@ router.post("/save", (req, res) => {
     let unitdescription = req.body.unitdescription;
     let itemname = req.body.itemname;
     let status = dictionary.GetValue(dictionary.ACT());
-    let createdby = req.session.fullname;
+    let createdby = "DEV42";
     let createddate = helper.GetCurrentDatetime();
     let master_item_unit = [];
 

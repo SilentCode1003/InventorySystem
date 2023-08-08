@@ -85,10 +85,23 @@ router.post("/save", (req, res) => {
     let createddate = helper.GetCurrentDatetime();
     let master_store = [];
     let cabling_request_type = [];
+    let request_equipment_item = [];
     let sql_exist = `select * from request_equipment_detail 
         where red_requestby='${requestby}' 
         and red_requestdate='${requestdate}' 
         and red_detail='${details}'`;
+
+    let jsonDetails = helper.ConvertToJson(JSON.parse(details));
+    let requestEquipmentItemModel = jsonDetails.map(
+      (data) =>
+        new RequestMaterialModel(
+          data["brand"],
+          data["description"],
+          data["count"],
+          data["unit"]
+        )
+    );
+
     //#region STORE
     let check_master_store = `select * from master_store where ms_storename='${store}'`;
     admin.Select(check_master_store, "MasterStore", (err, result) => {
@@ -101,14 +114,14 @@ router.post("/save", (req, res) => {
         admin.InsertTable("master_store", master_store, (err, result) => {
           if (err) console.error("Error: ", err);
 
-          console.log(result);
+          console.log(`${result}`);
         });
       }
     });
     //#endregion
 
     //#region TYPE
-    let check_cabling_request_type = `select * from cabling_request_type where crt_typename='${store}'`;
+    let check_cabling_request_type = `select * from cabling_request_type where crt_typename='${type}'`;
     mysql.Select(
       check_cabling_request_type,
       "CablingRequestType",
@@ -130,7 +143,7 @@ router.post("/save", (req, res) => {
             (err, result) => {
               if (err) console.error("Error: ", err);
 
-              console.log(result);
+              console.log(`${result}`);
             }
           );
         }
@@ -141,8 +154,6 @@ router.post("/save", (req, res) => {
     //#region REQUEST
     mysql.Select(sql_exist, "RequestEquipmentDetail", (err, result) => {
       if (err) console.error("Error: ", err);
-
-      console.log(result);
 
       if (result.length != 0) {
         return res.json({
@@ -163,11 +174,37 @@ router.post("/save", (req, res) => {
           request_equipment_detail,
           (err, result) => {
             if (err) console.error("Error: ", err);
-
             console.log(result);
-            res.json({
-              msg: "success",
+            let requestid = result[0].id;
+
+            requestEquipmentItemModel.forEach((item, index) => {
+              request_equipment_item.push([
+                requestid,
+                requestby,
+                requestdate,
+                item.brand,
+                item.description,
+                item.count,
+                item.unit,
+                status,
+                "",
+                "",
+              ]);
             });
+
+            console.log(request_equipment_item);
+            mysql.InsertTable(
+              "request_equipment_item",
+              request_equipment_item,
+              (err, result) => {
+                if (err) console.error("Error: ", err);
+                console.log(result);
+
+                res.json({
+                  msg: "success",
+                });
+              }
+            );
           }
         );
       }

@@ -334,7 +334,7 @@
 
           console.log(details);
 
-          // var detail = JSON.stringify(details);
+          var detail = JSON.stringify(details);
 
           $.ajax({
             type: "POST",
@@ -344,7 +344,7 @@
               requestdate: requestdate,
               store: store,
               type: type,
-              details: details,
+              details: detail,
             },
             success: function (result) {
               if (result.msg == "success") {

@@ -197,7 +197,13 @@ exports.Insert = (stmt, todos, callback) => {
         callback(err, null);
       }
       // callback(null, `Row inserted: ${results}`);
-      callback(null, `Row inserted: ${results.affectedRows}`);
+      let data = [
+        {
+          rows: results.affectedRows,
+          id: results.insertId,
+        },
+      ];
+      callback(null, data);
       // console.log(`Row inserted: ${results.affectedRows}`);
     });
   } catch (error) {
@@ -359,6 +365,27 @@ exports.InsertTable = (tablename, data, callback) => {
         red_detail,
         red_remarks,
         red_status) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "request_equipment_item") {
+    let sql = `INSERT INTO request_equipment_item(
+        rei_detailid,
+        rei_requestby,
+        rei_requestdate,
+        rei_itembrand,
+        rei_description,
+        rei_quantity,
+        rei_unit,
+        rei_status,
+        rei_approvedby,
+        rei_approveddate) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {
