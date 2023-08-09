@@ -15,7 +15,7 @@ router.get("/", isAuthAdminUser, function (req, res, next) {
 function isAuthAdminUser(req, res, next) {
   console.log(req.session.roletype);
 
-  if (req.session.roletype == "Admin" || req.session.roletype == "User") {
+  if (req.session.roletype == "Admin" || req.session.roletype == "User" || req.session.roletype == "Manager") {
     next();
   } else {
     res.redirect("/login");

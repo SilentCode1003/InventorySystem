@@ -66,11 +66,16 @@
             password: password,
           },
           success: function (result) {
-            console.log(result);
+            console.log(result.role);
 
             if (result.msg == "success") {
               success("Logged In", "Successfully");
-              location.replace("/");
+
+              if (result.role == "Manager") {
+                location.replace("/cablingdashboard");
+              } else {
+                location.replace("/");
+              }
             }
 
             if (result.msg == "incorrect") {
