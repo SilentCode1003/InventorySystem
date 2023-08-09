@@ -58,6 +58,9 @@
       LoadTableModal(detailid);
     });
 
+    //Submit Report
+    $(document).on("click", "#submitBtn", function () {});
+
     //Request Table Action Buttons
     $(document).on("click", "#approveBtn", function () {
       console.log(detailid);
@@ -190,70 +193,98 @@
 
             //#region request datatable
             $.each(data, (key, item) => {
-              const tbody = document.getElementById("request-dataTable");
-              const row = document.createElement("tr");
-              const BRAND = document.createElement("td");
-              const DESCRIPTION = document.createElement("td");
-              const COUNT = document.createElement("td");
-              const UNIT = document.createElement("td");
+              if (item.description == "PATCH PANEL") {
+                const tbody = document.getElementById("patchpanel-dataTable");
+                const row = document.createElement("tr");
+                const BRAND = document.createElement("td");
+                const DESCRIPTION = document.createElement("td");
+                const COUNT = document.createElement("td");
+                const UNIT = document.createElement("td");
 
-              BRAND.innerHTML = item.itembrand;
-              row.appendChild(BRAND);
+                BRAND.innerHTML = item.itembrand;
+                row.appendChild(BRAND);
 
-              DESCRIPTION.innerHTML = item.description;
-              row.appendChild(DESCRIPTION);
+                DESCRIPTION.innerHTML = item.description;
+                row.appendChild(DESCRIPTION);
 
-              COUNT.innerHTML = item.quantity;
-              row.appendChild(COUNT);
+                COUNT.innerHTML = item.quantity;
+                row.appendChild(COUNT);
 
-              UNIT.innerHTML = item.unit;
-              row.appendChild(UNIT);
+                UNIT.innerHTML = item.unit;
+                row.appendChild(UNIT);
 
-              tbody.appendChild(row);
+                tbody.appendChild(row);
+              } else {
+                const tbody = document.getElementById("request-dataTable");
+                const row = document.createElement("tr");
+                const BRAND = document.createElement("td");
+                const DESCRIPTION = document.createElement("td");
+                const COUNT = document.createElement("td");
+                const UNIT = document.createElement("td");
+
+                BRAND.innerHTML = item.itembrand;
+                row.appendChild(BRAND);
+
+                DESCRIPTION.innerHTML = item.description;
+                row.appendChild(DESCRIPTION);
+
+                COUNT.innerHTML = item.quantity;
+                row.appendChild(COUNT);
+
+                UNIT.innerHTML = item.unit;
+                row.appendChild(UNIT);
+
+                tbody.appendChild(row);
+              }
             });
             //#endregion
 
             //#region return datatable
             $.each(data, (key, item) => {
-              const tbody = document.getElementById("return-dataTable");
-              const row = document.createElement("tr");
-              const BRAND = document.createElement("td");
-              const DESCRIPTION = document.createElement("td");
-              const COUNT = document.createElement("td");
-              const UNIT = document.createElement("td");
+              if (item.description == "PATCH PANEL") {
+              } else {
+                const tbody = document.getElementById("return-dataTable");
+                const row = document.createElement("tr");
+                const BRAND = document.createElement("td");
+                const DESCRIPTION = document.createElement("td");
+                const COUNT = document.createElement("td");
+                const UNIT = document.createElement("td");
 
-              BRAND.innerHTML = item.itembrand;
-              row.appendChild(BRAND);
+                BRAND.innerHTML = item.itembrand;
+                row.appendChild(BRAND);
 
-              DESCRIPTION.innerHTML = item.description;
-              row.appendChild(DESCRIPTION);
+                DESCRIPTION.innerHTML = item.description;
+                row.appendChild(DESCRIPTION);
 
-              COUNT.innerHTML = item.quantity;
-              row.appendChild(COUNT);
+                COUNT.innerHTML = item.quantity;
+                row.appendChild(COUNT);
 
-              UNIT.innerHTML = item.unit;
-              row.appendChild(UNIT);
+                UNIT.innerHTML = item.unit;
+                row.appendChild(UNIT);
 
-              tbody.appendChild(row);
+                tbody.appendChild(row);
+              }
             });
             //#endregion
 
             //#region report datatable
             $.each(data, (key, item) => {
-              const tbody = document.getElementById("report-dataTable");
-              const row = document.createElement("tr");
-              const BRAND = document.createElement("td");
-              const DESCRIPTION = document.createElement("td");
-              const COUNT = document.createElement("td");
-              const UNIT = document.createElement("td");
+              if (item.description == "PATCH PANEL") {
+              } else {
+                const tbody = document.getElementById("report-dataTable");
+                const row = document.createElement("tr");
+                const BRAND = document.createElement("td");
+                const DESCRIPTION = document.createElement("td");
+                const COUNT = document.createElement("td");
+                const UNIT = document.createElement("td");
 
-              BRAND.innerHTML = item.itembrand;
-              row.appendChild(BRAND);
+                BRAND.innerHTML = item.itembrand;
+                row.appendChild(BRAND);
 
-              DESCRIPTION.innerHTML = item.description;
-              row.appendChild(DESCRIPTION);
+                DESCRIPTION.innerHTML = item.description;
+                row.appendChild(DESCRIPTION);
 
-              COUNT.innerHTML = ` <input
+                COUNT.innerHTML = ` <input
                     id="reportcount"
                     name="reportcount"
                     type="text"
@@ -261,13 +292,15 @@
                     placeholder="Enter Item Count"
                     aria-label="reportcount"
                     aria-describedby="basic-addon1"
+                    value=0
                   />`;
-              row.appendChild(COUNT);
+                row.appendChild(COUNT);
 
-              UNIT.innerHTML = item.unit;
-              row.appendChild(UNIT);
+                UNIT.innerHTML = item.unit;
+                row.appendChild(UNIT);
 
-              tbody.appendChild(row);
+                tbody.appendChild(row);
+              }
             });
             //#endregion
           }
