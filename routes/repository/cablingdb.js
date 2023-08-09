@@ -119,6 +119,10 @@ exports.Select = (sql, table, callback) => {
       if (table == "InventoryLogs") {
         callback(null, model.InventoryLogs(results));
       }
+
+      if (table == "RequestEquipmentItem") {
+        callback(null, model.RequestEquipmentItem(results));
+      }
     });
   } catch (error) {
     console.log(error);

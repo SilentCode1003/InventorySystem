@@ -1,6 +1,11 @@
 <script>
   $(document).ready(function () {
     let detailid = "";
+    let requestby = "";
+    let requestdate = "";
+
+    let report_brand = "";
+    let report_description = "";
 
     LoadTable();
 
@@ -17,10 +22,41 @@
           });
         console.log(dataRow);
         detailid = dataRow[0];
-
+        requestby = dataRow[1];
+        requestdate = dataRow[2];
       }
     );
 
+    let row_index = "";
+    let current_row_index = "";
+    let current_row = "";
+    let current_count = 0;
+    $("#report-dataTable").on("click", "tr", function () {
+      var dataRow = [];
+      row_index = this;
+      current_row_index = $(this).index();
+      current_row = $(this).closest("tr");
+      $(this)
+        .closest("tr")
+        .find("td")
+        .each(function () {
+          dataRow.push($(this).text());
+        });
+      console.log(dataRow);
+      report_brand = dataRow[0];
+      report_description = dataRow[1];
+    });
+
+    $(document).on("click", "#reportBtn", function () {
+      //   $("#itempricemodal").val(RemoveCurrencyFormatting(itemprice));
+      $("#detailidmodal").html(detailid);
+      $("#requestbymodal").html(requestby);
+      $("#requestdatemodal").html(requestdate);
+      $("#cablingrequestmaterialreportModal").modal("show");
+      console.log(detailid);
+
+      LoadTableModal(detailid);
+    });
 
     //Request Table Action Buttons
     $(document).on("click", "#approveBtn", function () {
@@ -60,6 +96,19 @@
           }
         }
       }
+    });
+
+    $("#report-dataTable").on("keyup", ".input-element", function (e) {
+      var count = $(this).val();
+      var request_count = $(
+        `#request-dataTable tr:eq(${current_row_index - 1}) td:eq(2)`
+      ).text();
+      console.log(`${count} ${request_count} ${current_row_index}`);
+
+      current_count = request_count - count;
+      $(`#return-dataTable tr:eq(${current_row_index - 1}) td:eq(2)`).text(
+        `${current_count}`
+      );
     });
 
     function LoadTable() {
@@ -124,6 +173,108 @@
           { data: "action" },
         ],
         initComplete: function () {},
+      });
+    }
+
+    function LoadTableModal(detailid) {
+      //Request Table Data
+      $.ajax({
+        type: "POST",
+        url: "/cablingrequestmaterial/getrequestdetail",
+        data: {
+          detailid: detailid,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            var data = result.data;
+
+            //#region request datatable
+            $.each(data, (key, item) => {
+              const tbody = document.getElementById("request-dataTable");
+              const row = document.createElement("tr");
+              const BRAND = document.createElement("td");
+              const DESCRIPTION = document.createElement("td");
+              const COUNT = document.createElement("td");
+              const UNIT = document.createElement("td");
+
+              BRAND.innerHTML = item.itembrand;
+              row.appendChild(BRAND);
+
+              DESCRIPTION.innerHTML = item.description;
+              row.appendChild(DESCRIPTION);
+
+              COUNT.innerHTML = item.quantity;
+              row.appendChild(COUNT);
+
+              UNIT.innerHTML = item.unit;
+              row.appendChild(UNIT);
+
+              tbody.appendChild(row);
+            });
+            //#endregion
+
+            //#region return datatable
+            $.each(data, (key, item) => {
+              const tbody = document.getElementById("return-dataTable");
+              const row = document.createElement("tr");
+              const BRAND = document.createElement("td");
+              const DESCRIPTION = document.createElement("td");
+              const COUNT = document.createElement("td");
+              const UNIT = document.createElement("td");
+
+              BRAND.innerHTML = item.itembrand;
+              row.appendChild(BRAND);
+
+              DESCRIPTION.innerHTML = item.description;
+              row.appendChild(DESCRIPTION);
+
+              COUNT.innerHTML = item.quantity;
+              row.appendChild(COUNT);
+
+              UNIT.innerHTML = item.unit;
+              row.appendChild(UNIT);
+
+              tbody.appendChild(row);
+            });
+            //#endregion
+
+            //#region report datatable
+            $.each(data, (key, item) => {
+              const tbody = document.getElementById("report-dataTable");
+              const row = document.createElement("tr");
+              const BRAND = document.createElement("td");
+              const DESCRIPTION = document.createElement("td");
+              const COUNT = document.createElement("td");
+              const UNIT = document.createElement("td");
+
+              BRAND.innerHTML = item.itembrand;
+              row.appendChild(BRAND);
+
+              DESCRIPTION.innerHTML = item.description;
+              row.appendChild(DESCRIPTION);
+
+              COUNT.innerHTML = ` <input
+                    id="reportcount"
+                    name="reportcount"
+                    type="text"
+                    class="form-control input-element"
+                    placeholder="Enter Item Count"
+                    aria-label="reportcount"
+                    aria-describedby="basic-addon1"
+                  />`;
+              row.appendChild(COUNT);
+
+              UNIT.innerHTML = item.unit;
+              row.appendChild(UNIT);
+
+              tbody.appendChild(row);
+            });
+            //#endregion
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
       });
     }
   });

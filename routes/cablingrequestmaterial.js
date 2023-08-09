@@ -386,3 +386,25 @@ router.post("/approve", (req, res) => {
     });
   }
 });
+
+router.post("/getrequestdetail", (req, res) => {
+  try {
+    let detailid = req.body.detailid;
+    let sql = `select  * from request_equipment_item where rei_detailid='${detailid}'`;
+
+    mysql.Select(sql, "RequestEquipmentItem", (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      console.log(result);
+
+      res.json({
+        msg: "success",
+        data: result,
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});

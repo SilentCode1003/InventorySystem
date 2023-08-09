@@ -8,7 +8,7 @@ const helper = require("./repository/customhelper");
 const { CablingProductModel } = require("./model/modelclass");
 
 /* GET home page. */
-router.get("/", isAuthAdminUser, function (req, res, next) {
+router.get("/", function (req, res, next) {
   res.render("cablingproduct", {
     title: req.session.title,
     fullname: req.session.fullname,
