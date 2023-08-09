@@ -347,3 +347,42 @@ router.post("/add", (req, res) => {
     });
   }
 });
+
+router.post("/approve", (req, res) => {
+  try {
+    let detailid = req.body.detailid;
+    let status = dictionary.GetValue(dictionary.APD());
+    let approvedby = req.session.fullname;
+    let approvedate = helper.GetCurrentDatetime();
+    let update_request_equipment_detail = `update request_equipment_detail 
+            set red_status='${status}',
+            red_approvedby='${approvedby}',
+            red_approvedate='${approvedate}' 
+            where red_detailid='${detailid}'`;
+    let update_request_equipment_item = `update request_equipment_item 
+          set rei_status='${status}',
+          rei_approvedby='${approvedby}',
+          rei_approveddate='${approvedate}' 
+          where rei_detailid='${detailid}'`;
+
+    mysql.Update(update_request_equipment_detail, (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      console.log(result);
+    });
+
+    mysql.Update(update_request_equipment_item, (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      console.log(result);
+    });
+
+    res.json({
+      msg: "success",
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});

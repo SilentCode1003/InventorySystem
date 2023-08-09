@@ -1,0 +1,130 @@
+<script>
+  $(document).ready(function () {
+    let detailid = "";
+
+    LoadTable();
+
+    $("#cabling-equipment-request-dataTable tbody").on(
+      "click",
+      "tr",
+      function () {
+        var dataRow = [];
+        $(this)
+          .closest("tr")
+          .find("td")
+          .each(function () {
+            dataRow.push($(this).text());
+          });
+        console.log(dataRow);
+        detailid = dataRow[0];
+
+      }
+    );
+
+
+    //Request Table Action Buttons
+    $(document).on("click", "#approveBtn", function () {
+      console.log(detailid);
+      $.ajax({
+        type: "POST",
+        url: "/cablingrequestmaterial/approve",
+        data: {
+          detailid: detailid,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Saved", "Successfully");
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
+    $("#search").on("keyup", function () {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("cabling-equipment-request-dataTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    });
+
+    function LoadTable() {
+      $("#cabling-equipment-request-dataTable").DataTable({
+        destroy: true,
+        processing: true,
+        serverSide: true,
+        paging: false,
+        searching: false,
+        info: false,
+        scrollY: 400,
+        scrollCollapse: true,
+        serverMethod: "GET",
+        ajax: {
+          url: "/cablingrequestmaterial/load",
+          dataSrc: (json) => {
+            var finalData = [];
+            var data = json.data;
+
+            console.log(data);
+            $.each(data, (key, item) => {
+              var action = "";
+              var status = item.status;
+
+              if (status == "REQUEST") {
+                action =
+                  '<button id="approveBtn" class="btn btn-outline-primary btn-sm" name="approveBtn">APPROVE</button>';
+              }
+
+              if (status == "APPROVED") {
+                action =
+                  '<button id="reportBtn" class="btn btn-outline-primary btn-sm" name="reportBtn">REPORT</button>';
+              }
+
+              finalData.push({
+                detailid: item.detailid,
+                requestby: item.requestby,
+                requestdate: item.requestdate,
+                detail: item.detail,
+                remarks: item.remarks,
+                status: item.status,
+                action: action,
+              });
+            });
+
+            return finalData;
+          },
+        },
+        columnDefs: [
+          {
+            targets: 1,
+            className: "td-indent",
+          },
+        ],
+        columns: [
+          { data: "detailid" },
+          { data: "requestby" },
+          { data: "requestdate" },
+          { data: "detail" },
+          { data: "remarks" },
+          { data: "status" },
+          { data: "action" },
+        ],
+        initComplete: function () {},
+      });
+    }
+  });
+</script>
