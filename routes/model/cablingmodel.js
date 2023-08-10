@@ -324,3 +324,44 @@ exports.InventoryLogs = (data) => {
 
   return dataResult;
 };
+
+exports.ConsumptionReport = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      reportid: key.cr_report_id,
+      detailid: key.cr_detail_id,
+      brand: key.cr_brand,
+      description: key.cr_description,
+      quantity: key.cr_quantity,
+      drnumber: key.cr_dr_number,
+      personel: key.cr_personel,
+      status: key.cr_status,
+      createdby: key.cr_createdby,
+      createddate: key.cr_createddate,
+    });
+  });
+
+  return dataResult;
+};
+
+exports.ReturnMaterial = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      returnid: key.rm_return_id,
+      detailid: key.rm_detail_id,
+      brand: key.rm_brand,
+      description: key.rm_description,
+      quantity: key.rm_quantity,
+      personel: key.rm_personel,
+      status: key.rm_status,
+      createdby: key.rm_createdby,
+      createddate: key.rm_createddate,
+    });
+  });
+
+  return dataResult;
+};

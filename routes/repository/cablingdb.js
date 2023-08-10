@@ -123,6 +123,14 @@ exports.Select = (sql, table, callback) => {
       if (table == "RequestEquipmentItem") {
         callback(null, model.RequestEquipmentItem(results));
       }
+
+      if (table == "ConsumptionReport") {
+        callback(null, model.ConsumptionReport(results));
+      }
+
+      if (table == "ReturnEquipment") {
+        callback(null, model.ReturnEquipment(results));
+      }
     });
   } catch (error) {
     console.log(error);
@@ -443,6 +451,45 @@ exports.InsertTable = (tablename, data, callback) => {
           il_description,
           il_user,
           il_date) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "consumption_report") {
+    let sql = `INSERT INTO consumption_report(
+          cr_detail_id,
+          cr_brand,
+          cr_description,
+          cr_quantity,
+          cr_dr_number,
+          cr_personel,
+          cr_status,
+          cr_createdby,
+          cr_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "return_material") {
+    let sql = `INSERT INTO return_material(
+          rm_detail_id,
+          rm_brand,
+          rm_description,
+          rm_quantity,
+          rm_personel,
+          rm_status,
+          rm_createdby,
+          rm_createddate) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {
