@@ -104,14 +104,117 @@
     $("#report-dataTable").on("keyup", ".input-element", function (e) {
       var count = $(this).val();
       var request_count = $(
-        `#request-dataTable tr:eq(${current_row_index - 1}) td:eq(2)`
+        `#request-body-table tr:eq(${current_row_index}) td:eq(2)`
       ).text();
       console.log(`${count} ${request_count} ${current_row_index}`);
 
       current_count = request_count - count;
-      $(`#return-dataTable tr:eq(${current_row_index - 1}) td:eq(2)`).text(
+
+      console.log(current_count);
+      $(`#return-dataTable tr:eq(${current_row_index + 1}) td:eq(2)`).text(
         `${current_count}`
       );
+    });
+
+    $(document).on("click", "#submitBtn", function () {
+      //#region Report table
+      var table = document.getElementById("report-dataTable");
+      var report_table = $("#report-dataTable tr");
+      var report_table_length = report_table.length;
+      var reportdr = $("#reportdr").val();
+      var report_detail = [];
+
+      for (x = 1; x < report_table_length; x++) {
+        var innerData = report_table[x].innerText;
+        innerData = innerData.split("\t");
+        var target_row = table
+          .getElementsByTagName("tbody")[0]
+          .getElementsByTagName("tr")[x - 1];
+
+        var input = $(target_row).closest("tr").find('input[type="text"]');
+
+        if (reportdr == "") {
+          return warning("Empty", "Please fillup DR for report table.");
+        }
+
+        report_detail.push({
+          brand: innerData[0],
+          description: innerData[1],
+          count: input.val(),
+          unit: innerData[3],
+          dr: reportdr,
+        });
+      }
+      //#endregion
+
+      //#region Return table
+      var return_table = $("#return-dataTable tr");
+      var return_table_length = return_table.length;
+      var return_detail = [];
+
+      for (x = 1; x < return_table_length; x++) {
+        var innerData = return_table[x].innerText;
+        innerData = innerData.split("\t");
+
+        var count = innerData[2];
+        if (count != "0") {
+          return_detail.push({
+            brand: innerData[0],
+            description: innerData[1],
+            count: innerData[2],
+            unit: innerData[3],
+          });
+        }
+      }
+      //#endregion
+
+      //#region Patch Panel table
+      var patchpanel_table = $("#patchpanel-dataTable tr");
+      var patchpanel_table_length = patchpanel_table.length;
+      var patchpaneldr = $("#patchpaneldr").val();
+      var patchpanel_detail = [];
+
+      for (x = 1; x < patchpanel_table_length; x++) {
+        var innerData = patchpanel_table[x].innerText;
+        innerData = innerData.split("\t");
+
+        if (patchpaneldr == "") {
+          return warning("Empty", "Please fillup DR for patch panel table.");
+        }
+
+        patchpanel_detail.push({
+          brand: innerData[0],
+          description: innerData[1],
+          count: innerData[2],
+          unit: innerData[3],
+          dr: patchpaneldr,
+        });
+      }
+      //#endregion
+
+      report_detail = JSON.stringify(report_detail);
+      return_detail = JSON.stringify(return_detail);
+      patchpanel_detail = JSON.stringify(patchpanel_detail);
+
+      $.ajax({
+        type: "POST",
+        url: "/cablingrequestmaterial/report",
+        data: {
+          detailid: detailid,
+          requestby: requestby,
+          reportdetail: report_detail,
+          returndetail: return_detail,
+          patchpaneldetail: patchpanel_detail,
+        },
+        success: function (result) {
+          $("#cablingrequestmaterialreportModal").modal("toggle");
+          LoadTable();
+          success("Success", "Report Complete!");
+        },
+        error: function (err) {
+          errmsg(err);
+        },
+      });
     });
 
     function LoadTable() {
@@ -122,7 +225,6 @@
         paging: false,
         searching: false,
         info: false,
-        scrollY: 400,
         scrollCollapse: true,
         serverMethod: "GET",
         ajax: {
@@ -215,7 +317,7 @@
 
                 tbody.appendChild(row);
               } else {
-                const tbody = document.getElementById("request-dataTable");
+                const tbody = document.getElementById("request-body-table");
                 const row = document.createElement("tr");
                 const BRAND = document.createElement("td");
                 const DESCRIPTION = document.createElement("td");
@@ -243,7 +345,7 @@
             $.each(data, (key, item) => {
               if (item.description == "PATCH PANEL") {
               } else {
-                const tbody = document.getElementById("return-dataTable");
+                const tbody = document.getElementById("return-body-table");
                 const row = document.createElement("tr");
                 const BRAND = document.createElement("td");
                 const DESCRIPTION = document.createElement("td");
@@ -268,10 +370,11 @@
             //#endregion
 
             //#region report datatable
+            var index = 0;
             $.each(data, (key, item) => {
               if (item.description == "PATCH PANEL") {
               } else {
-                const tbody = document.getElementById("report-dataTable");
+                const tbody = document.getElementById("report-table-body");
                 const row = document.createElement("tr");
                 const BRAND = document.createElement("td");
                 const DESCRIPTION = document.createElement("td");
@@ -284,7 +387,7 @@
                 DESCRIPTION.innerHTML = item.description;
                 row.appendChild(DESCRIPTION);
 
-                COUNT.innerHTML = ` <input
+                COUNT.innerHTML = `<input
                     id="reportcount"
                     name="reportcount"
                     type="text"
@@ -299,6 +402,7 @@
                 UNIT.innerHTML = item.unit;
                 row.appendChild(UNIT);
 
+                index += 1;
                 tbody.appendChild(row);
               }
             });

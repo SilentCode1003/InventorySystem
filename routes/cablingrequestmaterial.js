@@ -6,7 +6,11 @@ const admin = require("./repository/admindb");
 const crypt = require("./repository/cryptography");
 const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
-const { RequestMaterialModel } = require("./model/modelclass");
+const {
+  RequestMaterialModel,
+  ReportMaterialModel,
+  ConsumptionReportModel,
+} = require("./model/modelclass");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -31,7 +35,8 @@ module.exports = router;
 
 router.get("/load", (req, res) => {
   try {
-    let sql = `select * from request_equipment_detail`;
+    let status = dictionary.GetValue(dictionary.DND());
+    let sql = `select * from request_equipment_detail where not red_status='${status}'`;
 
     mysql.Select(sql, "RequestEquipmentDetail", (err, result) => {
       if (err) console.error("Error: ", err);
@@ -400,6 +405,166 @@ router.post("/getrequestdetail", (req, res) => {
       res.json({
         msg: "success",
         data: result,
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
+router.post("/report", (req, res) => {
+  try {
+    let report_detail = req.body.reportdetail;
+    let return_detail = req.body.returndetail;
+    let patchpanel_detail = req.body.patchpaneldetail;
+    let detailid = req.body.detailid;
+    let requestby = req.body.requestby;
+    let deploy_status = dictionary.GetValue(dictionary.DLY());
+    let return_status = dictionary.GetValue(dictionary.RET());
+    let done_status = dictionary.GetValue(dictionary.DND());
+    let reportby = req.session.fullname;
+    let reportdate = helper.GetCurrentDatetime();
+    let consumption_report = [];
+    let return_material = [];
+
+    let report = JSON.parse(report_detail);
+    let reportModel = report.map(
+      (data) =>
+        new ReportMaterialModel(
+          data["brand"],
+          data["description"],
+          data["count"],
+          data["unit"],
+          data["dr"]
+        )
+    );
+
+    let returnMaterials = JSON.parse(return_detail);
+    let returnModel = returnMaterials.map(
+      (data) =>
+        new RequestMaterialModel(
+          data["brand"],
+          data["description"],
+          data["count"],
+          data["unit"]
+        )
+    );
+
+    let patchpanel = JSON.parse(patchpanel_detail);
+    let patchpanelModel = patchpanel.map(
+      (data) =>
+        new ReportMaterialModel(
+          data["brand"],
+          data["description"],
+          data["count"],
+          data["unit"],
+          data["dr"]
+        )
+    );
+    3;
+    patchpanelModel.forEach((item, index) => {
+      consumption_report.push([
+        detailid,
+        item.brand,
+        item.description,
+        item.count,
+        item.unit,
+        item.dr,
+        requestby,
+        deploy_status,
+        reportby,
+        reportdate,
+      ]);
+    });
+
+    reportModel.forEach((item, index) => {
+      consumption_report.push([
+        detailid,
+        item.brand,
+        item.description,
+        item.count,
+        item.unit,
+        item.dr,
+        requestby,
+        deploy_status,
+        reportby,
+        reportdate,
+      ]);
+    });
+
+    returnModel.forEach((item, index) => {
+      return_material.push([
+        detailid,
+        item.brand,
+        item.description,
+        item.count,
+        item.unit,
+        requestby,
+        return_status,
+        reportby,
+        reportdate,
+      ]);
+    });
+
+    if (consumption_report.length != 0) {
+      mysql.InsertTable(
+        "consumption_report",
+        consumption_report,
+        (err, result) => {
+          if (err) console.error("Error: ", err);
+
+          console.log(result);
+        }
+      );
+    }
+
+    if (return_material.length != 0) {
+      mysql.InsertTable("return_material", return_material, (err, result) => {
+        if (err) console.error("Error: ", err);
+
+        console.log(result);
+      });
+    }
+
+    let consupmtionModel = consumption_report.map(
+      (data) => new ConsumptionReportModel(data[1], data[2], data[3])
+    );
+    consupmtionModel.forEach((item, index) => {
+      var sql_select = `select ii_stocks as stocks from inventory_item where ii_itemdescription='${item.description}'`;
+      mysql.SelectResult(sql_select, (err, result) => {
+        if (err) console.error("Error: ", err);
+
+        var stocks = result[0].stocks;
+        var count = item.count;
+        var description = item.description;
+        var current_stock = parseFloat(stocks);
+        var consumption = parseFloat(count);
+        var update_stock = current_stock - consumption;
+        var update_inventory_item = [update_stock, description];
+
+        console.log(`STOCKS: ${stocks} CONSUMPTION: ${consumption} UPDATE: ${update_stock}`);
+        let sql_update = `update inventory_item set ii_stocks=? where ii_itemdescription=?`;
+        mysql.UpdateMultiple(
+          sql_update,
+          update_inventory_item,
+          (err, result) => {
+            if (err) console.error("Error: ", err);
+
+            console.log(result);
+          }
+        );
+      });
+    });
+
+    let update_request_material_detail = `update request_equipment_detail set red_status='${done_status}' where red_detailid='${detailid}'`;
+    mysql.Update(update_request_material_detail, (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      console.log(result);
+      res.json({
+        msg: "success",
       });
     });
   } catch (error) {

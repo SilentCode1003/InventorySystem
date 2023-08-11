@@ -63,6 +63,14 @@ class InventoryLogsModel {
     this.date = date;
   }
 }
+
+class ConsumptionReportModel {
+  constructor(brand, description, count) {
+    this.brand = brand;
+    this.description = description;
+    this.count = count;
+  }
+}
 //#endregion
 
 //#region Data Models
@@ -74,6 +82,16 @@ class RequestMaterialModel {
     this.unit = unit;
   }
 }
+
+class ReportMaterialModel {
+  constructor(brand, description, count, unit, dr) {
+    this.brand = brand;
+    this.description = description;
+    this.count = count;
+    this.unit = unit;
+    this.dr = dr;
+  }
+}
 //#endregion
 
 module.exports = {
@@ -83,4 +101,6 @@ module.exports = {
   InventoryItemModel,
   InventoryLogsModel,
   RequestMaterialModel,
+  ReportMaterialModel,
+  ConsumptionReportModel,
 };
