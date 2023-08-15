@@ -92,6 +92,41 @@ class ReportMaterialModel {
     this.dr = dr;
   }
 }
+
+class ReportMaterialConsumptionModel {
+  constructor(
+    detailid,
+    requestby,
+    requestdate,
+    brand,
+    description,
+    quantity,
+    unit,
+    approvedby,
+    approveddate,
+    drnumber,
+    used,
+    usedunits,
+    returned,
+    returnedunits
+  ) {
+    this.detailid = detailid;
+    this.requestby = requestby;
+    this.requestdate = requestdate;
+    this.brand = brand;
+    this.description = description;
+    this.quantity = quantity;
+    this.unit = unit;
+    this.approvedby = approvedby;
+    this.approveddate = approveddate;
+    this.drnumber = drnumber;
+    this.used = used;
+    this.usedunits = usedunits;
+    this.returned = returned === null ? "" : returned;
+    this.returnedunits = returnedunits === null ? "" : returnedunits;
+  }
+}
+
 //#endregion
 
 module.exports = {
@@ -103,4 +138,5 @@ module.exports = {
   RequestMaterialModel,
   ReportMaterialModel,
   ConsumptionReportModel,
+  ReportMaterialConsumptionModel,
 };
