@@ -168,6 +168,42 @@
       }
     });
 
+    $(document).on("click", "#exportBtn", function () {
+      console.log("clicked!");
+      var content = $("#report-dataTable tr");
+      var headerArr = [];
+      var dataArr = [];
+      var filename = `Report`;
+
+      console.log(content.length);
+      var index = 1;
+      for (x = 0; x < content.length; x++) {
+        // console.log(header[x].innerText);
+        console.log(content[x].innerText);
+        var innerData = content[x].innerText;
+        innerData = innerData.split("\t");
+
+        dataArr.push([innerData]);
+      }
+
+      // console.log(dataArr);
+
+      $.ajax({
+        type: "POST",
+        url: "/reportmaterials/excel",
+        data: {
+          data: JSON.stringify(dataArr),
+          filename: filename,
+        },
+        success: function (result) {
+          window.open("/reportmaterials/generate-excel", "_blank");
+        },
+        error: function (error) {
+          error(error);
+        },
+      });
+    });
+
     function LoadTable() {
       $("#report-dataTable").DataTable({
         destroy: true,

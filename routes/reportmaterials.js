@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const xl = require('excel4node');
 
 const mysql = require("./repository/cablingdb");
 const crypt = require("./repository/cryptography");
@@ -112,4 +113,86 @@ router.get("/load", (req, res) => {
       msg: error,
     });
   }
+});
+
+let _excelDataArr = [];
+let _excelFile = "";
+router.post("/excel", (req, res) => {
+  try {
+    let data = req.body.data;
+    let filename = `${req.body.filename}_${helper.GetCurrentDate()}`;
+    let dataArr = [];
+
+    console.log(`Request Received: ${filename}`);
+    console.log(`Data Received: ${data}`);
+
+    dataArr = JSON.parse(data);
+    console.log(`Data JSON Parse: ${dataArr}`);
+
+    _excelDataArr = dataArr;
+    _excelFile = filename;
+    res.json({
+      msg: "success",
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
+router.get("/generate-excel", (req, res) => {
+  // res.download(_excelFile);
+  const workbook = new xl.Workbook();
+  const worksheet = workbook.addWorksheet(`${_excelFile}`);
+  var row = 1;
+  var col = 1;
+
+  var headerStyle = workbook.createStyle({
+    font: {
+      bold: true,
+      underline: false,
+    },
+    alignment: {
+      wrapText: true,
+      horizontal: "center",
+    },
+  });
+
+  var dataStyle = workbook.createStyle({
+    font: {
+      bold: false,
+      underline: false,
+    },
+    alignment: {
+      wrapText: true,
+      horizontal: "center",
+    },
+  });
+
+  // console.log(_excelDataArr);
+  console.log(`data length: ${_excelDataArr}`);
+
+  for (x = 0; x < _excelDataArr.length; x++) {
+    // console.log(`header content length: ${_excelDataArr[x].length}`);
+
+    for (z = 0; z < _excelDataArr[x].length; z++) {
+      // console.log(`row: ${row} col ${col} data: ${_excelDataArr[x][z]}`);
+      let data = `${_excelDataArr[x][z]}`;
+      data = data.split(",");
+      for (i = 0; i < data.length; i++) {
+        if (row == 1) {
+          worksheet.cell(row, col).string(data[i]).style(headerStyle);
+        } else {
+          worksheet.cell(row, col).string(data[i]).style(dataStyle);
+        }
+
+        col += 1;
+      }
+    }
+
+    col = 1;
+    row += 1;
+  }
+  workbook.write(`${_excelFile}.xlsx`, res);
 });
