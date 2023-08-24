@@ -15,10 +15,14 @@ router.get("/", isAuthAdminUser, function (req, res, next) {
 function isAuthAdminUser(req, res, next) {
   console.log(req.session.roletype);
 
-  if (req.session.roletype == "Admin" || req.session.roletype == "User") {
+  if (req.session.roletype == "Admin") {
     next();
   } else {
-    res.redirect("/login");
+    if (req.session.roletype == "User" && req.session.department == "Cabling") {
+      res.redirect("/cablingdashboard");
+    } else {
+      res.redirect("/login");
+    }
   }
 }
 

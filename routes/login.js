@@ -49,7 +49,6 @@ router.post("/authentication", (req, res) => {
 
           res.json({
             msg: "success",
-            role: req.session.roletype,
           });
         } else {
           return res.json({
