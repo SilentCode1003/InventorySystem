@@ -114,7 +114,8 @@
     </div>
   </li>
 
-  <% } %> <% if (roletype === 'Admin' || roletype === 'User' || roletype === 'Manager') { %>
+  <% } %> <% if (roletype === 'Admin' || roletype === 'User' || roletype ===
+  'Manager') { %>
   <!-- Divider -->
   <hr class="sidebar-divider" />
 
@@ -296,8 +297,109 @@
     </div>
   </li>
   <% } %>
+
   <!-- Divider -->
   <hr class="sidebar-divider" />
+
+  <!-- Heading -->
+  <div class="sidebar-heading">Production Inventory</div>
+  <!-- Divider -->
+  <hr class="sidebar-divider" />
+
+  <!-- Nav Item - Production Dashboard Collapse Menu -->
+  <li class="nav-item active">
+    <a class="nav-link" href="#">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a
+    >
+  </li>
+
+  <!-- Nav Item - Production Master Collapse Menu -->
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#collapseProductionMaster"
+      aria-expanded="true"
+      aria-controls="collapseUtilities"
+    >
+      <i class="fa fa-database" aria-hidden="true"></i>
+      <span>Masters</span>
+    </a>
+    <div
+      id="collapseProductionMaster"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Master:</h6>
+        <a class="collapse-item" href="/vendor">
+          <i class="fa fa-truck" aria-hidden="true"></i>
+          <span>Vendors</span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Nav Item - Production Inventory Collapse Menu -->
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#collapseProductionInventory"
+      aria-expanded="true"
+      aria-controls="collapseUtilities"
+    >
+      <i class="fa fa-boxes" aria-hidden="true"></i>
+      <span>Inventory</span>
+    </a>
+    <div
+      id="collapseProductionInventory"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">options:</h6>
+        <a class="collapse-item" href="/productionmaterial">
+          <i class="fa fa-box-open" aria-hidden="true"></i>
+          <span>Materials</span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Nav Item - Production Components Collapse Menu -->
+  <li class="nav-item">
+    <a
+      class="nav-link collapsed"
+      href="#"
+      data-toggle="collapse"
+      data-target="#collapseProductionComponents"
+      aria-expanded="true"
+      aria-controls="collapseUtilities"
+    >
+      <i class="fa fa-industry" aria-hidden="true"></i>
+      <span>Production</span>
+    </a>
+    <div
+      id="collapseProductionComponents"
+      class="collapse"
+      aria-labelledby="headingUtilities"
+      data-parent="#accordionSidebar"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">options:</h6>
+        <a class="collapse-item" href="/productcomponent">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          <span>Components</span>
+        </a>
+      </div>
+    </div>
+  </li>
 
   <!-- Sidebar Toggler (Sidebar) -->
   <div class="text-center d-none d-md-inline">
