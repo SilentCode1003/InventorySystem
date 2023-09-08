@@ -1,0 +1,375 @@
+<!-- Modal -->
+<div
+  class="modal fade bd-example-modal-lg"
+  id="cablingrequestsubmitModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-keyboard="false"
+  data-backdrop="static"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Requester Information
+        </h5>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="col-lg-12">
+            <div class="card-body">
+              <div class="row mb-2">
+                <div class="col-md-12">
+                  <label class="form-label" for="requestdate"
+                    >Request Date</label
+                  >
+                  <input
+                    class="entry-input form-control mb-2"
+                    id="requestdate"
+                    name="requestdate"
+                    type="date"
+                    data-field="date"
+                    readonly
+                  />
+                  <div id="dtbox"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label" for="personel">Personel</label>
+                  <input
+                    class="entry-input form-control mb-2"
+                    list="personellist"
+                    id="personel"
+                    name="personel"
+                  />
+
+                  <datalist id="personellist">
+                    <option value=""></option>
+                  </datalist>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label" for="storelist">Store</label>
+                  <input
+                    class="entry-input form-control mb-2"
+                    list="storenamelist"
+                    id="storelist"
+                    name="storelist"
+                  />
+
+                  <datalist id="storenamelist">
+                    <option value=""></option>
+                  </datalist>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label" for="typelist">Type</label>
+                  <input
+                    class="entry-input form-control mb-2"
+                    list="typenamelist"
+                    id="typelist"
+                    name="typelist"
+                  />
+
+                  <datalist id="typenamelist">
+                    <option value=""></option>
+                  </datalist>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times" aria-hidden="true"></i> Close
+        </button>
+        <button
+          type="button"
+          id="requestBtn"
+          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+        >
+          <i class="fa fa-check" aria-hidden="true"></i> Request
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PCreated by Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-3">
+  <h1 class="page-title">Product Component</h1>
+</div>
+<!-- Content Row -->
+<div class="row mb-2">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h6 class="m-0 font-weight-bold table-title">Product Info</h6>
+      </div>
+      <div class="card-body">
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label class="form-label" for="productlist">Product Name</label>
+            <input
+              class="entry-input form-control mb-2"
+              list="productnamelist"
+              id="productlist"
+              name="fruit"
+            />
+
+            <datalist id="productnamelist">
+              <option value=""></option>
+            </datalist>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="categorylist">Category</label>
+            <input
+              class="entry-input form-control mb-2"
+              list="categorynamelist"
+              id="categorylist"
+              name="fruit"
+            />
+
+            <datalist id="categorynamelist">
+              <option value=""></option>
+            </datalist>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <label class="form-label" for="address">Product Description</label>
+            <textarea
+              class="form-control"
+              id="address"
+              name="address"
+              rows="4"
+              cols="50"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label class="form-label" for="price">Price</label>
+            <input
+              id="price"
+              name="price"
+              type="text"
+              class="form-control"
+              placeholder="Enter Price"
+              aria-label="price"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="cost">Cost</label>
+            <input
+              id="cost"
+              name="cost"
+              type="text"
+              class="form-control"
+              placeholder="Enter Cost"
+              aria-label="cost"
+              aria-describedby="basic-addon1"
+              disabled
+            />
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label class="form-label" for="sku">SKU</label>
+            <input
+              id="sku"
+              name="sku"
+              type="text"
+              class="form-control"
+              placeholder="Enter SKU"
+              aria-label="sku"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="barcode">Barcode </label>
+            <input
+              id="barcode"
+              name="barcode"
+              type="text"
+              class="form-control"
+              placeholder="Enter Barcode"
+              aria-label="barcode"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Requestlist Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <h6 class="m-0 font-weight-bold table-title">Components</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <label class="form-label" for="materialname">Material Name</label>
+        <input
+          id="materialname"
+          name="materialname"
+          type="text"
+          class="form-control"
+          placeholder="Enter Material Name"
+          aria-label="materialname"
+          aria-describedby="basic-addon1"
+        />
+      </div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <label class="form-label" for="quantity">Quantity</label>
+        <input
+          id="quantity"
+          name="quantity"
+          type="text"
+          class="form-control"
+          placeholder="Enter Quantity"
+          aria-label="quantity"
+          aria-describedby="basic-addon1"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="materialcost">Cost</label>
+        <input
+          id="materialcost"
+          name="materialcost"
+          type="text"
+          class="form-control"
+          placeholder="Enter Cost"
+          aria-label="materialcost"
+          aria-describedby="basic-addon1"
+        />
+      </div>
+    </div>
+
+    <div class="row d-grid gap-2 d-md-flex justify-content-md-end">
+      <div class="col-md-4 text-center mt-1">
+        <button
+          id="addBtn"
+          name="addBtn"
+          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Add
+        </button>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="cablingrequestmateriallist-dataTable"
+        width="100%"
+        cellspacing="10"
+      >
+        <thead class="table-dark">
+          <tr>
+            <th class="col-2 text-start">Material Name</th>
+            <th class="col-1 text-center">Quantity</th>
+            <th class="col-1 text-center">Unit</th>
+            <th class="col-1 text-center">Cost</th>
+            <th class="col-1 text-end">Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="cablingrequestbody-datatable" class="table-light"></tbody>
+      </table>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 text-center mt-1">
+        <button
+          id="submitBtn"
+          name="submitBtn"
+          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Create
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <h6 class="m-0 font-weight-bold table-title">Products</h6>
+      </div>
+      <div class="col-md-6">
+        <input
+          id="search"
+          name="search"
+          type="text"
+          class="form-control"
+          placeholder="Search Product"
+          aria-label="search"
+          aria-describedby="basic-addon1"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="production-dataTable"
+        width="100%"
+        cellspacing="10"
+      >
+        <thead class="table-dark">
+          <tr>
+            <th class="col-1 text-start">ID</th>
+            <th class="col-2 text-center">Product</th>
+            <th class="col-4 text-center">Components</th>
+            <th class="col-1 text-center">Price</th>
+            <th class="col-1 text-center">Cost</th>
+            <th class="col-1 text-end">Action</th>
+          </tr>
+        </thead>
+
+        <tbody class="table-light"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
