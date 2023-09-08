@@ -26,6 +26,7 @@ var cablingmaterialRouter = require("./routes/cablingmaterial");
 var cablingitempriceRouter = require("./routes/cablingitemprice");
 var reportmaterialsRouter = require("./routes/reportmaterials");
 var cablingrequestproductRouter = require("./routes/cablingrequestproduct");
+var vendorsRouter = require("./routes/vendors");
 
 var app = express();
 
@@ -62,6 +63,7 @@ app.use("/cablingmaterial", cablingmaterialRouter);
 app.use("/cablingitemprice", cablingitempriceRouter);
 app.use("/reportmaterials", reportmaterialsRouter);
 app.use("/cablingrequestproduct", cablingrequestproductRouter);
+app.use("/vendors", vendorsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
