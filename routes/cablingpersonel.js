@@ -6,25 +6,14 @@ const crypt = require("./repository/cryptography");
 const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
 const { CablingPersonelModel } = require("./model/modelclass");
+const { Validator } = require("./repository/middleware");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("cablingpersonel", {
-    title: req.session.title,
-    fullname: req.session.fullname,
-    roletype: req.session.roletype,
-    position: req.session.position,
-    department: req.session.department,
-  });
+  Validator(req, res, "cablingpersonel");
+
 });
 
-function isAuthAdminUser(req, res, next) {
-  if (req.session.roletype == "Admin" || req.session.roletype == "User") {
-    next();
-  } else {
-    res.redirect("/login");
-  }
-}
 
 module.exports = router;
 
