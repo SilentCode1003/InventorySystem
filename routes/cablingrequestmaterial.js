@@ -17,9 +17,7 @@ const { Validator } = require("./repository/middleware");
 /* GET home page. */
 router.get("/", function (req, res, next) {
   Validator(req, res, "cablingrequestmaterial");
-
 });
-
 
 module.exports = router;
 
@@ -526,6 +524,8 @@ router.post("/report", (req, res) => {
       mysql.SelectResult(sql_select, (err, result) => {
         if (err) console.error("Error: ", err);
 
+        console.log(`${item.description} ${result}`);
+
         var stocks = result[0].stocks;
         var count = item.count;
         var description = item.description;
@@ -534,7 +534,9 @@ router.post("/report", (req, res) => {
         var update_stock = current_stock - consumption;
         var update_inventory_item = [update_stock, description];
 
-        console.log(`STOCKS: ${stocks} CONSUMPTION: ${consumption} UPDATE: ${update_stock}`);
+        console.log(
+          `ITEM: ${item.description} STOCKS: ${stocks} CONSUMPTION: ${consumption} UPDATE: ${update_stock}`
+        );
         let sql_update = `update inventory_item set ii_stocks=? where ii_itemdescription=?`;
         mysql.UpdateMultiple(
           sql_update,
