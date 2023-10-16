@@ -151,6 +151,10 @@ exports.Select = (sql, table, callback) => {
       if (table == "ProductionProductCost") {
         callback(null, model.ProductionProductCost(results));
       }
+
+      if (table == "DeliveryReport") {
+        callback(null, model.DeliveryReport(results));
+      }
     });
   } catch (error) {
     console.log(error);
@@ -614,6 +618,22 @@ exports.InsertTable = (tablename, data, callback) => {
       ppc_status,
       ppc_createdby,
       ppc_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "delivery_report") {
+    let sql = `INSERT INTO delivery_report(
+      dt_serial,
+      dr_number,
+      dr_client,
+      dr_deliverby,
+      dr_date) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {

@@ -32,7 +32,8 @@ module.exports = router;
 
 router.get("/load", (req, res) => {
   try {
-    let sql = "select * from cabling_product";
+    let status = dictionary.GetValue(dictionary.REM());
+    let sql = `select * from cabling_product where not cp_status='${status}'`;
     mysql.Select(sql, "CablingProduct", (err, result) => {
       if (err) console.error("Error: ", err);
 
@@ -89,6 +90,47 @@ router.post("/save", (req, res) => {
           msg: error,
         });
       });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
+router.post("/edit", (req, res) => {
+  try {
+    let itemserial = req.body.itemserial;
+    let description = req.body.description;
+
+    let data = [description, itemserial];
+
+    let sql_Update = `UPDATE cabling_product 
+                     SET cp_description = ?
+                     WHERE cp_productserial = ?`;
+
+    let sql_check = `SELECT * FROM cabling_product WHERE cp_productserial='${itemserial}'`;
+
+    console.log(data);
+
+    mysql.Select(sql_check, "CablingProduct", (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      if (result.length != 1) {
+        return res.json({
+          msg: "notexist",
+        });
+      } else {
+        mysql.UpdateMultiple(sql_Update, data, (err, result) => {
+          if (err) console.error("Error: ", err);
+
+          console.log(result);
+
+          res.json({
+            msg: "success",
+          });
+        });
+      }
+    });
   } catch (error) {
     res.json({
       msg: error,
@@ -190,6 +232,30 @@ router.post("/excelsave", (req, res) => {
   }
 });
 
+router.post("/delete", (req, res) => {
+  try {
+    let serial = req.body.serial;
+    let status = dictionary.GetValue(dictionary.REM());
+    let update_product = [status, serial];
+    let sql_update =
+      "UPDATE cabling_product SET cp_status=? where cp_productserial=?";
+
+    mysql.UpdateMultiple(sql_update, update_product, (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      console.log(result);
+
+      res.json({
+        msg: "success",
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
 // router.get("/test", (req, res) => {
 //   let jsonData = [
 //     {
@@ -244,3 +310,42 @@ router.post("/excelsave", (req, res) => {
 //     data: dataArr,
 //   });
 // });
+
+router.post("/sold", (req, res) => {
+  try {
+    let serial = req.body.serial;
+    let drnumber = req.body.drnumber;
+    let date = req.body.date;
+    let client = req.body.client;
+    let personel = req.body.personel;
+    let status = dictionary.GetValue(dictionary.SLD());
+    let delivery_report = [[serial, drnumber, client, personel, date]];
+
+    mysql.InsertTable("delivery_report", delivery_report, (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      console.log(result);
+
+      let update_product = [status, serial];
+      let sql_update_product =
+        "UPDATE cabling_product set cp_status=? where cp_productserial=?";
+
+      mysql.UpdateMultiple(
+        sql_update_product,
+        update_product,
+        (err, result) => {
+          if (err) console.error("Error: ", err);
+
+          console.log(result);
+          res.json({
+            msg: "success",
+          });
+        }
+      );
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});

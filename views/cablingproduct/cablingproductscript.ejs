@@ -1,7 +1,10 @@
 <script>
   $(document).ready(function () {
-    let itemcode = "";
+    let itemserial = "";
+    let description = "";
     let status = "";
+    var activeDescription = [];
+    var activePersonel = [];
 
     LoadTable();
     LoadList();
@@ -11,7 +14,7 @@
       dateFormat: "yyyy-MM-dd",
     });
 
-    $("#cablingrequestmaterial-dataTable tbody").on("click", "tr", function () {
+    $("#cablingproducts-dataTable tbody").on("click", "tr", function () {
       var dataRow = [];
       $(this)
         .closest("tr")
@@ -20,8 +23,9 @@
           dataRow.push($(this).text());
         });
       // console.log(dataRow);
-      itemcode = dataRow[0];
-      status = dataRow[3];
+      itemserial = dataRow[0];
+      description = dataRow[1];
+      status = dataRow[2];
     });
 
     let row_index = "";
@@ -30,7 +34,7 @@
     let current_description = "";
     let current_row_index = "";
     let current_row = "";
-    $("#cablingrequestbody-datatable").on("click", "tr", function () {
+    $("#cablingproducts-dataTable tbody").on("click", "tr", function () {
       var dataRow = [];
       row_index = this;
       current_row_index = $(this).index();
@@ -41,7 +45,7 @@
         .each(function () {
           dataRow.push($(this).text());
         });
-      // console.log(dataRow);
+      console.log(dataRow);
 
       current_brand = dataRow[0];
       current_description = dataRow[1];
@@ -53,7 +57,7 @@
     });
 
     $(document).on("click", "#addBtn", function () {
-      let description = $("#itemlist").val();
+      let description = $("#description").val();
       let serial = $("#itemserial").val();
       var message = "";
 
@@ -96,18 +100,25 @@
     });
 
     //Edit Update
+    $(document).on("click", "#editBtn", function () {
+      $("#itemserialmodal").val(itemserial);
+      $("#descriptionlist").val(description);
+      $("#cablingitemsModal").modal("show");
+      console.log(description);
+    });
+
     $(document).on("click", "#saveBtn", function () {
-      let itemdescriptionmodal = $("#itemdescriptionmodal").val();
-      let brandlistmodal = $("#brandlistmodal").val();
+      let itemserialmodal = $("#itemserialmodal").val();
+      let descriptionmodal = $("#descriptionlist").val();
 
       var message = "";
 
-      if (itemdescriptionmodal == "") {
-        message += "ITEM DESCRIPTION ";
+      if (itemserialmodal == "") {
+        message += "SERIAL ";
       }
 
-      if (brandlistmodal == "") {
-        message += "BRAND NAME ";
+      if (descriptionmodal == "") {
+        message += "DESCRIPTION ";
       }
 
       if (message != "") {
@@ -115,15 +126,15 @@
       } else {
         $.ajax({
           type: "POST",
-          url: "/cablingrequestmaterial/edit",
+          url: "/cablingproduct/edit",
           data: {
-            itemdescriptionmodal: itemdescriptionmodal,
-            brandlistmodal: brandlistmodal,
-            itemcode: itemcode,
+            itemserial: itemserial,
+            description: descriptionmodal,
           },
           success: function (result) {
             if (result.msg == "success") {
               LoadTable();
+              $("#cablingitemsModal").modal("hide");
               success("Saved", "Successfully");
             }
 
@@ -140,14 +151,14 @@
 
     //Status Update
     $(document).on("click", "#activeBtn", function () {
-      console.log(itemcode);
+      console.log(itemserial);
       console.log(status);
       $.ajax({
         type: "POST",
         url: "/cablingpersonel/status",
         data: {
           status: status,
-          itemcode: itemcode,
+          itemserial: itemserial,
         },
         success: function (result) {
           if (result.msg == "success") {
@@ -156,7 +167,7 @@
           }
 
           if (result.msg == "notexist") {
-            warning(`${itemcode} does not exist!`);
+            warning(`${itemserial} does not exist!`);
           }
         },
         error: function (err) {
@@ -166,14 +177,14 @@
     });
 
     $(document).on("click", "#inactiveBtn", function () {
-      console.log(itemcode);
+      console.log(itemserial);
       console.log(status);
       $.ajax({
         type: "POST",
         url: "/cablingpersonel/status",
         data: {
           status: status,
-          itemcode: itemcode,
+          itemserial: itemserial,
         },
         success: function (result) {
           if (result.msg == "success") {
@@ -182,7 +193,7 @@
           }
 
           if (result.msg == "notexist") {
-            warning(`${itemcode} does not exist!`);
+            warning(`${itemserial} does not exist!`);
           }
         },
         error: function (err) {
@@ -216,6 +227,86 @@
       UploadProcess();
     });
 
+    //Sold or Delivered
+    $(document).on("click", "#deliverBtn", function () {
+      $("#deployserialmodal").val(itemserial);
+      $("#soldModal").modal("show");
+      console.log(itemserial);
+    });
+
+    $(document).on("click", "#submitBtn", function () {
+      let serial = $("#deployserialmodal").val();
+      let drnumber = $("#drnumbermodal").val();
+      let date = $("#datedeploy").val();
+      let client = $("#soldtomodal").val();
+      let personel = $("#soldbymodal").val();
+
+      var message = "";
+
+      if (drnumber == "") {
+        message += "DR NUMBER ";
+      }
+
+      if (date == "") {
+        message += "DATE ";
+      }
+
+      if (client == "") {
+        message += "SOLD TO ";
+      }
+
+      if (personel == "") {
+        message += "SOLB BY ";
+      }
+
+      if (message != "") {
+        warning("Required", `Please fill up ${message}`);
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/cablingproduct/sold",
+          data: {
+            serial: serial,
+            drnumber: drnumber,
+            date: date,
+            client: client,
+            personel: personel,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              LoadTable();
+              $("#soldModal").modal("hide");
+              success("Done", "Submit Successfully");
+            }
+          },
+          error: function (err) {
+            errormsg(err);
+          },
+        });
+      }
+    });
+
+    //Remove Data
+
+    $(document).on("click", "#removeBtn", function () {
+      $.ajax({
+        type: "POST",
+        url: "/cablingproduct/delete",
+        data: {
+          serial: itemserial,
+        },
+        success: function (result) {
+          if (result.msg == "success") {
+            LoadTable();
+            success("Done", "Removed Successfully");
+          }
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
     function LoadTable() {
       $("#cablingproducts-dataTable").DataTable({
         destroy: true,
@@ -241,6 +332,12 @@
               if (status == "REQUEST") {
                 action =
                   '<button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingrequestmaterialModal">CANCEL</button> <button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingrequestmaterialModal">EDIT</button>';
+              }
+              if (status == "WAREHOUSE") {
+                action = `
+                <button id="deliverBtn" class="btn btn-outline-primary" name="deliverBtn" data-toggle="modal" data-target="#soldModal">SOLD</button>
+                <button id="editBtn" class="btn btn-outline-primary" name="editBtn" data-toggle="modal" data-target="#cablingitemsModal">EDIT</button>
+                <button id="removeBtn" class="btn btn-outline-primary" name="removeBtn">REMOVE</button>`;
               }
 
               finalData.push({
@@ -283,12 +380,35 @@
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              activeDescription.push(item.description);
               var options = new Option(item.description, item.description);
               $(options).html(item.description);
-              // $("#fruits").append(options);
-              $("#itemnamelist").append(options);
+              $("#descriptionlist").append(options);
             }
           });
+
+          populateDescription(activeDescription);
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "/cablingpersonel/load",
+        success: function (result) {
+          var data = result.data;
+
+          $.each(data, function (key, item) {
+            if (item.status == "ACTIVE") {
+              activePersonel.push(item.personel);
+            }
+          });
+
+          console.log(activePersonel);
+
+          populatePersonel(activePersonel);
         },
         error: function (err) {
           errormsg(err);
@@ -464,5 +584,91 @@
       });
       hidespinner();
     }
+
+    function populateDescription() {
+      for (const description of activeDescription) {
+        addDescription("descriptionDropdown", description);
+      }
+    }
+
+    function populatePersonel() {
+      for (const personel of activePersonel) {
+        addPersonel("personelDropdown", personel);
+      }
+    }
+
+    function addDescription(dropdownId, optionText) {
+      const dropdownElement = document.getElementById(dropdownId);
+      const newOption = document.createElement("div");
+      newOption.className = "dropdown-option";
+      newOption.textContent = optionText;
+
+      newOption.addEventListener("click", function () {
+        const inputElement = document.getElementById("description");
+        inputElement.value = optionText;
+        dropdownElement.style.display = "none";
+      });
+
+      dropdownElement.appendChild(newOption);
+    }
+
+    function addPersonel(dropdownId, optionText) {
+      const dropdownElement = document.getElementById(dropdownId);
+      const newOption = document.createElement("div");
+      newOption.className = "dropdown-option";
+      newOption.textContent = optionText;
+
+      newOption.addEventListener("click", function () {
+        const inputElement = document.getElementById("soldbymodal");
+        inputElement.value = optionText;
+        dropdownElement.style.display = "none";
+      });
+
+      dropdownElement.appendChild(newOption);
+    }
+
+    function setupCustomDropdown(inputId, dropdownId, optionClass) {
+      const inputElement = document.getElementById(inputId);
+      const dropdownElement = document.getElementById(dropdownId);
+      const options = dropdownElement.getElementsByClassName(optionClass);
+
+      inputElement.addEventListener("click", function () {
+        dropdownElement.style.display = "block";
+      });
+
+      for (const option of options) {
+        option.addEventListener("click", function () {
+          inputElement.value = option.textContent;
+          dropdownElement.style.display = "none";
+        });
+      }
+
+      inputElement.addEventListener("input", function () {
+        const value = inputElement.value.toUpperCase();
+        for (const option of options) {
+          if (option.textContent.toUpperCase().includes(value)) {
+            option.style.display = "block";
+          } else {
+            option.style.display = "none";
+          }
+        }
+        dropdownElement.style.display = "block";
+      });
+
+      document.addEventListener("click", function (event) {
+        const target = event.target;
+        if (!dropdownElement.contains(target) && target !== inputElement) {
+          dropdownElement.style.display = "none";
+        }
+      });
+    }
+
+    setupCustomDropdown(
+      "description",
+      "descriptionDropdown",
+      "dropdown-option"
+    );
+
+    setupCustomDropdown("soldbymodal", "personelDropdown", "dropdown-option");
   });
 </script>

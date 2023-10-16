@@ -471,7 +471,24 @@ exports.ProductionProductCost = (data) => {
       createdby: key.ppc_createdby,
       createddate: key.ppc_createddate,
     });
-  });                                                                                           
+  });
+
+  return dataResult;
+};
+
+exports.DeliveryReport = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      id: key.dr_id,
+      serial: key.dt_serial,
+      number: key.dr_number,
+      client: key.dr_client,
+      deliverby: key.dr_deliverby,
+      date: key.dr_date,
+    });
+  });
 
   return dataResult;
 };

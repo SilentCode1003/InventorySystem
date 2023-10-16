@@ -1,3 +1,4 @@
+@import url(customdropdown.css);
 :root {
   --clr-base: #700b12;
   --clr-top: #911f27;
@@ -197,4 +198,56 @@ body {
   /* optional */
   text-align: center;
   /* optional */
+}
+
+/* CUSTOM DROPDOWN */
+.custom-input {
+  width: 100%;
+}
+
+.categoryDropdown{
+  margin-left: 5.1rem !important;
+}
+
+.hidden{
+  display: none;
+}
+
+.custom-dropdown {
+  display: none;
+  width: 100%;
+  border: 1px solid #ccc;
+  max-height: 250px;
+  overflow-y: auto;
+  position: absolute;
+  background-color: white;
+  width: 36.7vw;
+  z-index: 1000;
+  border-radius: 0.275rem;
+}
+
+.custom-dropdown-modal {
+  display: none;
+  width: 100%;
+  border: 1px solid #ccc;
+  max-height: 250px;
+  overflow-y: auto;
+  position: absolute;
+  background-color: white;
+  width: inherit;
+  z-index: 1000;
+  border-radius: 0.275rem;
+}
+
+.dropdown-option {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background-color: #f0f0f0;
+}
+
+.daterangepicker th.month{
+  color: black !important;
 }
