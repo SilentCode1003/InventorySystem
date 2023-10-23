@@ -24,129 +24,93 @@
       console.log(systemid);
     });
 
-    $(document).on("click", "#addBtn", function () {
-      let personelname = $("#personelname").val();
+    var startDateInput = document.getElementById("startdate");
+    var endDateInput = document.getElementById("enddate");
 
+    startDateInput.addEventListener("change", function () {
+      endDateInput.min = startDateInput.value;
+
+      if (endDateInput.value < startDateInput.value) {
+        endDateInput.value = startDateInput.value;
+      }
+    });
+
+    $(document).on("click", "#searchBtn", function () {
+      var startdate = $("#startdate").val();
+      var enddate = $("#enddate").val();
       var message = "";
 
-      if (personelname == "") {
-        message += "Personel Name";
+      if (startdate == "") {
+        message += "Start Date ";
+      }
+      if (enddate == "") {
+        message += "End Date";
       }
 
       if (message != "") {
-        warning("Required", `Please fill up ${message}`);
+        warning("Required", `Required to fillup ${message}`);
       } else {
-        $.ajax({
-          type: "POST",
-          url: "/cablingpersonel/save",
-          data: {
-            personelname: personelname,
-          },
-          success: function (result) {
-            if (result.msg == "success") {
-              LoadTable();
-              success("Saved", "Successfully");
-            }
+        $("#report-dataTable").DataTable({
+          destroy: true,
+          processing: true,
+          serverSide: true,
+          paging: false,
+          searching: false,
+          info: false,
+          scrollCollapse: true,
+          serverMethod: "POST",
+          ajax: {
+            url: "/reportmaterials/search",
+            data: {
+              startdate: startdate,
+              enddate: enddate,
+            },
+            dataSrc: (json) => {
+              var finalData = [];
+              var data = json.data;
 
-            if (result.msg == "exist") {
-              warning("Exist", `${personelname} has already registered!`);
-            }
+              console.log(data);
+              $.each(data, (key, item) => {
+                finalData.push({
+                  detailid: item.detailid,
+                  requestby: item.requestby,
+                  requestdate: item.requestdate,
+                  brand: item.brand,
+                  description: item.description,
+                  quantity: item.quantity,
+                  approvedby: item.approvedby,
+                  approveddate: item.approveddate,
+                  drnumber: item.drnumber,
+                  used: item.used,
+                  returned: item.returned,
+                });
+              });
+
+              return finalData;
+            },
           },
-          error: function (err) {
-            errormsg(err);
-          },
+          columnDefs: [
+            {
+              targets: 1,
+              className: "td-indent",
+            },
+          ],
+          columns: [
+            { data: "detailid" },
+            { data: "requestby" },
+            { data: "requestdate" },
+            { data: "brand" },
+            { data: "description" },
+            { data: "quantity" },
+            { data: "approvedby" },
+            { data: "approveddate" },
+            { data: "drnumber" },
+            { data: "used" },
+            { data: "returned" },
+          ],
+          initComplete: function () {},
         });
       }
-    });
-
-    //Edit Update
-    $(document).on("click", "#saveBtn", function () {
-      let personelnamemodal = $("#personelnamemodal").val();
-
-      var message = "";
-
-      if (personelnamemodal == "") {
-        message += "PERSONEL ";
-      }
-
-      if (message != "") {
-        warning("Required", `Please fill up ${message}`);
-      } else {
-        $.ajax({
-          type: "POST",
-          url: "/cablingpersonel/edit",
-          data: {
-            personelnamemodal: personelnamemodal,
-            systemid: systemid,
-          },
-          success: function (result) {
-            if (result.msg == "success") {
-              LoadTable();
-              success("Saved", "Successfully");
-            }
-
-            if (result.msg == "exist") {
-              warning("Exist", `${personelnamemodal} already exist!`);
-            }
-          },
-          error: function (err) {
-            errormsg(err);
-          },
-        });
-      }
-    });
-
-    //Status Update
-    $(document).on("click", "#activeBtn", function () {
-      console.log(systemid);
-      console.log(status);
-      $.ajax({
-        type: "POST",
-        url: "/cablingpersonel/status",
-        data: {
-          status: status,
-          systemid: systemid,
-        },
-        success: function (result) {
-          if (result.msg == "success") {
-            LoadTable();
-            success("Saved", "Successfully");
-          }
-
-          if (result.msg == "notexist") {
-            warning(`${systemid} does not exist!`);
-          }
-        },
-        error: function (err) {
-          errormsg(err);
-        },
-      });
-    });
-
-    $(document).on("click", "#inactiveBtn", function () {
-      console.log(systemid);
-      console.log(status);
-      $.ajax({
-        type: "POST",
-        url: "/cablingpersonel/status",
-        data: {
-          status: status,
-          systemid: systemid,
-        },
-        success: function (result) {
-          if (result.msg == "success") {
-            LoadTable();
-            success("Saved", "Successfully");
-          }
-
-          if (result.msg == "notexist") {
-            warning(`${systemid} does not exist!`);
-          }
-        },
-        error: function (err) {
-          errormsg(err);
-        },
-      });
     });
 
     $("#search").on("keyup", function () {
