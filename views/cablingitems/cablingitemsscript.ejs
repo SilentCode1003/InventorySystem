@@ -2,6 +2,7 @@
   $(document).ready(function () {
     let itemcode = "";
     let status = "";
+    let brand = "";
 
     LoadTable();
     LoadList();
@@ -17,18 +18,20 @@
         });
       console.log(dataRow);
       itemcode = dataRow[0];
+      brand = dataRow[1];
       status = dataRow[3];
     });
 
     $(document).on("click", "#editBtn", function () {
       $("#itemcodemodal").val(itemcode);
+      $("#brandmodal").val(brand);
       $("#cablingitemsModal").modal("show");
       console.log(itemcode);
     });
 
     $(document).on("click", "#addBtn", function () {
       let itemdescription = $("#itemdescription").val();
-      let brandname = $("#brandlist").val();
+      let brandname = $("#brand").val();
 
       var message = "";
 
@@ -252,15 +255,19 @@
         url: "/brand/load",
         success: function (result) {
           var data = result.data;
+          let brandActive = [];
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              brandActive.push(item.brandname);
               var options = new Option(item.brandname, item.brandname);
               $(options).html(item.brandname);
               // $("#fruits").append(options);
-              $("#brandnamelist").append(options);
+              // $("#brandnamelist").append(options);
             }
           });
+
+          populateDropdown(brandActive, "brandDropdown", "brand");
         },
         error: function (err) {
           errormsg(err);
@@ -274,20 +281,27 @@
         url: "/brand/load",
         success: function (result) {
           var data = result.data;
+          let brandActive = [];
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              brandActive.push(item.brandname);
               var options = new Option(item.brandname, item.brandname);
               $(options).html(item.brandname);
               // $("#fruits").append(options);
-              $("#brandnamelistmodal").append(options);
+              // $("#brandnamelistmodal").append(options);
             }
           });
+
+          populateDropdown(brandActive, "brandmodalDropdown", "brandmodal");
         },
         error: function (err) {
           errormsg(err);
         },
       });
     }
+
+    setupCustomDropdown("brand", "brandDropdown", "dropdown-option");
+    setupCustomDropdown("brandmodal", "brandmodalDropdown", "dropdown-option");
   });
 </script>

@@ -19,13 +19,13 @@ const connection = mysql.createConnection({
   database: process.env._DATABASE_CABLING,
 });
 
-crypt.Encrypter("#Ebedaf19dd0d", (err, result) => {
-  if (err) console.error("Error: ", err);
+// crypt.Encrypter("#Ebedaf19dd0d", (err, result) => {
+//   if (err) console.error("Error: ", err);
 
-  console.log(result);
-});
+//   console.log(result);
+// });
 
-// crypt.Decrypter('f6a3287039d0d75cb83cb29d35b3dfcb', (err, result) => {
+// crypt.Decrypter('e0f57e46160db3664140d8a0a3b897cc', (err, result) => {
 //     if (err) console.error('Error: ', err);
 
 //     console.log(`${result}`);

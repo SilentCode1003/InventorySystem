@@ -54,19 +54,18 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <label class="form-label" for="brandlistmodal"
-                    >Brand Name</label
-                  >
-                  <input
-                    class="entry-input form-control mb-2"
-                    list="brandnamelistmodal"
-                    id="brandlistmodal"
-                    name="fruit"
-                  />
-
-                  <datalist id="brandnamelistmodal">
-                    <option value=""></option>
-                  </datalist>
+                  <div class="input-group">
+                    <input
+                      class="form-control text-center custom-input"
+                      placeholder="Select/Input Brand"
+                      name="brandmodal"
+                      id="brandmodal"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">Brand</span>
+                    </div>
+                  </div>
+                  <div class="custom-dropdown" id="brandmodalDropdown"></div>
                 </div>
               </div>
             </div>
@@ -121,17 +120,18 @@
 
         <div class="row mb-2">
           <div class="col-md-6">
-            <label class="form-label" for="brandlist">Brand Name</label>
-            <input
-              class="entry-input form-control mb-2"
-              list="brandnamelist"
-              id="brandlist"
-              name="fruit"
-            />
-
-            <datalist id="brandnamelist">
-              <option value=""></option>
-            </datalist>
+            <div class="input-group">
+              <input
+                class="form-control text-center custom-input"
+                placeholder="Select/Input Brand"
+                name="brand"
+                id="brand"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">Brand</span>
+              </div>
+            </div>
+            <div class="custom-dropdown" id="brandDropdown"></div>
           </div>
         </div>
 
