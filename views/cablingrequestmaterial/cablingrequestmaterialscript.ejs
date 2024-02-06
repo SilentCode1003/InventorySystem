@@ -54,7 +54,7 @@
 
     $(document).on("click", "#addBtn", function () {
       let quantity = $("#quantity").val();
-      let description = $("#itemlist").val();
+      let description = $("#itemname").val();
       var data = $("#cablingrequestmateriallist-dataTable tr");
 
       var message = "";
@@ -291,8 +291,8 @@
     $(document).on("click", "#requestBtn", function () {
       var requestby = $("#personel").val();
       var requestdate = $("#requestdate").val();
-      var store = $("#storelist").val();
-      var type = $("#typelist").val();
+      var store = $("#store").val();
+      var type = $("#type").val();
       var request_table = $("#cablingrequestmateriallist-dataTable tr");
       var data_length = request_table.length;
       var details = [];
@@ -439,15 +439,19 @@
         url: "/cablingitems/load",
         success: function (result) {
           var data = result.data;
+          let activeItems = [];
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              activeItems.push(item.description);
               var options = new Option(item.description, item.description);
               $(options).html(item.description);
               // $("#fruits").append(options);
-              $("#itemnamelist").append(options);
+              // $("#itemnamelist").append(options);
             }
           });
+
+          populateDropdown(activeItems, "itemDropdown", "itemname");
         },
         error: function (err) {
           errormsg(err);
@@ -461,15 +465,19 @@
         url: "/cablingpersonel/load",
         success: function (result) {
           var data = result.data;
+          let activePersonel = [];
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              activePersonel.push(item.personel);
               var options = new Option(item.personel, item.personel);
               $(options).html(item.personel);
               // $("#fruits").append(options);
               $("#personellist").append(options);
             }
           });
+
+          populateDropdown(activePersonel, "personelDropdown", "personel");
         },
         error: function (err) {
           errormsg(err);
@@ -481,15 +489,18 @@
         url: "/store/load",
         success: function (result) {
           var data = result.data;
+          let storeActive = [];
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              storeActive.push(item.storename);
               var options = new Option(item.storename, item.storename);
               $(options).html(item.storename);
               // $("#fruits").append(options);
               $("#storenamelist").append(options);
             }
           });
+          populateDropdown(storeActive, "storeDropdown", "store");
         },
         error: function (err) {
           errormsg(err);
@@ -501,20 +512,28 @@
         url: "/cablingrequesttype/load",
         success: function (result) {
           var data = result.data;
+          let activeType = [];
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              activeType.push(item.typename);
               var options = new Option(item.typename, item.typename);
               $(options).html(item.typename);
               // $("#fruits").append(options);
               $("#typenamelist").append(options);
             }
           });
+          populateDropdown(typeActive, "typeDropdown", "type");
         },
         error: function (err) {
           errormsg(err);
         },
       });
     }
+
+    setupCustomDropdown("itemname", "itemDropdown", "dropdown-option");
+    setupCustomDropdown("personel", "personelDropdown", "dropdown-option");
+    setupCustomDropdown("store", "storeDropdown", "dropdown-option");
+    setupCustomDropdown("type", "typeDropdown", "dropdown-option");
   });
 </script>

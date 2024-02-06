@@ -31,6 +31,7 @@
                     name="requestdate"
                     type="date"
                     data-field="date"
+                    placeholder="Select Date"
                     readonly
                   />
                   <div id="dtbox"></div>
@@ -38,49 +39,52 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <label class="form-label" for="personel">Personel</label>
-                  <input
-                    class="entry-input form-control mb-2"
-                    list="personellist"
-                    id="personel"
-                    name="personel"
-                  />
-
-                  <datalist id="personellist">
-                    <option value=""></option>
-                  </datalist>
+                  <div class="input-group">
+                    <input
+                      class="form-control text-center custom-input"
+                      placeholder="Select/Input Personel"
+                      name="personel"
+                      id="personel"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">Personel</span>
+                    </div>
+                  </div>
+                  <div class="custom-dropdown" id="personelDropdown"></div>
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row mt-2">
                 <div class="col-md-12">
-                  <label class="form-label" for="storelist">Store</label>
-                  <input
-                    class="entry-input form-control mb-2"
-                    list="storenamelist"
-                    id="storelist"
-                    name="storelist"
-                  />
-
-                  <datalist id="storenamelist">
-                    <option value=""></option>
-                  </datalist>
+                  <div class="input-group">
+                    <input
+                      class="form-control text-center custom-input"
+                      placeholder="Select/Input Store"
+                      name="store"
+                      id="store"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">Store</span>
+                    </div>
+                  </div>
+                  <div class="custom-dropdown" id="storelDropdown"></div>
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row mt-2">
                 <div class="col-md-12">
-                  <label class="form-label" for="typelist">Type</label>
-                  <input
-                    class="entry-input form-control mb-2"
-                    list="typenamelist"
-                    id="typelist"
-                    name="typelist"
-                  />
-
-                  <datalist id="typenamelist">
-                    <option value=""></option>
-                  </datalist>
+                  <div class="input-group">
+                    <input
+                      class="form-control text-center custom-input"
+                      placeholder="Select/Input Type"
+                      name="type"
+                      id="type"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">Type ex. SOF/RE-SOF/MIGRATION/TICKET</span>
+                    </div>
+                  </div>
+                  <div class="custom-dropdown" id="stypelDropdown"></div>
                 </div>
               </div>
             </div>
@@ -133,27 +137,18 @@
 
         <div class="row mb-2">
           <div class="col-md-6">
-            <label class="form-label" for="itemlist">Description</label>
-            <input
-              class="entry-input form-control mb-2"
-              list="itemnamelist"
-              id="itemlist"
-              name="items"
-            />
-
-            <datalist id="itemnamelist">
-              <option value=""></option>
-            </datalist>
-
-            <!-- <label class="form-label" for="brandlist">Brand</label>
-            <select
-              class="entry-input form-control mb-2 selectpicker"
-              data-live-search="true"
-              name="brandlist"
-              id="brandlist"
-            >
-              <option value="">- - - Select Brand - - -</option>
-            </select> -->
+            <div class="input-group">
+              <input
+                class="form-control text-center custom-input"
+                placeholder="Select/Input Item Description"
+                name="itemname"
+                id="itemname"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">Item Description</span>
+              </div>
+            </div>
+            <div class="custom-dropdown" id="itemDropdown"></div>
           </div>
         </div>
 
