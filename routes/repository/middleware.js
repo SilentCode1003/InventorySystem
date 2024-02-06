@@ -68,6 +68,9 @@ var roleacess = [
       {
         layout: "vendors",
       },
+      {
+        layout: "repeatrequest",
+      },
     ],
   },
   {
@@ -111,6 +114,9 @@ var roleacess = [
       },
       {
         layout: "reportmaterials",
+      },
+      {
+        layout: "repeatrequest",
       },
     ],
   },

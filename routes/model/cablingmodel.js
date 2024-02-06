@@ -492,3 +492,20 @@ exports.DeliveryReport = (data) => {
 
   return dataResult;
 };
+
+exports.RepeatRequest = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      id: key.rr_id,
+      name: key.rr_name,
+      details: key.rr_details,
+      status: key.rr_status,
+      createdby: key.rr_createdby,
+      createddate: key.rr_createddate,
+    });
+  });
+
+  return dataResult;
+};

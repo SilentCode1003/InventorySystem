@@ -27,8 +27,8 @@
     });
 
     $(document).on("click", "#addBtn", function () {
-      let description = $("#description").val();
-      let brandname = $("#brandlist").val();
+      let description = $("#itemname").val();
+      let brandname = $("#brandname").val();
       let itemcount = $("#itemcount").val();
 
       var message = "";
@@ -193,9 +193,11 @@
       }
     });
 
-    $(document).on("change", "#brandlist", function () {
-      var brand = $("#brandlist").val();
-      $("#descriptionlist").empty();
+    $(document).on("click", "#itemname", function () {
+      var brand = $("#brandname").val();
+
+      console.log(brand);
+      $("#itemDropdown").empty();
       $.ajax({
         type: "POST",
         url: "/cablingitems/getitem",
@@ -204,13 +206,17 @@
         },
         success: function (result) {
           var data = result.data;
+          let activeItem = [];
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              activeItem.push(item.description);
               var options = new Option(item.description, item.description);
               $(options).html(item.description);
-              $("#descriptionlist").append(options);
+              // $("#descriptionlist").append(options);
             }
           });
+
+          populateItem(activeItem);
         },
         error: function (error) {
           errormsg(error);
@@ -296,15 +302,18 @@
         url: "/brand/load",
         success: function (result) {
           var data = result.data;
+          let activeBrand = [];
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              activeBrand.push(item.brandname);
               var options = new Option(item.brandname, item.brandname);
               $(options).html(item.brandname);
               // $("#fruits").append(options);
-              $("#brandnamelist").append(options);
+              // $("#brandnamelist").append(options);
             }
           });
+          populateBrand(activeBrand);
         },
         error: function (err) {
           errormsg(err);
@@ -333,5 +342,95 @@
         },
       });
     }
+
+    function populateBrand(activeBrand) {
+      for (const brand of activeBrand) {
+        addBrand("brandDropdown", brand);
+      }
+    }
+
+    function populateItem(activeItem) {
+      for (const item of activeItem) {
+        addItem("itemDropdown", item);
+      }
+    }
+
+    function addBrand(dropdownId, optionText) {
+      const dropdownElement = document.getElementById(dropdownId);
+      const newOption = document.createElement("div");
+      newOption.className = "dropdown-option";
+      newOption.textContent = optionText;
+
+      newOption.addEventListener("click", function () {
+        const inputElement = document.getElementById("brandname");
+        inputElement.value = optionText;
+        dropdownElement.style.display = "none";
+      });
+
+      dropdownElement.appendChild(newOption);
+    }
+
+    function addItem(dropdownId, optionText) {
+      const dropdownElement = document.getElementById(dropdownId);
+      const newOption = document.createElement("div");
+      newOption.className = "dropdown-option";
+      newOption.textContent = optionText;
+
+      newOption.addEventListener("click", function () {
+        const inputElement = document.getElementById("itemname");
+        inputElement.value = optionText;
+        dropdownElement.style.display = "none";
+      });
+
+      dropdownElement.appendChild(newOption);
+    }
+
+    function setupCustomDropdown(inputId, dropdownId, optionClass) {
+      const inputElement = document.getElementById(inputId);
+      const dropdownElement = document.getElementById(dropdownId);
+      const options = dropdownElement.getElementsByClassName(optionClass);
+
+      inputElement.addEventListener("click", function () {
+        dropdownElement.style.display = "block";
+      });
+
+      for (const option of options) {
+        option.addEventListener("click", function () {
+          inputElement.value = option.textContent;
+          dropdownElement.style.display = "none";
+        });
+      }
+
+      inputElement.addEventListener("input", function () {
+        const value = inputElement.value.toUpperCase();
+        for (const option of options) {
+          if (option.textContent.toUpperCase().includes(value)) {
+            option.style.display = "block";
+          } else {
+            option.style.display = "none";
+          }
+        }
+        dropdownElement.style.display = "block";
+      });
+
+      document.addEventListener("click", function (event) {
+        const target = event.target;
+        if (!dropdownElement.contains(target) && target !== inputElement) {
+          dropdownElement.style.display = "none";
+        }
+      });
+    }
+
+    setupCustomDropdown(
+      "brandname",
+      "brandDropdown",
+      "dropdown-option"
+    );
+
+    setupCustomDropdown(
+      "itemname",
+      "itemDropdown",
+      "dropdown-option"
+    );
   });
 </script>

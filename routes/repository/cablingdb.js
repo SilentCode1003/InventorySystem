@@ -2,6 +2,7 @@ const mysql = require("mysql");
 const model = require("../model/cablingmodel");
 require("dotenv").config();
 const crypt = require("./cryptography");
+const { SubtractDayTime } = require("./customhelper");
 
 let password = "";
 crypt.Decrypter(process.env._PASSWORD_CABLING, (err, result) => {
@@ -29,6 +30,8 @@ crypt.Encrypter("#Ebedaf19dd0d", (err, result) => {
 
 //     console.log(`${result}`);
 // });
+
+SubtractDayTime("2018-05-15", "2023-11-20");
 
 exports.CheckConnection = () => {
   connection.connect((err) => {
@@ -154,6 +157,10 @@ exports.Select = (sql, table, callback) => {
 
       if (table == "DeliveryReport") {
         callback(null, model.DeliveryReport(results));
+      }
+
+      if (table == "RepeatRequest") {
+        callback(null, model.RepeatRequest(results));
       }
     });
   } catch (error) {
@@ -634,6 +641,22 @@ exports.InsertTable = (tablename, data, callback) => {
       dr_client,
       dr_deliverby,
       dr_date) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "repeat_request") {
+    let sql = `INSERT INTO repeat_request(
+      rr_name,
+      rr_details,
+      rr_status,
+      rr_createdby,
+      rr_createddate) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {

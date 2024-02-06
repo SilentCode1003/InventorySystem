@@ -178,6 +178,13 @@ exports.SubtractDayTime = (idate, fdate) => {
   const initaldate = moment(`${idate}`);
   const finaldate = moment(`${fdate}`);
   const diffInDays = finaldate.diff(initaldate, "days");
+  console.log(`year: ${finaldate.diff(initaldate, "year")}`);
+  console.log(
+    `month: ${
+      finaldate.diff(initaldate, "month") -
+      12 * finaldate.diff(initaldate, "year")
+    }`
+  );
 
   return diffInDays;
 };

@@ -104,57 +104,55 @@
       <div class="card-body">
         <div class="row mb-2">
           <div class="col-md-6">
-            <label class="form-label" for="brandlist">Brand Name</label>
-            <input
-              class="entry-input form-control mb-2"
-              list="brandnamelist"
-              id="brandlist"
-              name="brandlist"
-              placeholder="Enter Brand Name"
-              aria-label="brandlist"
-              aria-describedby="basic-addon1"
-            />
-
-            <datalist id="brandnamelist">
-              <option value=""></option>
-            </datalist>
+            <div class="input-group">
+              <input
+                class="form-control text-center custom-input"
+                placeholder="Select/Input Brand"
+                name="brandname"
+                id="brandname"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">Brand</span>
+              </div>
+            </div>
+            <div class="custom-dropdown" id="brandDropdown"></div>
           </div>
         </div>
 
         <div class="row mb-2">
           <div class="col-md-6">
-            <label class="form-label" for="description">Item Description</label>
-            <input
-              class="entry-input form-control mb-2"
-              list="descriptionlist"
-              id="description"
-              name="description"
-              placeholder="Enter Item Description"
-              aria-label="description"
-              aria-describedby="basic-addon1"
-            />
+            <div class="input-group">
+              <input
+                class="form-control text-center custom-input"
+                placeholder="Select/Input Item"
+                name="itemname"
+                id="itemname"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">Item Description</span>
+              </div>
+            </div>
 
-            <datalist id="descriptionlist">
-              <option value=""></option>
-            </datalist>
+            <div class="custom-dropdown" id="itemDropdown"></div>
           </div>
         </div>
 
         <div class="row mb-2">
           <div class="col-md-6">
-            <label class="form-label" for="itemcount">Item Count</label>
-            <input
-              id="itemcount"
-              name="itemcount"
-              type="number"
-              class="form-control"
-              placeholder="Enter Item Count"
-              aria-label="itemcount"
-              aria-describedby="basic-addon1"
-            />
+            <div class="input-group">
+              <input
+                class="form-control text-center custom-input"
+                placeholder="Select/Input Item"
+                name="itemcount"
+                id="itemcount"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">Item Count</span>
+              </div>
+            </div>
           </div>
         </div>
-
+       
         <div class="row">
           <div class="col-md-4 text-center mt-1">
             <button
