@@ -37,36 +37,34 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <label class="form-label" for="unitdescriptionmodal"
-                    >Unit Description</label
-                  >
-                  <input
-                    id="unitdescriptionmodal"
-                    name="unitdescriptionmodal"
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter new item description"
-                    aria-label="fullname"
-                    aria-describedby="basic-addon1"
-                  />
+                  <div class="input-group">
+                    <input
+                      class="form-control text-center custom-input"
+                      placeholder="Select/Input Unit"
+                      name="unitdescriptionmodal"
+                      id="unitdescriptionmodal"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">Unit</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row mt-2">
                 <div class="col-md-12">
-                  <label class="form-label" for="itemlistmodal"
-                    >Item Code</label
-                  >
-                  <input
-                    class="entry-input form-control mb-2"
-                    list="itemnamelist"
-                    id="itemlistmodal"
-                    name="itemosmodal"
-                  />
-
-                  <datalist id="itemnamelist">
-                    <option value=""></option>
-                  </datalist>
+                  <div class="input-group">
+                    <input
+                      class="form-control text-center custom-input"
+                      placeholder="Select/Input Item"
+                      name="itemmodal"
+                      id="itemmodal"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">Item</span>
+                    </div>
+                  </div>
+                  <div class="custom-dropdown" id="itemmodalDropdown"></div>
                 </div>
               </div>
             </div>
@@ -121,27 +119,18 @@
 
         <div class="row mb-2">
           <div class="col-md-6">
-            <label class="form-label" for="itemlist">Item Code</label>
-            <input
-              class="entry-input form-control mb-2"
-              list="itemnamelist"
-              id="itemlist"
-              name="items"
-            />
-
-            <datalist id="itemnamelist">
-              <option value=""></option>
-            </datalist>
-
-            <!-- <label class="form-label" for="brandlist">Brand</label>
-            <select
-              class="entry-input form-control mb-2 selectpicker"
-              data-live-search="true"
-              name="brandlist"
-              id="brandlist"
-            >
-              <option value="">- - - Select Brand - - -</option>
-            </select> -->
+            <div class="input-group">
+              <input
+                class="form-control text-center custom-input"
+                placeholder="Select/Input Item"
+                name="item"
+                id="item"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">Item</span>
+              </div>
+            </div>
+            <div class="custom-dropdown" id="itemDropdown"></div>
           </div>
         </div>
 

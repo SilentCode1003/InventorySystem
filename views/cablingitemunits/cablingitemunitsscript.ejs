@@ -2,10 +2,12 @@
   $(document).ready(function () {
     let itemunitcode = "";
     let status = "";
+    let unit = "";
+    let item = "";
 
     LoadTable();
     LoadList();
-    LoadModalList();
+    // LoadModalList();
 
     $("#cablingitemunits-dataTable tbody").on("click", "tr", function () {
       var dataRow = [];
@@ -17,18 +19,22 @@
         });
       console.log(dataRow);
       itemunitcode = dataRow[0];
+      item = dataRow[1];
+      unit = dataRow[2];
       status = dataRow[3];
     });
 
     $(document).on("click", "#editBtn", function () {
       $("#itemunitcodemodal").val(itemunitcode);
+      $("#itemmodal").val(item);
+      $("#unitdescriptionmodal").val(unit);
       $("#cablingitemunitsModal").modal("show");
       console.log(itemunitcode);
     });
 
     $(document).on("click", "#addBtn", function () {
       let unitdescription = $("#unitdescription").val();
-      let itemname = $("#itemlist").val();
+      let itemname = $("#item").val();
 
       console.log(`${unitdescription} ${itemname}`);
 
@@ -72,7 +78,7 @@
     //Edit Update
     $(document).on("click", "#saveBtn", function () {
       let unitdescriptionmodal = $("#unitdescriptionmodal").val();
-      let itemlistmodal = $("#itemlistmodal").val();
+      let itemlistmodal = $("#itemmodal").val();
 
       var message = "";
 
@@ -254,15 +260,20 @@
         url: "/cablingitems/load",
         success: function (result) {
           var data = result.data;
+          let activeItems = [];
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              activeItems.push(item.description);
               var options = new Option(item.description, item.description);
               $(options).html(item.description);
               // $("#fruits").append(options);
-              $("#itemnamelist").append(options);
+              // $("#itemnamelist").append(options);
             }
           });
+
+          populateDropdown(activeItems, "itemDropdown", "item");
+          populateDropdown(activeItems, "itemmodalDropdown", "itemmodal");
         },
         error: function (err) {
           errormsg(err);
@@ -270,26 +281,32 @@
       });
     }
 
-    function LoadModalList() {
-      $.ajax({
-        type: "GET",
-        url: "/brand/load",
-        success: function (result) {
-          var data = result.data;
+    // function LoadModalList() {
+    //   $.ajax({
+    //     type: "GET",
+    //     url: "/brand/load",
+    //     success: function (result) {
+    //       var data = result.data;
+    //       let activeItems = [];
 
-          $.each(data, function (key, item) {
-            if (item.status == "ACTIVE") {
-              var options = new Option(item.description, item.description);
-              $(options).html(item.description);
-              // $("#fruits").append(options);
-              $("#itemlistmodal").append(options);
-            }
-          });
-        },
-        error: function (err) {
-          errormsg(err);
-        },
-      });
-    }
+    //       $.each(data, function (key, item) {
+    //         if (item.status == "ACTIVE") {
+    //           activeItems.push(item.description);
+    //           var options = new Option(item.description, item.description);
+    //           $(options).html(item.description);
+    //           // $("#fruits").append(options);
+    //           // $("#itemlistmodal").append(options);
+    //         }
+    //       });
+    //       populateDropdown(activeItems, "itemmodalDropdown", "itemmodal");
+    //     },
+    //     error: function (err) {
+    //       errormsg(err);
+    //     },
+    //   });
+    // }
+
+    setupCustomDropdown("item", "itemDropdown", "dropdown-option");
+    setupCustomDropdown("itemmodal", "itemmodalDropdown", "dropdown-option");
   });
 </script>

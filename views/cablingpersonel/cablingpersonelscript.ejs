@@ -2,6 +2,7 @@
   $(document).ready(function () {
     let systemid = "";
     let status = "";
+    let personel = "";
 
     LoadTable();
 
@@ -15,11 +16,13 @@
         });
       console.log(dataRow);
       systemid = dataRow[0];
+      personel = dataRow[1];
       status = dataRow[2];
     });
 
     $(document).on("click", "#editBtn", function () {
       $("#systemidmodal").val(systemid);
+      $("#personelnamemodal").val(personel);
       $("#personelModal").modal("show");
       console.log(systemid);
     });
