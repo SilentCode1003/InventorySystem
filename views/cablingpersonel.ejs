@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include("header.ejs")%>
+    <%- include("./components/header.ejs")%>
   </head>
 
   <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
       <!-- Sidebar -->
-      <%- include("sidebar.ejs")%>
+      <%- include("./components/sidebar.ejs")%>
       <!-- End of Sidebar -->
 
       <!-- Content Wrapper -->
@@ -16,19 +16,19 @@
         <!-- Main Content -->
         <div id="content">
           <!-- Topbar -->
-          <%- include("topbar.ejs")%>
+          <%- include("./components/topbar.ejs")%>
           <!-- End of Topbar -->
 
           <!-- Begin Page Content -->
           <div class="container-fluid">
-            <%- include("./cablingpersonel/cablingpersonel.ejs")%>
+            <%- include("./pages/cablingpersonel/cablingpersonel.ejs")%>
           </div>
           <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <%- include("footer.ejs")%>
+        <%- include("./components/footer.ejs")%>
         <!-- End of Footer -->
       </div>
       <!-- End of Content Wrapper -->
@@ -42,6 +42,6 @@
 
     <!-- Bootstrap core JavaScript-->
     <%- include("script.ejs")%> <%-
-    include("./cablingpersonel/cablingpersonelscript.ejs")%>
+    include("./pages/cablingpersonel/cablingpersonelscript.ejs")%>
   </body>
 </html>
