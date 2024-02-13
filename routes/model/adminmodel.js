@@ -1,3 +1,12 @@
+const {
+  MasterUserModel,
+  MasterAccessTypeModel,
+  MasterPositionModel,
+  MasterRoleTypeModel,
+  MasterDepartmentModel,
+  MasterStoreModel,
+} = require("./modelclass");
+
 exports.MasterUser = (data) => {
   let dataResult = [];
 
@@ -17,7 +26,22 @@ exports.MasterUser = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterUserModel(
+        key["usercode"],
+        key["fullname"],
+        key["username"],
+        key["password"],
+        key["accesstype"],
+        key["roletype"],
+        key["position"],
+        key["department"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.MasterAccessType = (data) => {
@@ -33,7 +57,16 @@ exports.MasterAccessType = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterAccessTypeModel(
+        key["accesstypecode"],
+        key["accesstypename"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.MasterRoleType = (data) => {
@@ -49,7 +82,16 @@ exports.MasterRoleType = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterRoleTypeModel(
+        key["roletypecode"],
+        key["roletypename"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.MasterPosition = (data) => {
@@ -65,7 +107,16 @@ exports.MasterPosition = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterPositionModel(
+        key["positioncode"],
+        key["positionname"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.MasterDepartment = (data) => {
@@ -81,7 +132,16 @@ exports.MasterDepartment = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterDepartmentModel(
+        key["departmentcode"],
+        key["departmentname"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.MasterStore = (data) => {
@@ -97,5 +157,14 @@ exports.MasterStore = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterStoreModel(
+        key["storecode"],
+        key["storename"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };

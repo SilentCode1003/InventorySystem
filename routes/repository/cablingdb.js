@@ -25,10 +25,10 @@ const connection = mysql.createConnection({
 //   console.log(result);
 // });
 
-crypt.Decrypter('34db43a15c797175bfc4f7cd5d7156dd', (err, result) => {
-    if (err) console.error('Error: ', err);
+crypt.Decrypter("34db43a15c797175bfc4f7cd5d7156dd", (err, result) => {
+  if (err) console.error("Error: ", err);
 
-    console.log(`${result}`);
+  console.log(`${result}`);
 });
 
 SubtractDayTime("2018-05-15", "2023-11-20");
@@ -63,7 +63,7 @@ exports.InsertMultiple = async (stmt, todos) => {
   }
 };
 
-exports.Select = (sql, table, callback) => {
+exports.Select = (sql, callback) => {
   try {
     connection.connect((err) => {
       return err;
@@ -75,93 +75,7 @@ exports.Select = (sql, table, callback) => {
         callback(error, null);
       }
 
-      if (table == "MasterItem") {
-        callback(null, model.MasterItem(results));
-      }
-
-      if (table == "MasterItemPrice") {
-        callback(null, model.MasterItemPrice(results));
-      }
-
-      if (table == "MasterItemUnit") {
-        callback(null, model.MasterItemUnit(results));
-      }
-
-      if (table == "MasterStock") {
-        callback(null, model.MasterStock(results));
-      }
-
-      if (table == "MasterTool") {
-        callback(null, model.MasterTool(results));
-      }
-
-      if (table == "MasterBrand") {
-        callback(null, model.MasterBrand(results));
-      }
-
-      if (table == "RequestEquipmentDetail") {
-        callback(null, model.RequestEquipmentDetail(results));
-      }
-
-      if (table == "CablingPersonel") {
-        callback(null, model.CablingPersonel(results));
-      }
-
-      if (table == "CablingRequestType") {
-        callback(null, model.CablingRequestType(results));
-      }
-
-      if (table == "CablingProduct") {
-        callback(null, model.CablingProduct(results));
-      }
-
-      if (table == "InventoryItem") {
-        callback(null, model.InventoryItem(results));
-      }
-
-      if (table == "InventoryLogs") {
-        callback(null, model.InventoryLogs(results));
-      }
-
-      if (table == "RequestEquipmentItem") {
-        callback(null, model.RequestEquipmentItem(results));
-      }
-
-      if (table == "ConsumptionReport") {
-        callback(null, model.ConsumptionReport(results));
-      }
-
-      if (table == "MasterVendor") {
-        callback(null, model.MasterVendor(results));
-      }
-
-      if (table == "ProductionMaterials") {
-        callback(null, model.ProductionMaterials(results));
-      }
-
-      if (table == "ProductionMaterialCount") {
-        callback(null, model.ProductionMaterialCount(results));
-      }
-
-      if (table == "ProductionLogs") {
-        callback(null, model.ProductionLogs(results));
-      }
-
-      if (table == "ProductComponent") {
-        callback(null, model.ProductComponent(results));
-      }
-
-      if (table == "ProductionProductCost") {
-        callback(null, model.ProductionProductCost(results));
-      }
-
-      if (table == "DeliveryReport") {
-        callback(null, model.DeliveryReport(results));
-      }
-
-      if (table == "RepeatRequest") {
-        callback(null, model.RepeatRequest(results));
-      }
+      callback(null, results);
     });
   } catch (error) {
     console.log(error);

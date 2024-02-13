@@ -1,3 +1,26 @@
+const {
+  MasterItemModel,
+  MasterItemUnitModel,
+  MasterToolModel,
+  RequestEquipmentDetailModel,
+  RequestEquipmentItemModel,
+  MasterBranchModel,
+  RequestToolDetailModel,
+  RequestToolItemModel,
+  ReturnEquipmentModel,
+  ReturnToolModel,
+  CablingPersonelModel,
+  CablingRequestTypeModel,
+  CablingProductModel,
+  InventoryItemModel,
+  InventoryLogsModel,
+  ConsumptionReportModel,
+  ReturnMaterialModel,
+  MasterVendorModel,
+  RepeatRequestModel,
+  MasterItemPriceModel,
+} = require("./modelclass");
+
 exports.MasterItem = (data) => {
   let dataResult = [];
 
@@ -12,7 +35,17 @@ exports.MasterItem = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterItemModel(
+        key["itemcode"],
+        key["brand"],
+        key["description"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.MasterItemUnit = (data) => {
@@ -29,7 +62,17 @@ exports.MasterItemUnit = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterItemUnitModel(
+        key["itemunitcode"],
+        key["itemcode"],
+        key["unit"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.MasterItemPrice = (data) => {
@@ -47,7 +90,18 @@ exports.MasterItemPrice = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterItemPriceModel(
+        key["itempricecode"],
+        key["itemcode"],
+        key["barcode"],
+        key["price"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.MasterTool = (data) => {
@@ -65,7 +119,18 @@ exports.MasterTool = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterToolModel(
+        key["toolcode"],
+        key["tag"],
+        key["serial"],
+        key["description"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.MasterStock = (data) => {
@@ -75,15 +140,26 @@ exports.MasterStock = (data) => {
     dataResult.push({
       stockquantitycode: key.msxn_stockquantitycode,
       itemcode: key.msxn_itemcode,
-      msxn_minimum: key.msxn_minimum,
-      msxn_maximum: key.msxn_maximum,
-      msxn_status: key.msxn_status,
+      minimum: key.msxn_minimum,
+      maximum: key.msxn_maximum,
+      status: key.msxn_status,
       createdby: key.msxn_createdby,
       createddate: key.msxn_createddate,
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterToolModel(
+        key["stockquantitycode"],
+        key["itemcode"],
+        key["minimum"],
+        key["maximum"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.MasterBrand = (data) => {
@@ -99,7 +175,16 @@ exports.MasterBrand = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new MasterBranchModel(
+        key["brandcode"],
+        key["brandname"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.RequestEquipmentDetail = (data) => {
@@ -118,7 +203,19 @@ exports.RequestEquipmentDetail = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new RequestEquipmentDetailModel(
+        key["detailid"],
+        key["requestby"],
+        key["requestdate"],
+        key["detail"],
+        key["remarks"],
+        key["status"],
+        key["approvedby"],
+        key["approvedate"]
+      )
+  );
 };
 
 exports.RequestEquipmentItem = (data) => {
@@ -140,7 +237,22 @@ exports.RequestEquipmentItem = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new RequestEquipmentItemModel(
+        key["systemid"],
+        key["detailid"],
+        key["requestby"],
+        key["requestdate"],
+        key["itembrand"],
+        key["description"],
+        key["quantity"],
+        key["unit"],
+        key["status"],
+        key["approvedby"],
+        key["approveddate"]
+      )
+  );
 };
 
 exports.RequestToolDetail = (data) => {
@@ -159,7 +271,19 @@ exports.RequestToolDetail = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new RequestToolDetailModel(
+        key["detailid"],
+        key["requestby"],
+        key["requestdate"],
+        key["detail"],
+        key["remarks"],
+        key["status"],
+        key["approvedby"],
+        key["approveddate"]
+      )
+  );
 };
 
 exports.RequestToolItem = (data) => {
@@ -179,7 +303,21 @@ exports.RequestToolItem = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new RequestToolItemModel(
+        key["systemid"],
+        key["detailid"],
+        key["requestby"],
+        key["requestdate"],
+        key["description"],
+        key["description"],
+        key["serialtag"],
+        key["status"],
+        key["approvedby"],
+        key["approveddate"]
+      )
+  );
 };
 
 exports.ReturnEquipment = (data) => {
@@ -199,26 +337,20 @@ exports.ReturnEquipment = (data) => {
     });
   });
 
-  return dataResult;
-};
-
-exports.ReturnEquipment = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      returnid: key.rt_returnid,
-      toolcode: key.rt_toolcode,
-      returnby: key.rt_returnby,
-      returndate: key.rt_returndate,
-      remark: key.rt_remark,
-      status: key.rt_status,
-      checkby: key.rt_checkby,
-      checkdate: key.rt_checkdate,
-    });
-  });
-
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new ReturnEquipmentModel(
+        key["returnid"],
+        key["itemcode"],
+        key["returnby"],
+        key["returndate"],
+        key["quantity"],
+        key["remark"],
+        key["status"],
+        key["checkby"],
+        key["checkdate"]
+      )
+  );
 };
 
 exports.ReturnTool = (data) => {
@@ -237,7 +369,19 @@ exports.ReturnTool = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new ReturnToolModel(
+        key["returnid"],
+        key["toolcode"],
+        key["returnby"],
+        key["returndate"],
+        key["remark"],
+        key["status"],
+        key["checkby"],
+        key["checkdate"]
+      )
+  );
 };
 
 exports.CablingPersonel = (data) => {
@@ -253,7 +397,16 @@ exports.CablingPersonel = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new CablingPersonelModel(
+        key["systemid"],
+        key["personel"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.CablingRequestType = (data) => {
@@ -269,7 +422,16 @@ exports.CablingRequestType = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new CablingRequestTypeModel(
+        key["typecode"],
+        key["typename"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.CablingProduct = (data) => {
@@ -285,7 +447,16 @@ exports.CablingProduct = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new CablingProductModel(
+        key["productserial"],
+        key["description"],
+        key["status"],
+        key["addedby"],
+        key["addeddate"]
+      )
+  );
 };
 
 exports.InventoryItem = (data) => {
@@ -306,7 +477,21 @@ exports.InventoryItem = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new InventoryItemModel(
+        key["itemcode"],
+        key["itembrand"],
+        key["itemdescription"],
+        key["stocks"],
+        key["updatestocks"],
+        key["updateby"],
+        key["updatedate"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.InventoryLogs = (data) => {
@@ -322,7 +507,16 @@ exports.InventoryLogs = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new InventoryLogsModel(
+        key["logid"],
+        key["type"],
+        key["description"],
+        key["user"],
+        key["date"]
+      )
+  );
 };
 
 exports.ConsumptionReport = (data) => {
@@ -344,7 +538,22 @@ exports.ConsumptionReport = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new ConsumptionReportModel(
+        key["reportid"],
+        key["detailid"],
+        key["brand"],
+        key["description"],
+        key["quantity"],
+        key["unit"],
+        key["drnumber"],
+        key["unit"],
+        key["personel"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.ReturnMaterial = (data) => {
@@ -365,132 +574,22 @@ exports.ReturnMaterial = (data) => {
     });
   });
 
-  return dataResult;
-};
-
-exports.MasterVendor = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      vendorid: key.mv_vendorid,
-      vendorname: key.mv_vendorname,
-      contactname: key.mv_contactname,
-      contactemail: key.mv_contactemail,
-      contactphone: key.mv_contactphone,
-      address: key.mv_address,
-      status: key.mv_status,
-      createdby: key.mv_createdby,
-      createddate: key.mv_createddate,
-    });
-  });
-
-  return dataResult;
-};
-
-exports.ProductionMaterials = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      productid: key.mpm_productid,
-      productname: key.mpm_productname,
-      description: key.mpm_description,
-      category: key.mpm_category,
-      vendorid: key.mpm_vendorid,
-      price: key.mpm_price,
-      status: key.mpm_status,
-      createdby: key.mpm_createdby,
-      createddate: key.mpm_createddate,
-    });
-  });
-
-  return dataResult;
-};
-
-exports.ProductionMaterialCount = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      countid: key.pmc_countid,
-      productid: key.pmc_productid,
-      quantity: key.pmc_quantity,
-      unit: key.pmc_unit,
-      status: key.pmc_status,
-      createdby: key.pmc_createdby,
-      createddate: key.pmc_createddate,
-    });
-  });
-
-  return dataResult;
-};
-
-exports.ProductionLogs = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      logid: key.pl_logid,
-      description: key.pl_description,
-      status: key.pl_status,
-      date: key.pl_date,
-    });
-  });
-
-  return dataResult;
-};
-
-exports.ProductComponent = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      componentid: key.pc_componentid,
-      productid: key.pc_productid,
-      components: key.pc_components,
-      status: key.pc_status,
-      createdby: key.pc_createdby,
-      createddate: key.pc_createddate,
-    });
-  });
-
-  return dataResult;
-};
-
-exports.ProductionProductCost = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      productionid: key.ppc_productionid,
-      componentid: key.ppc_componentid,
-      productid: key.ppc_productid,
-      cost: key.ppc_cost,
-      status: key.ppc_status,
-      createdby: key.ppc_createdby,
-      createddate: key.ppc_createddate,
-    });
-  });
-
-  return dataResult;
-};
-
-exports.DeliveryReport = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      id: key.dr_id,
-      serial: key.dt_serial,
-      number: key.dr_number,
-      client: key.dr_client,
-      deliverby: key.dr_deliverby,
-      date: key.dr_date,
-    });
-  });
-
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new ReturnMaterialModel(
+        key["returnid"],
+        key["detailid"],
+        key["brand"],
+        key["description"],
+        key["quantity"],
+        key["unit"],
+        key["unit"],
+        key["personel"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
 
 exports.RepeatRequest = (data) => {
@@ -507,5 +606,15 @@ exports.RepeatRequest = (data) => {
     });
   });
 
-  return dataResult;
+  return dataResult.map(
+    (key) =>
+      new RepeatRequestModel(
+        key["id"],
+        key["name"],
+        key["details"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
 };
