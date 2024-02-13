@@ -6,6 +6,9 @@
   --clr-default: #eb1c23;
   --clr-white: #fff;
   --clr-bg-table: #ff6459;
+
+  --topbar-width-6rem: calc(100% - 6rem);
+  --topbar-width-14rem: calc(100% - 14rem);
 }
 
 .bg-gradient-primary {
@@ -27,11 +30,6 @@
   border-radius: 50px !important;
   height: 60px;
   width: 60px;
-  margin-left: 8px;
-}
-.fa,
-.fas {
-  margin-right: 10px !important;
 }
 .form-label {
   font-size: 1.2rem;
@@ -76,6 +74,10 @@ button {
 
 .topbar-icon {
   color: var(--clr-btn);
+}
+
+.topbar{
+  width: var(--topbar-width-14rem);
 }
 
 th {
@@ -244,6 +246,11 @@ body {
   cursor: pointer;
 }
 
+.sidebar{
+  position: fixed;
+  z-index: 4;
+}
+
 .dropdown-option:hover {
   background-color: #f0f0f0;
 }
@@ -251,3 +258,55 @@ body {
 .daterangepicker th.month{
   color: black !important;
 }
+
+#content{
+  margin-left: 14rem;
+}
+
+@media (min-width: 768px) {
+  .navbar-toggled{
+    margin-left: 6rem !important;
+    width: var(--topbar-width-6rem);
+  }
+
+  .content-toggled {
+    margin-left: 6rem !important;
+  }
+
+  .sidebar{
+    overflow-y: auto;
+    max-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 767px){
+  /* .sidebar{
+    width: 20rem !important;
+  } */
+  #content{
+    margin-left: 6rem;
+  }
+  
+  .sticky-footer{
+    margin-left: 6rem;
+  }  
+
+  .navbar{
+    margin-left: 6.5rem !important;
+    width: var(--topbar-width-6rem);
+  }
+
+  .content-toggled {
+    margin-left: 0!important;
+  }
+  .navbar-toggled {
+    margin-left: 0!important;
+    width: 100%;
+  }
+  .footer-toggled{
+    margin-left: 0!important;
+  }
+  
+}
+
