@@ -8,6 +8,7 @@ const helper = require("./repository/customhelper");
 const { MasterItemModel, InventoryItemModel } = require("./model/modelclass");
 const { Logger } = require("./repository/logger");
 const { Validator } = require("./controller/middleware");
+const { InventoryItem } = require("./model/cablingmodel");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -21,15 +22,21 @@ router.get("/load", (req, res) => {
   try {
     let sql = `select * from inventory_item`;
 
-    mysql.Select(sql, "InventoryItem", (err, result) => {
+    mysql.Select(sql, (err, result) => {
       if (err) console.error("Error: ", err);
 
-      console.log(result);
-
-      res.json({
-        msg: "success",
-        data: result,
-      });
+      if (result.length != 0) {
+        let data = InventoryItem(result);
+        return res.json({
+          msg: "success",
+          data: data,
+        });
+      } else {
+        return res.json({
+          msg: "success",
+          data: result,
+        });
+      }
     });
   } catch (error) {
     res.json({

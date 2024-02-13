@@ -6,6 +6,7 @@ const crypt = require("./repository/cryptography");
 const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
 const { Validator } = require("./controller/middleware");
+const { MasterStore } = require("./model/adminmodel");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -19,15 +20,21 @@ router.get("/load", (req, res) => {
   try {
     let sql = `select * from master_store`;
 
-    mysql.Select(sql, "MasterStore", (err, result) => {
+    mysql.Select(sql ,(err, result) => {
       if (err) console.error("Error: ", err);
 
-      console.log(result);
-
-      res.json({
-        msg: "success",
-        data: result,
-      });
+      if (result.length != 0) {
+        let data = MasterStore(result);
+        return res.json({
+          msg: "success",
+          data: data,
+        });
+      } else {
+        return res.json({
+          msg: "success",
+          data: result,
+        });
+      }
     });
   } catch (error) {
     res.json({

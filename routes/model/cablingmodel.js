@@ -18,6 +18,7 @@ const {
   ReturnMaterialModel,
   MasterVendorModel,
   RepeatRequestModel,
+  MasterItemPriceModel,
 } = require("./modelclass");
 
 exports.MasterItem = (data) => {
@@ -91,7 +92,7 @@ exports.MasterItemPrice = (data) => {
 
   return dataResult.map(
     (key) =>
-      new MasterItemUnitModel(
+      new MasterItemPriceModel(
         key["itempricecode"],
         key["itemcode"],
         key["barcode"],

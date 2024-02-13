@@ -21,7 +21,7 @@ class MasterItemUnitModel {
   }
 }
 
-class MasterItemPrice {
+class MasterItemPriceModel {
   constructor(
     itempricecode,
     itemcode,
@@ -451,7 +451,90 @@ class ReportMaterialConsumptionModel {
 
 //#endregion
 
+//#region Admin Models
+class MasterUserModel {
+  constructor(
+    usercode,
+    fullname,
+    username,
+    password,
+    accesstype,
+    roletype,
+    position,
+    department,
+    status,
+    createdby,
+    createddate
+  ) {
+    (this.usercode = usercode),
+      (this.fullname = fullname),
+      (this.username = username),
+      (this.password = password),
+      (this.accesstype = accesstype),
+      (this.roletype = roletype),
+      (this.position = position),
+      (this.department = department),
+      (this.status = status),
+      (this.createdby = createdby),
+      (this.createddate = createddate);
+  }
+}
+
+class MasterAccessTypeModel {
+  constructor(accesstypecode, accesstypename, status, createdby, createddate) {
+    (this.accesstypecode = accesstypecode),
+      (this.accesstypename = accesstypename),
+      (this.status = status),
+      (this.createdby = createdby),
+      (this.createddate = createddate);
+  }
+}
+
+class MasterRoleTypeModel {
+  constructor(roletypecode, roletypename, status, createdby, createddate) {
+    (this.roletypecode = roletypecode),
+      (this.roletypename = roletypename),
+      (this.status = status),
+      (this.createdby = createdby),
+      (this.createddate = createddate);
+  }
+}
+
+class MasterPositionModel {
+  constructor(positioncode, positionname, status, createdby, createddate) {
+    (this.positioncode = positioncode),
+      (this.positionname = positionname),
+      (this.status = status),
+      (this.createdby = createdby),
+      (this.createddate = createddate);
+  }
+}
+
+class MasterDepartmentModel {
+  constructor(departmentcode, departmentname, status, createdby, createddate) {
+    (this.departmentcode = departmentcode),
+      (this.departmentname = departmentname),
+      (this.status = status),
+      (this.createdby = createdby),
+      (this.createddate = createddate);
+  }
+}
+
+class MasterStoreModel {
+  constructor(storecode, storename, status, createdby, createddate) {
+    (this.storecode = storecode),
+      (this.storename = storename),
+      (this.status = status),
+      (this.createdby = createdby),
+      (this.createddate = createddate);
+  }
+}
+//#endregion
 module.exports = {
+  MasterStoreModel,
+  MasterDepartmentModel,
+  MasterRoleTypeModel,
+  MasterPositionModel,
   MasterItemModel,
   CablingProductModel,
   CablingPersonelModel,
@@ -462,7 +545,6 @@ module.exports = {
   ConsumptionReportModel,
   ReportMaterialConsumptionModel,
   MasterItemUnitModel,
-  MasterItemPrice,
   MasterToolModel,
   MasterStockModel,
   RequestEquipmentDetailModel,
@@ -476,4 +558,7 @@ module.exports = {
   ReturnMaterialModel,
   MasterVendorModel,
   RepeatRequestModel,
+  MasterUserModel,
+  MasterAccessTypeModel,
+  MasterItemPriceModel
 };

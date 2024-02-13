@@ -60,7 +60,7 @@ exports.InsertMultiple = async (stmt, todos) => {
   }
 };
 
-exports.Select = (sql, table, callback) => {
+exports.Select = (sql, callback) => {
   try {
     connection.connect((err) => {
       return err;
@@ -72,29 +72,7 @@ exports.Select = (sql, table, callback) => {
         callback(error, null);
       }
 
-      if (table == "MasterUser") {
-        callback(null, model.MasterUser(results));
-      }
-
-      if (table == "MasterAccessType") {
-        callback(null, model.MasterAccessType(results));
-      }
-
-      if (table == "MasterDepartment") {
-        callback(null, model.MasterDepartment(results));
-      }
-
-      if (table == "MasterRoleType") {
-        callback(null, model.MasterRoleType(results));
-      }
-
-      if (table == "MasterPosition") {
-        callback(null, model.MasterPosition(results));
-      }
-
-      if (table == "MasterStore") {
-        callback(null, model.MasterStore(results));
-      }
+      callback(null, results);
     });
   } catch (error) {
     console.log(error);

@@ -10,7 +10,7 @@ const {
   ReportMaterialModel,
   ConsumptionReportModel,
 } = require("./model/modelclass");
-
+const { RequestEquipmentDetail } = require("./model/cablingmodel");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -24,35 +24,41 @@ router.get("/load", (req, res) => {
     let status = dictionary.GetValue(dictionary.DND());
     let sql = `select * from request_equipment_detail where not red_status='${status}'`;
 
-    mysql.Select(sql, "RequestEquipmentDetail", (err, result) => {
+    mysql.Select(sql, (err, result) => {
       if (err) console.error("Error: ", err);
-      let data = [];
+      if (result.length != 0) {
+        let data = RequestEquipmentDetail(result);
+        let responsedata = [];
 
-      result.forEach((key, item) => {
-        let detail = JSON.parse(key.detail);
-        var subdetail = "";
-        detail.forEach((subkey, subitem) => {
-          subdetail += `[${subkey.brand} ${subkey.description}] ${subkey.count} ${subkey.unit} </br>`;
+        data.forEach((key) => {
+          let detail = JSON.parse(key.detail);
+          var subdetail = "";
+          detail.forEach((subkey, subitem) => {
+            subdetail += `[${subkey.brand} ${subkey.description}] ${subkey.count} ${subkey.unit} </br>`;
+          });
+
+          responsedata.push({
+            detailid: key.detailid,
+            requestby: key.requestby,
+            requestdate: key.requestdate,
+            detail: subdetail,
+            remarks: key.remarks,
+            status: key.status,
+            approvedby: key.approvedby,
+            approvedate: key.approvedate,
+          });
         });
 
-        data.push({
-          detailid: key.detailid,
-          requestby: key.requestby,
-          requestdate: key.requestdate,
-          detail: subdetail,
-          remarks: key.remarks,
-          status: key.status,
-          approvedby: key.approvedby,
-          approvedate: key.approvedate,
+        res.json({
+          msg: "success",
+          data: data,
         });
-      });
-
-      console.log(result);
-
-      res.json({
-        msg: "success",
-        data: data,
-      });
+      } else {
+        return res.json({
+          msg: "success",
+          data: result,
+        });
+      }
     });
   } catch (error) {
     res.json({
