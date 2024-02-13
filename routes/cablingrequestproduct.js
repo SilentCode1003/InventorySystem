@@ -11,7 +11,7 @@ const {
   ReportMaterialModel,
   ConsumptionReportModel,
 } = require("./model/modelclass");
-const { Validator } = require("./repository/middleware");
+const { Validator } = require("./controller/middleware");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {

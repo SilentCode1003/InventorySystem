@@ -25,11 +25,11 @@ const connection = mysql.createConnection({
 //   console.log(result);
 // });
 
-// crypt.Decrypter('e0f57e46160db3664140d8a0a3b897cc', (err, result) => {
-//     if (err) console.error('Error: ', err);
+crypt.Decrypter('34db43a15c797175bfc4f7cd5d7156dd', (err, result) => {
+    if (err) console.error('Error: ', err);
 
-//     console.log(`${result}`);
-// });
+    console.log(`${result}`);
+});
 
 SubtractDayTime("2018-05-15", "2023-11-20");
 

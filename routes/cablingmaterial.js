@@ -7,7 +7,7 @@ const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
 const { MasterItemModel, InventoryItemModel } = require("./model/modelclass");
 const { Logger } = require("./repository/logger");
-const { Validator } = require("./repository/middleware");
+const { Validator } = require("./controller/middleware");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {

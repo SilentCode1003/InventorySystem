@@ -6,8 +6,7 @@ const crypt = require("./repository/cryptography");
 const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
 const { CablingProductModel } = require("./model/modelclass");
-const { Validator } = require("./repository/middleware");
-
+const { Validator } = require("./controller/middleware");
 /* GET home page. */
 router.get("/", function (req, res, next) {
   Validator(req, res, "cablingproduct");
