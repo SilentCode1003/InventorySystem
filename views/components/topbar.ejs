@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-light green topbar mb-4 static-top shadow">
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top topbar-bg">
 
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -6,9 +6,22 @@
     </button>
 
     <!-- Topbar Search -->
-
+    <a class="sidebar-brand  align-items-center justify-content-center mobile-hidden" href="#">
+        <div class="sidebar-brand-icon">
+            <img src="/images/img/5L_logo-Red.png" class="img-fluid-top" alt="Responsive image" />
+        </div>
+    </a>
        
-
+    <div class="text-center d-none d-md-inline">
+        <div class="hamburger" id="sidebarToggle" style="margin-top: 7px;">
+            <input class="checkbox" type="checkbox" />
+            <svg fill="none" viewBox="0 0 50 50" height="40" width="40">
+                <path class="lineTop line" stroke-linecap="round" stroke-width="4" stroke="black" d="M6 11L44 11"></path>
+                <path stroke-linecap="round" stroke-width="4" stroke="black" d="M6 24H43" class="lineMid line"></path>
+                <path stroke-linecap="round" stroke-width="4" stroke="black" d="M6 37H43" class="lineBottom line"></path>
+            </svg>
+        </div>
+    </div>
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -42,7 +55,7 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-white small"><%= fullname%> <br> (<%= position%>)</span>
+                <span class="mr-2 d-none d-lg-inline small text-black-50"><%= fullname%> <br> (<%= position%>)</span>
                 <img class="img-profile rounded-circle"
                     src="/images/img/undraw_profile.svg">    
             </a>
