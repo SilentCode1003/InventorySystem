@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const mysql = require("./repository/admindb");
 const crypt = require("./repository/cryptography");
+const { MasterUser } = require("./model/adminmodel");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -30,21 +31,22 @@ router.post("/authentication", (req, res) => {
 
       // console.log(USERNAME: ${username})
       let sql = `select * from master_user where mu_username='${username}' and mu_password='${result}'`;
-      mysql.Select(sql, "MasterUser", (err, result) => {
+      mysql.Select(sql, (err, result) => {
         if (err) {
           return res.json({
             msg: err,
           });
         }
-        console.log(result);
-        if (result.length != 0) {
+        let data = MasterUser(result)
+        console.log(data );
+        if (data.length != 0) {
           req.session.isAuth = true;
-          req.session.username = result[0].username;
-          req.session.fullname = result[0].fullname;
-          req.session.roletype = result[0].roletype;
-          req.session.accesstype = result[0].accesstype;
-          req.session.department = result[0].department;
-          req.session.position = result[0].position;
+          req.session.username = data[0].username;
+          req.session.fullname = data[0].fullname;
+          req.session.roletype = data[0].roletype;
+          req.session.accesstype = data[0].accesstype;
+          req.session.department = data[0].department;
+          req.session.position = data[0].position;
           req.session.title = process.env._TITLE;
 
           res.json({
