@@ -25,7 +25,7 @@ const connection = mysql.createConnection({
 //   console.log(result);
 // });
 
-crypt.Decrypter("34db43a15c797175bfc4f7cd5d7156dd", (err, result) => {
+crypt.Decrypter("77c43406c8cbd4597eb4844da432c70f", (err, result) => {
   if (err) console.error("Error: ", err);
 
   console.log(`${result}`);
