@@ -13,7 +13,6 @@ const { InventoryItem } = require("./model/cablingmodel");
 /* GET home page. */
 router.get("/", function (req, res, next) {
   Validator(req, res, "cablingmaterial");
-
 });
 
 module.exports = router;
@@ -55,7 +54,7 @@ router.post("/save", (req, res) => {
     let createddate = helper.GetCurrentDatetime();
 
     let sql_exist = `select * from master_item where mi_brand='${brandname}' and mi_description='${description}'`;
-    mysql.Select(sql_exist, "MasterItem", (err, result) => {
+    mysql.Select(sql_exist, (err, result) => {
       if (err) console.error("Error: ", err);
 
       let clean_no_duplicate = helper.removeDuplicateSets(result);
@@ -193,7 +192,7 @@ router.post("/edit", (req, res) => {
 
     console.log(data);
 
-    mysql.Select(sql_check, "InventoryItem", (err, result) => {
+    mysql.Select(sql_check, (err, result) => {
       if (err) console.error("Error: ", err);
 
       if (result.length != 1) {

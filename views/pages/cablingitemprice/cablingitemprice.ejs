@@ -103,33 +103,36 @@
 
         <div class="row mb-2">
           <div class="col-md-6">
-            <label class="form-label" for="brandlist">Item Brand</label>
-            <input
-              class="entry-input form-control mb-2"
-              list="brandnamelist"
-              id="brandlist"
-              name="brandlist"
-            />
-
-            <datalist id="brandnamelist">
-              <option value=""></option>
-            </datalist>
+            <div class="input-group">
+              <input
+                class="form-control text-center custom-input"
+                placeholder="Select/Input Brand"
+                name="brandname"
+                id="brandname"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">Brand</span>
+              </div>
+            </div>
+            <div class="custom-dropdown" id="brandDropdown"></div>
           </div>
         </div>
 
         <div class="row mb-2">
           <div class="col-md-6">
-            <label class="form-label" for="itemlist">Item Description</label>
-            <input
-              class="entry-input form-control mb-2"
-              list="itemdescriptionlist"
-              id="itemlist"
-              name="itemlist"
-            />
+            <div class="input-group">
+              <input
+                class="form-control text-center custom-input"
+                placeholder="Select/Input Item"
+                name="itemname"
+                id="itemname"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">Item Description</span>
+              </div>
+            </div>
 
-            <datalist id="itemdescriptionlist">
-              <option value=""></option>
-            </datalist>
+            <div class="custom-dropdown" id="itemDropdown"></div>
           </div>
         </div>
 
