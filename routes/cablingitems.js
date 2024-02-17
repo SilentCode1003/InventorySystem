@@ -63,7 +63,7 @@ router.post("/save", (req, res) => {
       } else {
         let sql_check = `select * from master_brand where mb_brandname='${brandname}'`;
         mysql
-          .isDataExist(sql_check, "MasterBrand")
+          .isDataExist(sql_check)
           .then((result) => {
             console.log(result);
 
@@ -138,7 +138,7 @@ router.post("/edit", (req, res) => {
 
     console.log(data);
 
-    mysql.Select(sql_check, "MasterItem", (err, result) => {
+    mysql.Select(sql_check, (err, result) => {
       if (err) console.error("Error: ", err);
 
       if (result.length != 1) {

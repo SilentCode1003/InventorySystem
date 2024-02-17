@@ -583,7 +583,7 @@ exports.InsertTable = (tablename, data, callback) => {
 
 exports.isDataExist = (sql, tablename) => {
   return new Promise((resolve, reject) => {
-    this.Select(sql, tablename, (err, result) => {
+    this.Select(sql, (err, result) => {
       if (err) reject(err);
 
       console.log(result);

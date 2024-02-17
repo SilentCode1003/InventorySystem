@@ -52,7 +52,7 @@ router.post("/save", (req, res) => {
     let master_item_unit = [];
 
     let sql_exist = `select * from master_item_unit where miu_itemcode='${itemname}' and miu_unit='${unitdescription}'`;
-    mysql.Select(sql_exist, "MasterItemUnit", (err, result) => {
+    mysql.Select(sql_exist, (err, result) => {
       if (err) console.error("Error: ", err);
 
       console.log(result);

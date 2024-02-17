@@ -8,7 +8,7 @@ const helper = require("./repository/customhelper");
 const { MasterItemModel, InventoryItemModel } = require("./model/modelclass");
 const { Logger } = require("./repository/logger");
 const { Validator } = require("./controller/middleware");
-const { InventoryItem } = require("./model/cablingmodel");
+const { InventoryItem, MasterItem } = require("./model/cablingmodel");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -58,40 +58,15 @@ router.post("/save", (req, res) => {
       if (err) console.error("Error: ", err);
 
       let clean_no_duplicate = helper.removeDuplicateSets(result);
-      let masterItemModel = clean_no_duplicate.map(
-        (data) =>
-          new MasterItemModel(
-            data["itemcode"],
-            data["brand"],
-            data["description"],
-            data["status"],
-            data["createdby"],
-            data["createddate"]
-          )
-      );
+      let masterItemModel = MasterItem(result);
 
       let sql_check = `select * from inventory_item where ii_itembrand='${brandname}' and ii_itemdescription='${description}'`;
-      mysql.Select(sql_check, "InventoryItem", (err, result) => {
+      mysql.Select(sql_check, (err, result) => {
         if (err) console.error("Error: ", err);
 
         console.log(result);
         let inventoryItem = helper.ConvertToJson(result);
-        let inventoryItemModel = inventoryItem.map(
-          (data) =>
-            new InventoryItemModel(
-              data["itemcode"],
-              data["itembrand"],
-              data["itemdescription"],
-              data["stocks"],
-              data["updatestocks"],
-              data["updateby"],
-              data["updatedate"],
-              data["status"],
-              data["createdby"],
-              data["createddate"]
-            )
-        );
-
+        let inventoryItemModel = InventoryItem(result);
         if (result.length != 0) {
           //update existing data
           let inventory_item = [];
@@ -145,6 +120,8 @@ router.post("/save", (req, res) => {
               createddate,
             ]);
           });
+
+          console.log(inventory_item);
 
           mysql.InsertTable("inventory_item", inventory_item, (err, result) => {
             if (err) console.error("Error: ", err);
