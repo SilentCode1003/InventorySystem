@@ -132,6 +132,7 @@
   </li>
 
   <!-- Nav Item - Cabling Collapse Menu -->
+  <% if (roletype==='Admin' || roletype==='Manager' ) { %>
   <li class="nav-item">
     <a
       class="nav-link collapsed"
@@ -190,7 +191,7 @@
       </div>
     </div>
   </li>
-
+  <% } %>
   <!-- Nav Item - Cabling Inventory Collapse Menu -->
   <li class="nav-item">
     <a
