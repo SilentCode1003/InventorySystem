@@ -80,6 +80,41 @@ var roleacess = [
         layout: "cablingdashboard",
       },
       {
+        layout: "cablingproduct",
+      },
+      {
+        layout: "cablingmaterial",
+      },
+      {
+        layout: "cablingtools",
+      },
+      {
+        layout: "cablingrequestmaterial",
+      },
+      {
+        layout: "cablingrequestproduct",
+      },
+      {
+        layout: "requesttools",
+      },
+      {
+        layout: "requestpurchaseorder",
+      },
+      {
+        layout: "reportmaterials",
+      },
+      {
+        layout: "reportpurchaseorder",
+      },
+    ],
+  },
+  {
+    role: "Manager",
+    routes: [
+      {
+        layout: "cablingdashboard",
+      },
+      {
         layout: "cablingitemprice",
       },
       {
@@ -107,25 +142,13 @@ var roleacess = [
         layout: "cablingrequesttype",
       },
       {
-        layout: "production",
-      },
-      {
-        layout: "productionmaterial",
-      },
-      {
         layout: "reportmaterials",
-      },
-      {
-        layout: "repeatrequest",
       },
     ],
   },
 ];
 
 exports.Validator = function (req, res, layout) {
-  console.log(layout);
-  console.log(roleacess.length);
-
   if (req.session.roletype == "User" && layout == "index") {
     return res.redirect("/cablingdashboard");
   } else {

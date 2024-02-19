@@ -1,33 +1,43 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul
+  class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+  id="accordionSidebar"
+>
   <!-- Sidebar - Brand -->
-  <a class="sidebar-brand align-items-center justify-content-center web-hidden" href="#">
+  <a
+    class="sidebar-brand align-items-center justify-content-center web-hidden"
+    href="#"
+  >
     <div class="sidebar-brand-icon">
-      <img src="/images/img/logo.jpg" class="img-fluid" alt="Responsive image" />
+      <img
+        src="/images/img/logo.jpg"
+        class="img-fluid"
+        alt="Responsive image"
+      />
     </div>
     <div class="sidebar-brand-text mx-3">Inventory System</div>
   </a>
 
   <div class="webview-margin"></div>
   <!-- Divider -->
-  <hr class="sidebar-divider" style="margin-bottom: 0 !important;"/>
+  <hr class="sidebar-divider" style="margin-bottom: 0 !important" />
   <% if (roletype==='Admin' ) { %>
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
-      <a class="nav-link" href="/">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></a>
-    </li>
+  <!-- Nav Item - Dashboard -->
+  <li class="nav-item">
+    <a class="nav-link" href="/">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a
+    >
+  </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider" />
+  <!-- Divider -->
+  <hr class="sidebar-divider" />
 
-    <!-- Heading -->
-    <div class="sidebar-heading">Control Panel</div>
+  <!-- Heading -->
+  <div class="sidebar-heading">Control Panel</div>
 
-    <!-- Nav Item - PCreated bys Collapse Menu -->
+  <!-- Nav Item - PCreated bys Collapse Menu -->
 
-    <!-- Nav Item - Admin Control Panel Collapse Menu -->
-
+  <!-- Nav Item - Admin Control Panel Collapse Menu -->
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdminControlPanel"
         aria-expanded="true" aria-controls="collapseAdminControlPanel">
@@ -65,7 +75,8 @@
           </a>
         </div>
       </div>
-    </li>
+    </div>
+  </li>
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
@@ -81,23 +92,16 @@
           </a>
         </div>
       </div>
-    </li>
+    </div>
+  </li>
 
-    <% } %>
-      <% if (roletype==='Admin' || roletype==='User' || roletype==='Manager' ) { %>
-        <!-- Divider -->
-        <hr class="sidebar-divider" />
+  <% } %> <% if (roletype==='Admin' || roletype==='User' || roletype==='Manager'
+  ) { %>
+  <!-- Divider -->
+  <hr class="sidebar-divider" />
 
-        <!-- Heading -->
-        <div class="sidebar-heading">Cabling Inventory</div>
-
-        <!-- Nav Item - Cabling Dashboard Collapse Menu -->
-        <li class="nav-item">
-          <a class="nav-link" href="/cablingdashboard">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-        </li>
-
+  <!-- Heading -->
+  <div class="sidebar-heading">Cabling Inventory</div>
         <!-- Nav Item - Cabling Collapse Menu -->
         <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCablingMaster"
@@ -228,11 +232,10 @@
             </div>
           </div>
         </li>
+  <% } %>
 
-        <% } %>
-
-          <!-- Sidebar Toggler (Sidebar) -->
-          <!-- <div class="text-center d-none d-md-inline">
+  <!-- Sidebar Toggler (Sidebar) -->
+  <!-- <div class="text-center d-none d-md-inline">
           <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div> -->
 </ul>

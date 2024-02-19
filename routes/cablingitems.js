@@ -5,7 +5,6 @@ const mysql = require("./repository/cablingdb");
 const crypt = require("./repository/cryptography");
 const dictionary = require("./repository/dictionary");
 const helper = require("./repository/customhelper");
-const { MasterItemModel } = require("./model/modelclass");
 const { Validator } = require("./controller/middleware");
 const { MasterItem } = require("./model/cablingmodel");
 
@@ -52,7 +51,7 @@ router.post("/save", (req, res) => {
     let master_item = [];
 
     let sql_exist = `select * from master_item where mi_brand='${brandname}' and mi_description='${itemdescription}'`;
-    mysql.Select(sql_exist, "MasterItem", (err, result) => {
+    mysql.Select(sql_exist, (err, result) => {
       if (err) console.error("Error: ", err);
 
       console.log(result);
@@ -64,7 +63,7 @@ router.post("/save", (req, res) => {
       } else {
         let sql_check = `select * from master_brand where mb_brandname='${brandname}'`;
         mysql
-          .isDataExist(sql_check, "MasterBrand")
+          .isDataExist(sql_check)
           .then((result) => {
             console.log(result);
 
@@ -139,7 +138,7 @@ router.post("/edit", (req, res) => {
 
     console.log(data);
 
-    mysql.Select(sql_check, "MasterItem", (err, result) => {
+    mysql.Select(sql_check, (err, result) => {
       if (err) console.error("Error: ", err);
 
       if (result.length != 1) {
@@ -200,33 +199,29 @@ router.post("/getitem", (req, res) => {
     let cabling_item = [];
     let sql = `select * from master_item where mi_brand='${brand}'`;
 
-    mysql.Select(sql, "MasterItem", (err, result) => {
+    mysql.Select(sql, (err, result) => {
       if (err) console.error("Error: ", err);
-      let clean_no_duplicate = helper.removeDuplicateSets(result);
-      let masterItemModel = clean_no_duplicate.map(
-        (data) =>
-          new MasterItemModel(
-            data["itemcode"],
-            data["brand"],
-            data["description"],
-            data["status"],
-            data["createdby"],
-            data["createddate"]
-          )
-      );
-
-      masterItemModel.forEach((item, index) => {
-        cabling_item.push({
-          description: item.description,
-          status: item.status,
+      if (result != 0) {
+        let data = MasterItem(result);
+        data.forEach((item) => {
+          cabling_item.push({
+            description: item.description,
+            status: item.status,
+          });
         });
-      });
 
-      console.log(cabling_item);
+        console.log(cabling_item);
 
-      res.json({
-        data: cabling_item,
-      });
+        res.json({
+          msg: "success",
+          data: cabling_item,
+        });
+      } else {
+        res.json({
+          msg: "success",
+          data: result,
+        });
+      }
     });
   } catch (error) {
     res.json({

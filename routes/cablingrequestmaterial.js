@@ -10,7 +10,16 @@ const {
   ReportMaterialModel,
   ConsumptionReportModel,
 } = require("./model/modelclass");
-const { RequestEquipmentDetail } = require("./model/cablingmodel");
+const {
+  RequestEquipmentDetail,
+  RequestEquipmentItem,
+} = require("./model/cablingmodel");
+const {
+  ConvertToJson,
+  GetCurrentDatetime,
+} = require("./repository/customhelper");
+
+const dictionary = require("./repository/dictionary");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -37,6 +46,8 @@ router.get("/load", (req, res) => {
             subdetail += `[${subkey.brand} ${subkey.description}] ${subkey.count} ${subkey.unit} </br>`;
           });
 
+          console.log(subdetail);
+
           responsedata.push({
             detailid: key.detailid,
             requestby: key.requestby,
@@ -51,7 +62,7 @@ router.get("/load", (req, res) => {
 
         res.json({
           msg: "success",
-          data: data,
+          data: responsedata,
         });
       } else {
         return res.json({
@@ -79,7 +90,7 @@ router.post("/save", (req, res) => {
     let request_equipment_detail = [];
     let remarks = `${store} - ${type}`;
     let createdby = req.session.fullname;
-    let createddate = helper.GetCurrentDatetime();
+    let createddate = GetCurrentDatetime();
     let master_store = [];
     let cabling_request_type = [];
     let request_equipment_item = [];
@@ -88,7 +99,7 @@ router.post("/save", (req, res) => {
         and red_requestdate='${requestdate}' 
         and red_detail='${details}'`;
 
-    let jsonDetails = helper.ConvertToJson(JSON.parse(details));
+    let jsonDetails = ConvertToJson(JSON.parse(details));
     let requestEquipmentItemModel = jsonDetails.map(
       (data) =>
         new RequestMaterialModel(
@@ -101,7 +112,7 @@ router.post("/save", (req, res) => {
 
     //#region STORE
     let check_master_store = `select * from master_store where ms_storename='${store}'`;
-    admin.Select(check_master_store, "MasterStore", (err, result) => {
+    admin.Select(check_master_store, (err, result) => {
       if (err) console.error("Error: ", err);
 
       if (result.length != 0) {
@@ -121,7 +132,7 @@ router.post("/save", (req, res) => {
     let check_cabling_request_type = `select * from cabling_request_type where crt_typename='${type}'`;
     mysql.Select(
       check_cabling_request_type,
-      "CablingRequestType",
+
       (err, result) => {
         if (err) console.error("Error: ", err);
 
@@ -149,7 +160,7 @@ router.post("/save", (req, res) => {
     //#endregion
 
     //#region REQUEST
-    mysql.Select(sql_exist, "RequestEquipmentDetail", (err, result) => {
+    mysql.Select(sql_exist, (err, result) => {
       if (err) console.error("Error: ", err);
 
       if (result.length != 0) {
@@ -189,7 +200,7 @@ router.post("/save", (req, res) => {
               ]);
             });
 
-            console.log(request_equipment_item);
+            console.log(requestEquipmentItemModel);
             mysql.InsertTable(
               "request_equipment_item",
               request_equipment_item,
@@ -302,7 +313,9 @@ router.post("/add", (req, res) => {
     mysql.SelectResult(sql, (err, result) => {
       if (err) console.error(err);
 
-      let jsonData = helper.ConvertToJson(result);
+      console.log(result);
+
+      let jsonData = ConvertToJson(result);
       let requestMaterialModel = jsonData.map(
         (data) =>
           new RequestMaterialModel(
@@ -350,7 +363,7 @@ router.post("/approve", (req, res) => {
     let detailid = req.body.detailid;
     let status = dictionary.GetValue(dictionary.APD());
     let approvedby = req.session.fullname;
-    let approvedate = helper.GetCurrentDatetime();
+    let approvedate = GetCurrentDatetime();
     let update_request_equipment_detail = `update request_equipment_detail 
             set red_status='${status}',
             red_approvedby='${approvedby}',
@@ -389,15 +402,18 @@ router.post("/getrequestdetail", (req, res) => {
     let detailid = req.body.detailid;
     let sql = `select  * from request_equipment_item where rei_detailid='${detailid}'`;
 
-    mysql.Select(sql, "RequestEquipmentItem", (err, result) => {
+    mysql.Select(sql, (err, result) => {
       if (err) console.error("Error: ", err);
 
-      console.log(result);
-
-      res.json({
-        msg: "success",
-        data: result,
-      });
+      if (result != 0) {
+        let data = RequestEquipmentItem(result);
+        res.json({ msg: "success", data: data });
+      } else {
+        res.json({
+          msg: "success",
+          data: result,
+        });
+      }
     });
   } catch (error) {
     res.json({
@@ -417,7 +433,7 @@ router.post("/report", (req, res) => {
     let return_status = dictionary.GetValue(dictionary.RET());
     let done_status = dictionary.GetValue(dictionary.DND());
     let reportby = req.session.fullname;
-    let reportdate = helper.GetCurrentDatetime();
+    let reportdate = GetCurrentDatetime();
     let consumption_report = [];
     let return_material = [];
 

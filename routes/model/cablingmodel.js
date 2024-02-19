@@ -16,7 +16,6 @@ const {
   InventoryLogsModel,
   ConsumptionReportModel,
   ReturnMaterialModel,
-  MasterVendorModel,
   RepeatRequestModel,
   MasterItemPriceModel,
 } = require("./modelclass");

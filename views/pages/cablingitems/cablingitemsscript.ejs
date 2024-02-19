@@ -3,6 +3,7 @@
     let itemcode = "";
     let status = "";
     let brand = "";
+    let itemname = "";
 
     LoadTable();
     LoadList();
@@ -19,12 +20,14 @@
       console.log(dataRow);
       itemcode = dataRow[0];
       brand = dataRow[1];
+      itemname = dataRow[2];
       status = dataRow[3];
     });
 
     $(document).on("click", "#editBtn", function () {
       $("#itemcodemodal").val(itemcode);
       $("#brandmodal").val(brand);
+      $("#itemnamemodal").val(itemname);
       $("#cablingitemsModal").modal("show");
       console.log(itemcode);
     });
@@ -72,16 +75,16 @@
 
     //Edit Update
     $(document).on("click", "#saveBtn", function () {
-      let itemdescriptionmodal = $("#itemdescriptionmodal").val();
-      let brandlistmodal = $("#brandlistmodal").val();
+      let brand = $("#brandmodal").val();
+      let item = $("#itemnamemodal").val();
 
       var message = "";
 
-      if (itemdescriptionmodal == "") {
+      if (item == "") {
         message += "ITEM DESCRIPTION ";
       }
 
-      if (brandlistmodal == "") {
+      if (brand == "") {
         message += "BRAND NAME ";
       }
 
@@ -92,8 +95,8 @@
           type: "POST",
           url: "/cablingitems/edit",
           data: {
-            itemdescriptionmodal: itemdescriptionmodal,
-            brandlistmodal: brandlistmodal,
+            itemdescriptionmodal: item,
+            brandlistmodal: brand,
             itemcode: itemcode,
           },
           success: function (result) {

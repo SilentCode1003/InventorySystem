@@ -33,8 +33,8 @@
 
     $(document).on("click", "#addBtn", function () {
       let price = $("#itemprice").val();
-      let brandname = $("#brandlist").val();
-      let description = $("#itemlist").val();
+      let brandname = $("#brandname").val();
+      let description = $("#itemname").val();
       let barcode = $("#barcode").val();
 
       var message = "";
@@ -193,34 +193,36 @@
       }
     });
 
-    $("#brandlist").on("change", function () {
-      var brandname = $("#brandlist").val();
-      $("#itemdescriptionlist").empty();
+    $(document).on("click", "#itemname", function () {
+      var brand = $("#brandname").val();
 
-      console.log(brandname);
-
+      console.log(brand);
+      $("#itemDropdown").empty();
       $.ajax({
         type: "POST",
         url: "/cablingitems/getitem",
-        data: { brand: brandname },
+        data: {
+          brand: brand,
+        },
         success: function (result) {
           var data = result.data;
-
+          let activeItem = [];
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              activeItem.push(item.description);
               var options = new Option(item.description, item.description);
               $(options).html(item.description);
-              // $("#fruits").append(options);
-              $("#itemdescriptionlist").append(options);
+              // $("#descriptionlist").append(options);
             }
           });
+
+          populateItem(activeItem);
         },
-        error: function (err) {
-          errormsg(err);
+        error: function (error) {
+          errormsg(error);
         },
       });
     });
-
     function LoadTable() {
       $("#cablingitemprice-dataTable").DataTable({
         destroy: true,
@@ -293,15 +295,18 @@
         url: "/brand/load",
         success: function (result) {
           var data = result.data;
+          let activeBrand = [];
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
+              activeBrand.push(item.brandname);
               var options = new Option(item.brandname, item.brandname);
               $(options).html(item.brandname);
               // $("#fruits").append(options);
-              $("#brandnamelist").append(options);
+              // $("#brandnamelist").append(options);
             }
           });
+          populateBrand(activeBrand);
         },
         error: function (err) {
           errormsg(err);
@@ -330,5 +335,51 @@
         },
       });
     }
+  
+    function populateBrand(activeBrand) {
+      for (const brand of activeBrand) {
+        addBrand("brandDropdown", brand);
+      }
+    }
+
+    function populateItem(activeItem) {
+      for (const item of activeItem) {
+        addItem("itemDropdown", item);
+      }
+    }
+
+    function addBrand(dropdownId, optionText) {
+      const dropdownElement = document.getElementById(dropdownId);
+      const newOption = document.createElement("div");
+      newOption.className = "dropdown-option";
+      newOption.textContent = optionText;
+
+      newOption.addEventListener("click", function () {
+        const inputElement = document.getElementById("brandname");
+        inputElement.value = optionText;
+        dropdownElement.style.display = "none";
+      });
+
+      dropdownElement.appendChild(newOption);
+    }
+
+    function addItem(dropdownId, optionText) {
+      const dropdownElement = document.getElementById(dropdownId);
+      const newOption = document.createElement("div");
+      newOption.className = "dropdown-option";
+      newOption.textContent = optionText;
+
+      newOption.addEventListener("click", function () {
+        const inputElement = document.getElementById("itemname");
+        inputElement.value = optionText;
+        dropdownElement.style.display = "none";
+      });
+
+      dropdownElement.appendChild(newOption);
+    }
+
+    setupCustomDropdown("brandname", "brandDropdown", "dropdown-option");
+
+    setupCustomDropdown("itemname", "itemDropdown", "dropdown-option");
   });
 </script>
