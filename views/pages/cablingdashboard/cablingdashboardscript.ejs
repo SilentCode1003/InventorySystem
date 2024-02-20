@@ -3,6 +3,7 @@
     let detailid = "";
     let requestby = "";
     let requestdate = "";
+    let remarks = "";
 
     let report_brand = "";
     let report_description = "";
@@ -22,8 +23,9 @@
           });
         console.log(dataRow);
         detailid = dataRow[0];
-        requestby = dataRow[1];
-        requestdate = dataRow[2];
+        requestby = dataRow[2];
+        requestdate = dataRow[1];
+        remarks = dataRow[4];
       }
     );
 
@@ -52,6 +54,12 @@
       $("#detailidmodal").html(detailid);
       $("#requestbymodal").html(requestby);
       $("#requestdatemodal").html(requestdate);
+      $("#requestremarksmodal").html(remarks);
+      ClearTable("request-dataTable");
+      ClearTable("report-dataTable");
+      ClearTable("patchpanel-dataTable");
+      ClearTable("return-dataTable");
+
       $("#cablingrequestmaterialreportModal").modal("show");
       console.log(detailid);
 
