@@ -30,6 +30,10 @@
   --cdw-100: calc(100% - 10rem);
 }
 
+.dashboard-icon{
+  color: var(--clr-hamburger);
+}
+
 .no-wrap{
   white-space: nowrap;
 }
