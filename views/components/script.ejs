@@ -8,13 +8,24 @@
 </div> -->
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+<div
+  class="modal fade"
+  id="logoutModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">×</span>
         </button>
       </div>
@@ -65,8 +76,40 @@
 <script src="/javascripts/bootstrap-select.min.js"></script>
 
 <!-- DATETIMEPICKER -->
-<link rel="stylesheet" type="text/css" href="/stylesheets/css/DateTimePicker.min.css" />
-<script type="text/javascript" src="/javascripts/DateTimePicker.min.js"></script>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="/stylesheets/css/DateTimePicker.min.css"
+/>
+<script
+  type="text/javascript"
+  src="/javascripts/DateTimePicker.min.js"
+></script>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/solid.min.js"
+  integrity="sha512-+fI924YJzeYFv7M0R29zJvRThPinSUOAmo5rpR9v6G4eWIbva/prHdZGSPN440vuf781/sOd/Fr+5ey0pqdW9w=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/regular.min.js"
+  integrity="sha512-T4H/jsKWzCRypzaFpVpYyWyBUhjKfp5e/hSD234qFO/h45wKAXba+0wG/iFRq1RhybT7dXxjPYYBYCLAwPfE0Q=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/v4-shims.min.js"
+  integrity="sha512-lcumC2XgVQA+cNJaYBRtZcTJ88EZ/Na2rG2yKtasO44flXlQWjvaqBqJch22AG9t/4pfD1EVD49oW8PBxtWBWg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/fontawesome.min.js"
+  integrity="sha512-C8qHv0HOaf4yoA7ISuuCTrsPX8qjolYTZyoFRKNA9dFKnxgzIHnYTOJhXQIt6zwpIFzCrRzUBuVgtC4e5K1nhA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
 
 <script>
   // ScrollReveal().reveal('tr', {
@@ -293,53 +336,62 @@
   }
 
   $(document).ready(function () {
-    let isSidebarOpen = localStorage.getItem('isSidebarOpen') === 'true';
+    let isSidebarOpen = localStorage.getItem("isSidebarOpen") === "true";
 
     function updateSidebarState() {
       $("body").toggleClass("sidebar-toggled", isSidebarOpen);
       $(".sidebar").toggleClass("toggled", isSidebarOpen);
 
       if (isSidebarOpen) {
-        $('.sidebar .collapse').collapse('hide');
-        $('#content').toggleClass('content-toggled');
-        $('.navbar').toggleClass('navbar-toggled');
-        $('.sticky-footer').toggleClass('footer-toggled');
+        $(".sidebar .collapse").collapse("hide");
+        $("#content").toggleClass("content-toggled");
+        $(".navbar").toggleClass("navbar-toggled");
+        $(".sticky-footer").toggleClass("footer-toggled");
       } else {
-        $('#content').removeClass('content-toggled');
-        $('.navbar').removeClass('navbar-toggled');
-        $('.sticky-footer').removeClass('footer-toggled');
+        $("#content").removeClass("content-toggled");
+        $(".navbar").removeClass("navbar-toggled");
+        $(".sticky-footer").removeClass("footer-toggled");
       }
     }
 
     updateSidebarState();
 
-    $("#sidebarToggle, #sidebarToggleTop").on('click', function (e) {
+    $("#sidebarToggle, #sidebarToggleTop").on("click", function (e) {
       isSidebarOpen = !isSidebarOpen;
 
-      localStorage.setItem('isSidebarOpen', isSidebarOpen);
+      localStorage.setItem("isSidebarOpen", isSidebarOpen);
 
       updateSidebarState();
     });
   });
 
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener("DOMContentLoaded", function () {
     setTimeout(function () {
       // Specify the IDs of the collapsible sections
-      var collapseSectionIds = ['#collapseAdminControlPanel', '#collapseUtilities2', '#collapseCablingMaster', '#collapseCablingInventory', '#collapseCablingRequest', '#collapseCablingReports'];
+      var collapseSectionIds = [
+        "#collapseAdminControlPanel",
+        "#collapseUtilities2",
+        "#collapseCablingMaster",
+        "#collapseCablingInventory",
+        "#collapseCablingRequest",
+        "#collapseCablingReports",
+      ];
 
       collapseSectionIds.forEach(function (sectionId) {
-        var collapseItems = document.querySelectorAll(sectionId + ' .collapse-item');
+        var collapseItems = document.querySelectorAll(
+          sectionId + " .collapse-item"
+        );
 
         collapseItems.forEach(function (item) {
-          var iconElement = item.querySelector('i');
+          var iconElement = item.querySelector("i");
 
           if (iconElement) {
-            if (item.classList.contains('active')) {
-              iconElement.classList.remove('far');
-              iconElement.classList.add('fas');
+            if (item.classList.contains("active")) {
+              iconElement.classList.remove("far");
+              iconElement.classList.add("fas");
             } else {
-              iconElement.classList.remove('fas');
-              iconElement.classList.add('far');
+              iconElement.classList.remove("fas");
+              iconElement.classList.add("far");
             }
           }
         });
@@ -358,8 +410,8 @@
           value: true,
           visible: true,
           className: "swal-button-ok",
-        }
-      }
+        },
+      },
     }).then((result) => {
       return new Promise((resolve, reject) => {
         if (result === true) {
@@ -379,110 +431,110 @@
             <span class="sr-only">Loading...</span>
           </div>
         </div>`,
-      null,  // No title for the notification itself
+      null, // No title for the notification itself
       {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": true,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": true,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "0",  // Set to 0 to make it indefinite until manually cleared
-        "timeOut": "0",      // Set to 0 to make it indefinite until manually cleared
-        "extendedTimeOut": "0",  // Set to 0 to make it indefinite until manually cleared
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "hide"
+        closeButton: false,
+        debug: false,
+        newestOnTop: true,
+        progressBar: false,
+        positionClass: "toast-top-right",
+        preventDuplicates: true,
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "0", // Set to 0 to make it indefinite until manually cleared
+        timeOut: "0", // Set to 0 to make it indefinite until manually cleared
+        extendedTimeOut: "0", // Set to 0 to make it indefinite until manually cleared
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "hide",
       }
     );
   }
 
   function success(title, text) {
     toastr.success(text, title, {
-      "closeButton": false,
-      "debug": false,
-      "newestOnTop": true,
-      "progressBar": true,
-      "positionClass": "toast-top-right",
-      "preventDuplicates": true,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "5000",
-      "extendedTimeOut": "1000",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "fadeIn",
-      "hideMethod": "fadeOut"
-    })
+      closeButton: false,
+      debug: false,
+      newestOnTop: true,
+      progressBar: true,
+      positionClass: "toast-top-right",
+      preventDuplicates: true,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      timeOut: "5000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+    });
   }
 
   function warning(title, text) {
     toastr.warning(text, title, {
-      "closeButton": false,
-      "debug": false,
-      "newestOnTop": true,
-      "progressBar": true,
-      "positionClass": "toast-top-right",
-      "preventDuplicates": true,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "5000",
-      "extendedTimeOut": "1000",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "fadeIn",
-      "hideMethod": "hide"
+      closeButton: false,
+      debug: false,
+      newestOnTop: true,
+      progressBar: true,
+      positionClass: "toast-top-right",
+      preventDuplicates: true,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      timeOut: "5000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "hide",
     });
   }
 
   function warningRegister(title, text) {
     toastr.warning(text, title, {
-      "closeButton": false,
-      "debug": false,
-      "newestOnTop": true,
-      "progressBar": true,
-      "positionClass": "toast-top-right",
-      "preventDuplicates": false,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "0",
-      "extendedTimeOut": "0",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "fadeIn",
-      "hideMethod": "hide"
+      closeButton: false,
+      debug: false,
+      newestOnTop: true,
+      progressBar: true,
+      positionClass: "toast-top-right",
+      preventDuplicates: false,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      timeOut: "0",
+      extendedTimeOut: "0",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "hide",
     });
   }
 
   function warningInfo(title, text) {
     toastr.info(text, title, {
-      "closeButton": false,
-      "debug": false,
-      "newestOnTop": true,
-      "progressBar": true,
-      "positionClass": "toast-top-right",
-      "preventDuplicates": false,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "0",
-      "extendedTimeOut": "0",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "fadeIn",
-      "hideMethod": "hide"
+      closeButton: false,
+      debug: false,
+      newestOnTop: true,
+      progressBar: true,
+      positionClass: "toast-top-right",
+      preventDuplicates: false,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      timeOut: "0",
+      extendedTimeOut: "0",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "hide",
     });
   }
 
   function hideLoading() {
     toastr.clear();
-    console.log("Toastr Cleared!")
+    console.log("Toastr Cleared!");
   }
 
   //GLOBAL SEARCH FUNCTION

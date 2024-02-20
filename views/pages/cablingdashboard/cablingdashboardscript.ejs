@@ -9,6 +9,7 @@
     let report_description = "";
 
     LoadTable();
+    LoadCardData();
 
     $("#cabling-equipment-request-dataTable tbody").on(
       "click",
@@ -420,6 +421,20 @@
         },
         error: function (err) {
           errormsg(err);
+        },
+      });
+    }
+
+    function LoadCardData() {
+      $.ajax({
+        type: "GET",
+        url: "/cablingdashboard/getactiverequest",
+        success: function (result) {
+          console.log(result.data.totalrequest);
+          document.getElementById('cablingequipmentrequest').textContent = result.data.totalrequest;
+        },
+        error: function (errormsg) {
+          warning("Error", errormsg);
         },
       });
     }
