@@ -5,7 +5,7 @@
         <i class="fa fa-bars"></i>
     </button>
 
-    <!-- Topbar Search -->
+    <!-- Logo & Toggle -->
     <a class="sidebar-brand  align-items-center justify-content-center mobile-hidden" href="#">
         <div class="sidebar-brand-icon">
             <img src="/images/img/5L_logo-Red.png" class="img-fluid-top" alt="Responsive image" />
@@ -22,6 +22,19 @@
             </svg>
         </div>
     </div>
+
+    <!-- Topbar Search -->
+    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <div class="input-group">
+            <input type="text" class="form-control small" placeholder="Search for..." aria-label="Search"
+                aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="custom-btn cw-5rem" type="button">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </form>
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -49,13 +62,14 @@
                 </form>
             </div>
         </li>
-       
         <div class="topbar-divider d-none d-sm-block"></div>
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline small text-black-50"><%= fullname%> <br> (<%= position%>)</span>
+                <span class="mr-4 d-none d-lg-inline inventory-title" ><%= fullname%><br> 
+                    <span class="small subheading"><%= position%> (<%= roletype%>)</span>
+                </span>
                 <img class="img-profile rounded-circle"
                     src="/images/img/undraw_profile.svg">    
             </a>
