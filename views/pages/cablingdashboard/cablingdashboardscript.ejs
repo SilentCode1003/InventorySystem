@@ -8,7 +8,9 @@
     let report_brand = "";
     let report_description = "";
 
-    LoadTable();
+    LoadTableRequest();
+    LoadCardData();
+    LoadTableStocks();
 
     $("#cabling-equipment-request-dataTable tbody").on(
       "click",
@@ -93,14 +95,14 @@
     $("#search").on("keyup", function () {
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("search");
-      filter = input.value.toUpperCase();
+      filter = input.value;
       table = document.getElementById("cabling-equipment-request-dataTable");
       tr = table.getElementsByTagName("tr");
       for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[2];
         if (td) {
           txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          if (txtValue.indexOf(filter) > -1) {
             tr[i].style.display = "";
           } else {
             tr[i].style.display = "none";
@@ -226,7 +228,7 @@
       });
     });
 
-    function LoadTable() {
+    function LoadTableRequest() {
       $("#cabling-equipment-request-dataTable").DataTable({
         destroy: true,
         processing: true,
@@ -285,6 +287,57 @@
           { data: "remarks" },
           { data: "status" },
           { data: "action" },
+        ],
+        initComplete: function () {},
+      });
+    }
+
+    function LoadTableStocks() {
+      $("#cabling-equipment-stocks-dataTable").DataTable({
+        destroy: true,
+        processing: true,
+        serverSide: true,
+        paging: false,
+        searching: false,
+        info: false,
+        scrollCollapse: true,
+        serverMethod: "GET",
+        ajax: {
+          url: "/cablingdashboard/getcurrentstocks",
+          dataSrc: (json) => {
+            var finalData = [];
+            var data = json.data;
+            let totalequipmentcost = 0;
+
+            console.log(data);
+            $.each(data, (key, item) => {
+              var action = "";
+
+              totalequipmentcost += parseFloat(item.itemcost);
+              finalData.push({
+                itemdescription: item.itemdescription,
+                stocks: item.stocks,
+                itemcost: item.itemcost,
+              });
+            });
+
+            createChart(finalData);
+            document.getElementById("totalequipmentcost").textContent =
+              ConvertToCurrency(totalequipmentcost);
+
+            return finalData;
+          },
+        },
+        columnDefs: [
+          {
+            targets: 1,
+            className: "td-indent",
+          },
+        ],
+        columns: [
+          { data: "itemdescription" },
+          { data: "stocks" },
+          { data: "itemcost" },
         ],
         initComplete: function () {},
       });
@@ -420,6 +473,71 @@
         },
         error: function (err) {
           errormsg(err);
+        },
+      });
+    }
+
+    function LoadCardData() {
+      $.ajax({
+        type: "GET",
+        url: "/cablingdashboard/getactiverequest",
+        success: function (result) {
+          console.log(result.data.totalrequest);
+          document.getElementById("cablingequipmentrequest").textContent =
+            result.data.totalrequest;
+          document.getElementById("cablingequipmentreport").textContent =
+            result.data.totalreport;
+        },
+        error: function (errormsg) {
+          warning("Error", errormsg);
+        },
+      });
+    }
+
+    function createChart(data) {
+      // let allCategories = [
+      //   ...new Set(data.map((item) => item.itemdescription, item.stocks)),
+      // ];
+
+      // let stocks = [];
+
+      // allCategories.forEach((category) => {
+      //   let count = data.filter(
+      //     (item) => item.category === category
+      //   ).length;
+      //   stocks.push({ category, count });
+      // });
+
+      let labels = data.map((entry) => entry.itemdescription);
+      let chartData = data.map((entry) => entry.stocks);
+
+      let ctx = document
+        .getElementById("equipment-stocks-chart")
+        .getContext("2d");
+      let myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Stock Counts",
+              data: chartData,
+              backgroundColor: "rgb(216, 42, 39, 0.65)",
+              borderColor: "rgb(216, 42, 39",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            labels: {
+              font: {
+                family: "Share Tech",
+                size: 14,
+              },
+            },
+          },
         },
       });
     }
