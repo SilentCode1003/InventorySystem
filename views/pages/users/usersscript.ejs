@@ -299,7 +299,7 @@
     function LoadListModal() {
       $.ajax({
         type: "GET",
-        url: "/roles/load",
+        url: "/roletype/load",
         success: function (result) {
           var data = result.data;
           $.each(data, function (key, item) {
