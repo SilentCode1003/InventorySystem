@@ -340,6 +340,11 @@ body {
 
   #content {
     margin: 5rem 0.85rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  .table-size{
+    height: 520px !important;
   }
 
   .nav-link {
@@ -628,7 +633,7 @@ span.subheading:first-letter{
 }
 
 .table-size{
-  height: 640px !important;
+  height: 640px;
 }
 
 .table-header{
