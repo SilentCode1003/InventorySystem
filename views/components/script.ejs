@@ -86,6 +86,9 @@
   src="/javascripts/DateTimePicker.min.js"
 ></script>
 
+<!--CHART-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/solid.min.js"
   integrity="sha512-+fI924YJzeYFv7M0R29zJvRThPinSUOAmo5rpR9v6G4eWIbva/prHdZGSPN440vuf781/sOd/Fr+5ey0pqdW9w=="
@@ -540,7 +543,7 @@
   //GLOBAL SEARCH FUNCTION
 
   function filterTableRows(tablename, colcount, searchid) {
-      console.log("triggered search")
+    console.log("triggered search");
 
     const searchQuery = $(searchid).val().trim().toLowerCase();
     let foundMatches = false;
