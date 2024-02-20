@@ -1,8 +1,13 @@
 var express = require("express");
 var router = express.Router();
 const { Validator } = require("./controller/middleware");
-const { Select } = require("./repository/cablingdb");
-const { InventoryItem } = require("./model/cablingmodel");
+const { Select, SelectParameter } = require("./repository/cablingdb");
+const {
+  InventoryItem,
+  RequestEquipmentDetail,
+} = require("./model/cablingmodel");
+const { GetValue, REQ } = require("./repository/dictionary");
+const { JsonDataResponse } = require("./repository/responce");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -29,6 +34,33 @@ router.get("/getcurrentstocks", (req, res) => {
           msg: "success",
           data: result,
         });
+      }
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
+router.get("/getactiverequest", (req, res) => {
+  try {
+    let status = GetValue(REQ());
+    let sql =
+      "SELECT COUNT(*) as totalrequest FROM request_equipment_detail WHERE red_status = ?";
+
+    SelectParameter(sql, status, (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      if (result.length != 0) {
+        let totalrequest = result[0].totalrequest;
+
+        let data = {
+          totalrequest: totalrequest,
+        };
+        res.json(JsonDataResponse(data));
+      } else {
+        res.json(JsonDataResponse(result));
       }
     });
   } catch (error) {

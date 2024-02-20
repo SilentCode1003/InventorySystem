@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "prestart": "npm install",
-    "start": "node ./bin/www",
-    "watch": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -24,5 +23,8 @@
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "node-linq": "^0.0.5"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^5.0.2"
   }
 }
