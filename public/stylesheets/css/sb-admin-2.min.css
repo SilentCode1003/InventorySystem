@@ -5068,7 +5068,8 @@ input[type=submit].btn-block {
     padding: .75rem 1.25rem;
     margin-bottom: 0;
     background-color: #f8f9fc;
-    border-bottom: 1px solid #e3e6f0
+    border-bottom: 1px solid #e3e6f0;
+    border-radius: 0.35rem 0.35rem 0 0;
 }
 
 .card-header:first-child {

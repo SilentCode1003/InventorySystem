@@ -12,6 +12,7 @@
   --clr-hamburger-25: rgb(23, 195, 178, .25);
   --clr-scrollbar: rgb(17, 196, 137);
   --clr-sidebar-icons: rgb(0, 167, 111);
+  --clr-subheading: #9499a3;
 
   --topbar-width-6rem: calc(100% - 6rem);
   --topbar-width-14rem: calc(100% - 17.5rem);
@@ -553,6 +554,19 @@ body {
 }
 
 /* --- BUTTON --- */
+
+.cw-7rem{
+  width: 7.5rem;
+}
+
+.cw-5rem{
+  width: 5rem;
+}
+
+.cw-3rem{
+  width: 3rem;
+}
+
 .custom-btn {
   padding: 0.8em 1.8em;
   font-weight: 400;
@@ -568,23 +582,23 @@ body {
   color: var(--clr-hamburger);
   padding: 0.375rem 0.75rem;
   border-radius: 0.2rem;
-  width: 7.5rem;
 }
 
-/* .btn {
-  display: inline-block;
-  color: #858796;
-  text-align: center;
-  vertical-align: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-color: transparent;
-  border: 1px solid transparent;
-  line-height: 1.5;
-  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-} */
+.inventory-title{
+  color: var(--clr-hamburger);
+  font-size: 85%;
+  font-weight: 700;
+}
+
+span.subheading{
+  color: var(--clr-subheading);
+  display: block;
+}
+
+span.subheading:first-letter{
+  text-transform: capitalize;
+}
+
 
 .custom-btn::before {
   content: '';
@@ -609,12 +623,12 @@ body {
 }
 
 .scrollable-table-container {
-  height: 535px !important; 
+  height: 565px !important; 
   overflow-y: auto !important;
 }
 
 .table-size{
-  height: 615px !important;
+  height: 640px !important;
 }
 
 .table-header{
