@@ -17,6 +17,25 @@
   --topbar-width-6rem: calc(100% - 6rem);
   --topbar-width-14rem: calc(100% - 17.5rem);
   --content-height: calc(100vh - 10rem);
+
+  /*Custom dropdown widths*/
+  --cdw-50: calc(100% - 5rem);
+  --cdw-55: calc(100% - 5.5rem);
+  --cdw-60: calc(100% - 6rem);
+  --cdw-68: calc(100% - 6.8rem);
+  --cdw-70: calc(100% - 7rem);
+  --cdw-75: calc(100% - 7.5rem);
+  --cdw-80: calc(100% - 8rem);
+  --cdw-90: calc(100% - 9rem);
+  --cdw-100: calc(100% - 10rem);
+}
+
+.dashboard-icon{
+  color: var(--clr-hamburger);
+}
+
+.no-wrap{
+  white-space: nowrap;
 }
 
 .ft-link{
@@ -248,9 +267,40 @@ body {
   overflow-y: auto;
   position: absolute;
   background-color: white;
-  width: 36.7vw;
   z-index: 1000;
   border-radius: 0.275rem;
+}
+
+.cdw-50{
+  width: var(--cdw-50);
+}
+
+.cdw-60{
+  width: var(--cdw-60);
+}
+
+.cdw-68{
+  width: var(--cdw-68);
+}
+
+.cdw-70{
+  width: var(--cdw-70);
+}
+
+.cdw-75{
+  width: var(--cdw-75);
+}
+
+.cdw-80{
+  width: var(--cdw-80);
+}
+
+.cdw-90{
+  width: var(--cdw-90);
+}
+
+.cdw-100{
+  width: var(--cdw-100);
 }
 
 .custom-dropdown-modal {
@@ -632,8 +682,17 @@ span.subheading:first-letter{
   overflow-y: auto !important;
 }
 
+.scrollable-table-container-m {
+  height: 665px !important; 
+  overflow-y: auto !important;
+}
+
 .table-size{
   height: 640px;
+}
+
+.table-size-m{
+  height: 765px;
 }
 
 .table-header{

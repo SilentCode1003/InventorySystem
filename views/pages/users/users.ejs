@@ -1,14 +1,6 @@
 <!-- Modal -->
-<div
-  class="modal fade bd-example-modal-lg"
-  id="userModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
-  data-keyboard="false"
-  data-backdrop="static"
->
+<div class="modal fade bd-example-modal-lg" id="userModal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -20,19 +12,10 @@
             <div class="card-body">
               <div class="row mb-2">
                 <div class="col-md-12">
-                  <label class="form-label" for="usercodemodal"
-                    >Access Type Code</label
-                  >
-                  <input
-                    id="usercodemodal"
-                    name="usercodemodal"
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter new usercodemodal"
-                    aria-label="usercodemodal"
-                    aria-describedby="basic-addon1"
-                    disabled
-                  />
+                  <label class="form-label" for="usercodemodal">Access Type Code</label>
+                  <input id="usercodemodal" name="usercodemodal" type="text" class="form-control"
+                    placeholder="Enter new usercodemodal" aria-label="usercodemodal" aria-describedby="basic-addon1"
+                    disabled />
                 </div>
               </div>
             </div>
@@ -40,18 +23,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-          data-dismiss="modal"
-        >
+        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+          data-dismiss="modal">
           <i class="fa fa-times" aria-hidden="true"></i> Close
         </button>
-        <button
-          type="button"
-          id="saveBtn"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-        >
+        <button type="button" id="saveBtn" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm">
           <i class="fa fa-check" aria-hidden="true"></i> Save
         </button>
       </div>
@@ -60,112 +36,86 @@
 </div>
 
 <!-- Begin PCreated by Content -->
-<div class="container-fluid">
-  <!-- PCreated by Heading -->
-  <div class="d-sm-flex align-items-center justify-content-between mb-3">
-    <h1 class="page-title">Users Info</h1>
-  </div>
-  <!-- Content Row -->
+<!-- PCreated by Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-1">
+  <h1 class="page-title">Users Info</h1>
+</div>
+<!-- Content Row -->
   <div class="row mb-2">
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
-          <div class="row mb-2">
+          <div class="row mb-2 justify-content-center">
             <div class="col-md-6">
               <label class="form-label" for="fullname">Fullname</label>
-              <input
-                id="fullname"
-                name="fullname"
-                type="text"
-                class="form-control"
-                placeholder="Enter Fullname"
-                aria-label="fullname"
-                aria-describedby="basic-addon1"
-              />
+              <input id="fullname" name="fullname" type="text" class="form-control" placeholder="Enter Fullname"
+                aria-label="fullname" aria-describedby="basic-addon1" />
             </div>
           </div>
-
+  
           <div class="row mb-2">
             <div class="col-md-6">
               <label class="form-label" for="username">Username</label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                class="form-control"
-                placeholder="Enter username"
-                aria-label="username"
-                aria-describedby="basic-addon1"
-              />
+              <input id="username" name="username" type="text" class="form-control" placeholder="Enter username"
+                aria-label="username" aria-describedby="basic-addon1" />
             </div>
             <div class="col-md-6">
               <label class="form-label" for="password">Password</label>
-              <input
-                id="password"
-                name="password"
-                minlength="8"
-                type="password"
-                class="form-control"
-                placeholder="Enter password"
-                aria-label="password"
-                aria-describedby="basic-addon1"
-              />
+              <input id="password" name="password" minlength="8" type="password" class="form-control"
+                placeholder="Enter password" aria-label="password" aria-describedby="basic-addon1" />
             </div>
           </div>
-
+  
           <div class="row mb-2">
-            <div class="col-md-6">
-              <label class="form-label" for="roletypelist">Role</label>
-              <select
-                class="entry-input form-control mb-2"
-                name="roletypelist"
-                id="roletypelist"
-              >
-                <option value="">- - - Select Role - - -</option>
-              </select>
+            <div class="col-md-6 mt-2">
+              <div class="input-group">
+                <input class="form-control text-center custom-input" placeholder="Select/Input Role" name="roletype"
+                  id="roletype" />
+                <div class="input-group-append">
+                  <span class="input-group-text">Role</span>
+                </div>
+              </div>
+              <div class="custom-dropdown cdw-50" id="roletypeDropdown"></div>
             </div>
-            <div class="col-md-6">
-              <label class="form-label" for="positionlist">Position</label>
-              <select
-                class="entry-input form-control"
-                name="positionlist"
-                id="positionlist"
-              >
-                <option value="">- - - Select Position - - -</option>
-              </select>
+            <div class="col-md-6 mt-2">
+              <div class="input-group">
+                <input class="form-control text-center custom-input" placeholder="Select/Input Position" name="position"
+                  id="position" />
+                <div class="input-group-append">
+                  <span class="input-group-text">Position</span>
+                </div>
+              </div>
+              <div class="custom-dropdown cdw-68" id="positionDropdown"></div>
             </div>
           </div>
-
+  
           <div class="row mb-2">
-            <div class="col-md-6">
-              <label class="form-label" for="accesstypelist">Access Type</label>
-              <select
-                class="entry-input form-control mb-2"
-                name="accesstypelist"
-                id="accesstypelist"
-              >
-                <option value="">- - - Select Role - - -</option>
-              </select>
+            <div class="col-md-6 mt-2">
+              <div class="input-group">
+                <input class="form-control text-center custom-input" placeholder="Select/Input Access Type" name="accesstype"
+                  id="accesstype" />
+                <div class="input-group-append">
+                  <span class="input-group-text">Access</span>
+                </div>
+              </div>
+              <div class="custom-dropdown" id="accesstypeDropdown"></div>
             </div>
-            <div class="col-md-6">
-              <label class="form-label" for="departmentlist">Department</label>
-              <select
-                class="entry-input form-control"
-                name="departmentlist"
-                id="departmentlist"
-              >
-                <option value="">- - - Select Position - - -</option>
-              </select>
+            <div class="col-md-6 mt-2">
+              <div class="input-group">
+                <input class="form-control text-center custom-input" placeholder="Select/Input Department" name="department"
+                  id="department" />
+                <div class="input-group-append">
+                  <span class="input-group-text">Department</span>
+                </div>
+              </div>
+              <div class="custom-dropdown" id="departmentDropdown"></div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-md-4 text-center mt-1">
-              <button
-                id="addBtn"
-                name="addBtn"
-                class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
-              >
+  
+          <div class="row justify-content-end">
+            <div class="col-md-4 mt-1 text-right">
+              <button id="addBtn" name="addBtn"
+                class="d-none d-sm-inline-block custom-btn cw-7rem shadow-sm">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Add
               </button>
@@ -176,53 +126,45 @@
     </div>
   </div>
 
-  <!-- DataTales Example -->
-  <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <div class="row mb-4">
-        <div class="col-md-3">
-          <h6 class="m-0 font-weight-bold table-title">DataTables Example</h6>
-        </div>
-        <div class="col-md-6">
-          <input
-            id="search"
-            name="search"
-            type="text"
-            class="form-control"
-            placeholder="Search Fullname"
-            aria-label="search"
-            aria-describedby="basic-addon1"
-          />
-        </div>
-        <div class="card-body">
-          <div class="table-responsive-sm">
-            <table
-              class="table table-bordered table-sm"
-              id="users-table"
-              width="100%"
-              cellspacing="10"
-            >
-              <thead>
-                <tr>
-                  <th class="col-1 text-start">USER CODE</th>
-                  <th class="col-2 text-center">FULLNAME</th>
-                  <th class="col-2 text-center">USERNAME</th>
-                  <th class="col-2 text-center">PASSWORD</th>
-                  <th class="col-2 text-center">ROLE TYPE</th>
-                  <th class="col-2 text-center">POSITION</th>
-                  <th class="col-2 text-center">ACCESS TYPE</th>
-                  <th class="col-2 text-center">DEPARTMENT</th>
-                  <th class="col-2 text-center">STATUS</th>
-                  <th class="col-2 text-center">CREATED BY</th>
-                  <th class="col-2 text-center">CREATED DATE</th>
-                  <th class="col-1 text-end">ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
+<!-- DataTales Example -->
+<div class="card shadow table-size-m">
+  <div class="progress progress-sm mb-2">
+    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+      aria-valuemax="100"></div>
+  </div>
+  <div class="card-header py-3">
+    <div class="row justify-content-center">
+      <div class="col-md-3 d-flex">
+        <h5 class="pt-3">Users Table</h5>
+      </div>
+      <div class="col-md-6 pt-2">
+        <input id="search" name="search" type="text" class="form-control" placeholder="Search roletype Name"
+          aria-label="search" aria-describedby="basic-addon1" />
       </div>
     </div>
   </div>
+  <div class="table-responsive scrollable-table-container-m">
+    <table class="table custom-mobile-table" id="datatable" width="100%">
+      <thead class="table-header" style="border: none;">
+        <tr>
+          <th>ID</th>
+          <th>Full Name</th>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Position</th>
+          <th>Access</th>
+          <th>Department</th>
+          <th>Created By</th>
+          <th>Created Date</th>
+          <th class="col-1">Status</th>
+          <th class="col-1"></th>
+        </tr>
+      </thead>
+  
+      <tbody class="table-light">
+  
+      </tbody>
+    </table>
+  </div>
 </div>
+  
