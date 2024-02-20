@@ -71,6 +71,9 @@ var roleacess = [
       {
         layout: "repeatrequest",
       },
+      {
+        layout: "cablingtoollayout",
+      },
     ],
   },
   {
