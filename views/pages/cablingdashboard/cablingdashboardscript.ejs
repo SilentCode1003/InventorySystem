@@ -432,6 +432,7 @@
         success: function (result) {
           console.log(result.data.totalrequest);
           document.getElementById('cablingequipmentrequest').textContent = result.data.totalrequest;
+          document.getElementById('cablingequipmentreport').textContent = result.data.totalreport;
         },
         error: function (errormsg) {
           warning("Error", errormsg);
