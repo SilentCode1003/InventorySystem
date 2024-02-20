@@ -3,11 +3,31 @@
     let usercode = "";
     let status = "";
 
+    const loader = `  
+        <tr>
+          <td><div class="custom-loader"></div></td>
+          <td><div class="custom-loader"></div></td>
+          <td><div class="custom-loader"></div></td>
+          <td><div class="custom-loader"></div></td>
+          <td><div class="custom-loader"></div></td>
+          <td><div class="custom-loader"></div></td>
+          <td><div class="custom-loader"></div></td>
+          <td><div class="custom-loader"></div></td>
+          <td><div class="custom-loader"></div></td>
+          <td><div class="custom-loader"></div></td>
+          <td><div class="custom-loader"></div></td>
+        </tr>`;
+
+    const tbody = $('#datatable tbody');
+    for(let i = 0; i < 11; i++){
+      tbody.append(loader);
+    }
+
     LoadTable();
     LoadList();
     LoadListModal();
 
-    $("#users-table tbody").on("click", "tr", function () {
+    $("#datatable tbody").on("click", "tr", function () {
       var dataRow = [];
       $(this)
         .closest("tr")
@@ -17,17 +37,17 @@
         });
       console.log(dataRow);
       usercode = dataRow[0];
-      status = dataRow[6];
+      status = dataRow[9];
     });
 
     $(document).on("click", "#addBtn", function () {
       let fullname = $("#fullname").val();
       let username = $("#username").val();
       let password = $("#password").val();
-      let roletype = $("#roletypelist").val();
-      let accesstype = $("#accesstypelist").val();
-      let department = $("#departmentlist").val();
-      let position = $("#positionlist").val();
+      let roletype = $("#roletype").val();
+      let accesstype = $("#accesstype").val();
+      let department = $("#department").val();
+      let position = $("#position").val();
 
       var message = "";
 
@@ -201,25 +221,6 @@
       });
     });
 
-    $("#search").on("keyup", function () {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("search");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("users-table");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    });
-
     //Load Lists
     function LoadList() {
       $.ajax({
@@ -227,14 +228,15 @@
         url: "/roletype/load",
         success: function (result) {
           var data = result.data;
+          let activeRole = [];
 
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
-              var options = new Option(item.roletypename, item.roletypename);
-              $(options).html(item.roletypename);
-              $("#roletypelist").append(options);
+              activeRole.push(item.roletypename);
             }
           });
+
+          populateDropdown(activeRole, "roletypeDropdown", "roletype" );
         },
         error: function (err) {
           errormsg(err);
@@ -246,13 +248,14 @@
         url: "/position/load",
         success: function (result) {
           var data = result.data;
+          let activePosition = [];
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
-              var options = new Option(item.positionname, item.positionname);
-              $(options).html(item.positionname);
-              $("#positionlist").append(options);
+              activePosition.push(item.positionname);
             }
           });
+
+          populateDropdown(activePosition, "positionDropdown", "position" );
         },
         error: function (err) {
           errormsg(err);
@@ -264,13 +267,13 @@
         url: "/accesstype/load",
         success: function (result) {
           var data = result.data;
+          let activeAccesstype = [];
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
-              var options = new Option(item.accesstypename, item.accesstypename);
-              $(options).html(item.accesstypename);
-              $("#accesstypelist").append(options);
+              activeAccesstype.push(item.accesstypename);
             }
           });
+          populateDropdown(activeAccesstype, "accesstypeDropdown", "accesstype" );
         },
         error: function (err) {
           errormsg(err);
@@ -282,13 +285,16 @@
         url: "/department/load",
         success: function (result) {
           var data = result.data;
+          let activeDepartment = [];
           $.each(data, function (key, item) {
             if (item.status == "ACTIVE") {
-              var options = new Option(item.departmentname, item.departmentname);
-              $(options).html(item.departmentname);
-              $("#departmentlist").append(options);
+              // var options = new Option(item.departmentname, item.departmentname);
+              // $(options).html(item.departmentname);
+              // $("#departmentlist").append(options);
+              activeDepartment.push(item.departmentname);
             }
           });
+          populateDropdown(activeDepartment, "departmentDropdown", "department" );
         },
         error: function (err) {
           errormsg(err);
@@ -334,100 +340,97 @@
       });
     }
 
+    //Search Table Functionality
+    $("#search").on("input", function () {
+      filterTableRows("#datatable", 11 , "#search");
+    });
+
     function LoadTable() {
-      $("#users-table").DataTable({
-        destroy: true,
-        processing: true,
-        serverSide: true,
-        paging: false,
-        searching: false,
-        info: false,
-        scrollY: 400,
-        scrollCollapse: true,
-        serverMethod: "GET",
-        ajax: {
-          url: "/users/load",
-          dataSrc: (json) => {
-            var finalData = [];
-            var data = json.data;
-            $.each(data, (key, item) => {
-              var action = "";
-              var status = item.status;
+      $(".progress").hide();
+      $(".progress").slideDown();
 
-              if (status == "ACTIVE") {
-                action =
-                  '<button class="edit-btn btn btn-outline-primary" id="editBtn" data-toggle="modal" data-target="#userModal">EDIT</button> <button class="inactive-btn btn btn-outline-primary" id="inactiveBtn">INACTIVE</button>';
-              }
-              if (status == "INACTIVE") {
-                action =
-                  '<button class="edit-btn btn btn-outline-primary" id="editBtn" data-toggle="modal" data-target="#userModal">EDIT</button> <button class="active-btn btn btn-outline-primary" id="activeBtn">ACTIVE</button>';
-              }
-
-              finalData.push({
-                usercode: item.usercode,
-                fullname: item.fullname,
-                username: item.username,
-                password: item.password,
-                roletype: item.roletype,
-                position: item.position,
-                accesstype: item.accesstype,
-                department: item.department,
-                status: item.status,
-                createdby: item.createdby,
-                createddate: item.createddate,
-                action: action,
-              });
-            });
-
-            return finalData;
-          },
+      $.ajax({
+        url: '/users/load',
+        method: 'GET',
+        dataType: 'json',
+        xhrFields: {
+          onprogress: function (e) {
+            if (e.lengthComputable) {
+              var percentComplete = (e.loaded / e.total) * 100;
+              $(".progress-bar").css("width", percentComplete + "%");
+            }
+          }
         },
-        columnDefs: [
-          {
-            targets: 1,
-            className: "td-indent",
-          },
-        ],
-        columns: [
-          {
-            data: "usercode",
-          },
-          {
-            data: "fullname",
-          },
-          {
-            data: "username",
-          },
-          {
-            data: "password",
-          },
-          {
-            data: "roletype",
-          },
-          {
-            data: "position",
-          },
-          {
-            data: "accesstype",
-          },
-          {
-            data: "department",
-          },
-          {
-            data: "status",
-          },
-          {
-            data: "createdby",
-          },
-          {
-            data: "createddate",
-          },
-          {
-            data: "action",
-          },
-        ],
-        initComplete: function () {},
+        success: function (data) {
+          setTimeout(function () {
+            $(".progress").slideUp(function () {
+              if (data.msg === 'success') {
+                populatedatatable(data.data);
+              } else {
+                console.error(data.msg);
+              }
+            });
+          }, 1000);
+        },
+        error: function (error) {
+          console.error(error);
+        }
       });
     }
+
+    function populatedatatable(data) {
+      console.log(data);
+      const tableBody = $('#datatable tbody');
+      tableBody.empty();
+
+      if (data.length === 0) {
+        const tr = $('<tr>').append($('<td>', {
+          colspan: 11,
+          class: 'text-center',
+          text: 'No Data Matched'
+        }));
+        tableBody.append(tr);
+      } else {
+        data.forEach(item => {
+          let action = '';
+          if (item.status === 'ACTIVE') {
+            action = `
+                  <span class="editbutton" id="editBtn" name="editBtn" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit" style="color: rgb(99, 115, 129);"></i></span>
+                  <span class="editbutton" id="inactiveBtn"><i class="fas fa-eye-slash" style="color: rgb(99, 115, 129);"></i></span>`;
+          } else if (item.status === 'INACTIVE') {
+            action = `
+                <span class="editbutton" id="editBtn" name="editBtn" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit" style="color: rgb(99, 115, 129);"></i></span>
+                <span class="editbutton" id="activeBtn"><i class="fas fa-eye" style="color: rgb(99, 115, 129);"></i></span>`;
+          }
+          const statusBackground = item.status === 'ACTIVE' ? 'status-success' : 'status-warning';
+          const containerBackground = item.status === 'ACTIVE' ? 'status-container-sc' : 'status-container-wr';
+
+          const tr = $('<tr>').append(
+            $('<td>', { text: item.usercode, 'data-label': 'ID', class: 'custom-mobile-align' }),
+            $('<td>', { text: item.fullname, 'data-label': 'Full Name', class: 'custom-mobile-align no-wrap' }),
+            $('<td>', { text: item.username, 'data-label': 'Username', class: 'custom-mobile-align' }),
+            $('<td>', { text: item.roletype, 'data-label': 'Role', class: 'custom-mobile-align' }),
+            $('<td>', { text: item.position, 'data-label': 'Position', class: 'custom-mobile-align' }),
+            $('<td>', { text: item.accesstype, 'data-label': 'Access', class: 'custom-mobile-align' }),
+            $('<td>', { text: item.department, 'data-label': 'Department', class: 'custom-mobile-align' }),
+            $('<td>', { text: item.createdby, 'data-label': 'Created By', class: 'custom-mobile-align no-wrap' }),
+            $('<td>', { text: item.createddate, 'data-label': 'Created Date', class: 'custom-mobile-align no-wrap' }),
+            $('<td>', { class: 'custom-mobile-align', 'data-label': 'Status' }).append(
+              $('<div>', { class: containerBackground }).append(
+                $('<span>', { text: item.status, class: statusBackground })
+              )
+            ),
+            $('<td>', { html: action, 'data-label': 'Action', class: 'actionWidth' })
+          );
+
+          tableBody.append(tr);
+        });
+      }
+    }
+
+    setupCustomDropdown("roletype", "roletypeDropdown", "dropdown-option");
+    setupCustomDropdown("position", "positionDropdown", "dropdown-option");
+    setupCustomDropdown("department", "departmentDropdown", "dropdown-option");
+    setupCustomDropdown("accesstype", "accesstypeDropdown", "dropdown-option");
   });
 </script>
