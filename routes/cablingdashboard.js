@@ -18,17 +18,20 @@ module.exports = router;
 
 router.get("/getcurrentstocks", (req, res) => {
   try {
-    let sql = "select * from inventory_item";
+    let sql = `select 
+    mip_itemcode as itemdescription,
+    ii_stocks as stocks,
+    case when mip_itemcode = ii_itemdescription then (mip_price * ii_stocks) end as itemcost
+    from master_item_price
+    inner join inventory_item on mip_itemcode = ii_itemdescription`;
 
     Select(sql, (err, result) => {
       if (err) console.error(err);
 
       if (result != 0) {
-        let data = InventoryItem(result);
-
         res.json({
           msg: "success",
-          data: data,
+          data: result,
         });
       } else {
         res.json({

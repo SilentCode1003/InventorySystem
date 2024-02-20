@@ -307,18 +307,23 @@
           dataSrc: (json) => {
             var finalData = [];
             var data = json.data;
+            let totalequipmentcost = 0;
 
             console.log(data);
             $.each(data, (key, item) => {
               var action = "";
 
+              totalequipmentcost += parseFloat(item.itemcost);
               finalData.push({
                 itemdescription: item.itemdescription,
                 stocks: item.stocks,
+                itemcost: item.itemcost,
               });
             });
 
             createChart(finalData);
+            document.getElementById("totalequipmentcost").textContent =
+              ConvertToCurrency(totalequipmentcost);
 
             return finalData;
           },
@@ -329,7 +334,11 @@
             className: "td-indent",
           },
         ],
-        columns: [{ data: "itemdescription" }, { data: "stocks" }],
+        columns: [
+          { data: "itemdescription" },
+          { data: "stocks" },
+          { data: "itemcost" },
+        ],
         initComplete: function () {},
       });
     }
