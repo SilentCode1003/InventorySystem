@@ -6,8 +6,9 @@ const {
   InventoryItem,
   RequestEquipmentDetail,
 } = require("./model/cablingmodel");
-const { GetValue, REQ } = require("./repository/dictionary");
+const { GetValue, REQ, APD } = require("./repository/dictionary");
 const { JsonDataResponse } = require("./repository/responce");
+const { SelectStatement } = require("./repository/customhelper");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -45,18 +46,24 @@ router.get("/getcurrentstocks", (req, res) => {
 
 router.get("/getactiverequest", (req, res) => {
   try {
-    let status = GetValue(REQ());
-    let sql =
-      "SELECT COUNT(*) as totalrequest FROM request_equipment_detail WHERE red_status = ?";
+    let request = GetValue(REQ());
+    let approved = GetValue(APD());
+    let sql = `SELECT 
+      COUNT(CASE WHEN red_status = ? THEN 1 END) as totalrequest,
+      COUNT(CASE WHEN red_status = ? THEN 1 END) as totalreport
+      FROM request_equipment_detail`;
+    let selectparam = SelectStatement(sql, [request, approved]);
 
-    SelectParameter(sql, status, (err, result) => {
+    Select(selectparam, (err, result) => {
       if (err) console.error("Error: ", err);
 
       if (result.length != 0) {
         let totalrequest = result[0].totalrequest;
+        let totalreport = result[0].totalreport;
 
         let data = {
           totalrequest: totalrequest,
+          totalreport: totalreport,
         };
         res.json(JsonDataResponse(data));
       } else {
