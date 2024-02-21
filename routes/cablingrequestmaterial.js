@@ -98,7 +98,8 @@ router.post("/save", (req, res) => {
     let sql_exist = `select * from request_equipment_detail 
         where red_requestby='${requestby}' 
         and red_requestdate='${requestdate}' 
-        and red_detail='${details}'`;
+        and red_detail='${details}'
+        and red_remarks='${remarks}'`;
 
     let jsonDetails = ConvertToJson(JSON.parse(details));
     let requestEquipmentItemModel = jsonDetails.map(
