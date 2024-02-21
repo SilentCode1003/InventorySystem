@@ -19,8 +19,8 @@
           <td><div class="custom-loader"></div></td>
         </tr>`;
 
-    const tbody = $('#cabling-equipment-datable tbody');
-    for(let i = 0; i < 8; i++){
+    const tbody = $("#cabling-equipment-datable tbody");
+    for (let i = 0; i < 8; i++) {
       tbody.append(loader);
     }
 
@@ -28,24 +28,20 @@
     LoadCardData();
     LoadTableStocks();
 
-    $("#cabling-equipment-datable tbody").on(
-      "click",
-      "tr",
-      function () {
-        var dataRow = [];
-        $(this)
-          .closest("tr")
-          .find("td")
-          .each(function () {
-            dataRow.push($(this).text());
-          });
-        console.log(dataRow);
-        detailid = dataRow[0];
-        requestby = dataRow[2];
-        requestdate = dataRow[1];
-        remarks = dataRow[4];
-      }
-    );
+    $("#cabling-equipment-datable tbody").on("click", "tr", function () {
+      var dataRow = [];
+      $(this)
+        .closest("tr")
+        .find("td")
+        .each(function () {
+          dataRow.push($(this).text());
+        });
+      console.log(dataRow);
+      detailid = dataRow[0];
+      requestby = dataRow[2];
+      requestdate = dataRow[1];
+      remarks = dataRow[4];
+    });
 
     let row_index = "";
     let current_row_index = "";
@@ -249,21 +245,21 @@
       $(".progress").slideDown();
 
       $.ajax({
-        url: '/cablingrequestmaterial/load',
-        method: 'GET',
-        dataType: 'json',
+        url: "/cablingrequestmaterial/load",
+        method: "GET",
+        dataType: "json",
         xhrFields: {
           onprogress: function (e) {
             if (e.lengthComputable) {
               var percentComplete = (e.loaded / e.total) * 100;
               $(".progress-bar").css("width", percentComplete + "%");
             }
-          }
+          },
         },
         success: function (data) {
           setTimeout(function () {
             $(".progress").slideUp(function () {
-              if (data.msg === 'success') {
+              if (data.msg === "success") {
                 populaterequesttable(data.data);
               } else {
                 console.error(data.msg);
@@ -273,25 +269,27 @@
         },
         error: function (error) {
           console.error(error);
-        }
+        },
       });
     }
 
     $("#search-request").on("input", function () {
-      filterTableRows("#cabling-equipment-datable", 7 , "#search-request");
+      filterTableRows("#cabling-equipment-datable", 7, "#search-request");
     });
 
     function populaterequesttable(data) {
-      console.log("reqeust",data);
-      const tableBody = $('#cabling-equipment-datable tbody');
+      console.log("reqeust", data);
+      const tableBody = $("#cabling-equipment-datable tbody");
       tableBody.empty();
 
       if (data.length === 0) {
-        const tr = $('<tr>').append($('<td>', {
-          colspan: 7,
-          class: 'text-center',
-          text: 'No Data Matched'
-        }));
+        const tr = $("<tr>").append(
+          $("<td>", {
+            colspan: 7,
+            class: "text-center",
+            text: "No Data Matched",
+          })
+        );
         tableBody.append(tr);
       } else {
         data.forEach(item => {
@@ -315,7 +313,11 @@
                 $('<span>', { text: item.status, class: statusBackground })
               )
             ),
-            $('<td>', { html: action, 'data-label': 'Action', class: 'actionWidth' })
+            $("<td>", {
+              html: action,
+              "data-label": "Action",
+              class: "actionWidth",
+            })
           );
 
           tableBody.append(tr);
@@ -348,7 +350,7 @@
               finalData.push({
                 itemdescription: item.itemdescription,
                 stocks: item.stocks,
-                itemcost: item.itemcost,
+                itemcost: ConvertToCurrency(item.itemcost),
               });
             });
 
