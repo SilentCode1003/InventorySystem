@@ -608,8 +608,8 @@ exports.isDataExist = (sql, tablename) => {
   });
 };
 
-exports.isSingleDataExist = (sql, tablename, callback) => {
-  this.Select(sql, tablename, (err, result) => {
+exports.isSingleDataExist = (sql, callback) => {
+  this.Select(sql, (err, result) => {
     if (err) callback(err, null);
 
     if (result.length != 0) {

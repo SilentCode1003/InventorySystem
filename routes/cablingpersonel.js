@@ -161,7 +161,6 @@ router.post("/excelsave", (req, res) => {
       var sql_check = `select * from cabling_personel where cp_personel='${personel}'`;
       mysql.isSingleDataExist(
         sql_check,
-        "CablingPersonel",
         (err, isduplicate) => {
           if (err) console.error("Error: ", err);
 
@@ -174,24 +173,6 @@ router.post("/excelsave", (req, res) => {
 
           count += 1;
           if (data_length == count) {
-            // console.log(cabling_personel);
-            let clean_no_duplicate =
-              helper.removeDuplicateSets(cabling_personel);
-            let cablingPersonelModel = clean_no_duplicate.map(
-              (data) =>
-                new CablingPersonelModel(data[0], data[1], data[2], data[3])
-            );
-            let refine_cabling_personel = [];
-
-            cablingPersonelModel.forEach((personel, index) => {
-              refine_cabling_personel.push([
-                personel.personel,
-                personel.status,
-                personel.createdby,
-                personel.createddate,
-              ]);
-            });
-
             if (isDuplicate) {
               return res.json({
                 msg: "exist",
@@ -201,7 +182,7 @@ router.post("/excelsave", (req, res) => {
 
             mysql.InsertTable(
               "cabling_personel",
-              refine_cabling_personel,
+              cabling_personel,
               (err, result) => {
                 if (err) console.error("Error: ", err);
 

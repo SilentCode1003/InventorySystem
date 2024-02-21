@@ -235,7 +235,7 @@
 
     $(document).on("click", "#uploadBtn", function () {
       //   console.log("clicked!");
-      showspinner();
+      Loading("Uploading");
       UploadProcess();
     });
 
@@ -342,7 +342,7 @@
           error(result.data);
         },
       });
-      hidespinner();
+      hideLoading();
     }
   });
 </script>
