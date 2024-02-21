@@ -22,18 +22,22 @@
             <div class="card-body">
               <div class="row mb-2">
                 <div class="col-md-12">
-                  <label class="form-label" for="requestdate"
-                    >Request Date</label
-                  >
-                  <input
-                    class="entry-input form-control mb-2"
-                    id="requestdate"
-                    name="requestdate"
-                    type="date"
-                    data-field="date"
-                    placeholder="Select Date"
-                    readonly
-                  />
+                  <div class="input-group">
+                    <input
+                      class="form-control text-center custom-input"
+                      id="requestdate"
+                      name="requestdate"
+                      type="date"
+                      data-field="date"
+                      placeholder="Select Date"
+                      readonly
+                      autocomplete="off"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">Request Date</span>
+                    </div>
+                   
+                  </div>
                   <div id="dtbox"></div>
                 </div>
               </div>
@@ -45,6 +49,7 @@
                       placeholder="Select/Input Personel"
                       name="personel"
                       id="personel"
+                      autocomplete="off"
                     />
                     <div class="input-group-append">
                       <span class="input-group-text">Personel</span>
@@ -62,6 +67,7 @@
                       placeholder="Select/Input Store"
                       name="store"
                       id="store"
+                      autocomplete="off"
                     />
                     <div class="input-group-append">
                       <span class="input-group-text">Store</span>
@@ -79,9 +85,12 @@
                       placeholder="Select/Input Type"
                       name="type"
                       id="type"
+                      autocomplete="off"
                     />
                     <div class="input-group-append">
-                      <span class="input-group-text">Type ex. SOF/RE-SOF/MIGRATION/TICKET</span>
+                      <span class="input-group-text"
+                        >Type ex. SOF/RE-SOF/MIGRATION/TICKET</span
+                      >
                     </div>
                   </div>
                   <div class="custom-dropdown" id="stypelDropdown"></div>
@@ -131,6 +140,7 @@
               placeholder="Enter Quantity"
               aria-label="quantity"
               aria-describedby="basic-addon1"
+              autocomplete="off"
             />
           </div>
         </div>
@@ -143,6 +153,7 @@
                 placeholder="Select/Input Item Description"
                 name="itemname"
                 id="itemname"
+                autocomplete="off"
               />
               <div class="input-group-append">
                 <span class="input-group-text">Item Description</span>

@@ -49,6 +49,10 @@
     });
 
     $(document).on("click", "#submitBtn", function () {
+      $("#personel").empty();
+      $("#requestdate").empty();
+      $("#store").empty();
+      $("#type").empty();
       $("#cablingrequestsubmitModal").modal("show");
     });
 
@@ -349,6 +353,7 @@
             success: function (result) {
               if (result.msg == "success") {
                 ClearTable("cablingrequestmateriallist-dataTable");
+                $("#cablingrequestsubmitModal").modal("hide");
                 LoadTable();
                 success("Success", "Request Success!");
               }

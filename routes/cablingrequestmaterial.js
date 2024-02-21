@@ -164,6 +164,8 @@ router.post("/save", (req, res) => {
     mysql.Select(sql_exist, (err, result) => {
       if (err) console.error("Error: ", err);
 
+      console.log(result);
+
       if (result.length != 0) {
         return res.json({
           msg: "duplicate",
