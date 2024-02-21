@@ -19,15 +19,11 @@
   --content-height: calc(100vh - 10rem);
 
   /*Custom dropdown widths*/
-  --cdw-50: calc(100% - 5rem);
-  --cdw-55: calc(100% - 5.5rem);
-  --cdw-60: calc(100% - 6rem);
-  --cdw-68: calc(100% - 6.8rem);
-  --cdw-70: calc(100% - 7rem);
-  --cdw-75: calc(100% - 7.5rem);
-  --cdw-80: calc(100% - 8rem);
-  --cdw-90: calc(100% - 9rem);
-  --cdw-100: calc(100% - 10rem);
+  --adaptw-5rem: calc(100% - 5rem);
+  --adaptw-5-8rem: calc(100% - 5.8rem);
+  --adaptw-6-5rem: calc(100% - 6.5rem);
+  --adaptw-6-8rem: calc(100% - 6.8rem);
+  --adaptw-9rem: calc(100% - 9rem);
 }
 
 .dashboard-icon{
@@ -271,36 +267,20 @@ body {
   border-radius: 0.275rem;
 }
 
-.cdw-50{
-  width: var(--cdw-50);
+.cdw-4letter{
+  width: var(--adaptw-5rem);
 }
-
-.cdw-60{
-  width: var(--cdw-60);
+.cdw-5letter{
+  width: var(--adaptw-5-8rem);
 }
-
-.cdw-68{
-  width: var(--cdw-68);
+.cdw-6letter{
+  width: var(--adaptw-6-5rem);
 }
-
-.cdw-70{
-  width: var(--cdw-70);
+.cdw-8letter{
+  width: var(--adaptw-6-8rem);
 }
-
-.cdw-75{
-  width: var(--cdw-75);
-}
-
-.cdw-80{
-  width: var(--cdw-80);
-}
-
-.cdw-90{
-  width: var(--cdw-90);
-}
-
-.cdw-100{
-  width: var(--cdw-100);
+.cdw-10letter{
+  width: var(--adaptw-9rem);
 }
 
 .custom-dropdown-modal {
