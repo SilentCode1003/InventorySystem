@@ -80,8 +80,8 @@
       LoadTableModal(detailid);
     });
 
-    //Submit Report
-    $(document).on("click", "#submitBtn", function () {});
+    // //Submit Report
+    // $(document).on("click", "#submitBtn", function () {});
 
     //Request Table Action Buttons
     $(document).on("click", "#approveBtn", function () {
@@ -218,6 +218,10 @@
       return_detail = JSON.stringify(return_detail);
       patchpanel_detail = JSON.stringify(patchpanel_detail);
 
+      console.log(report_detail);
+      console.log(return_detail);
+      console.log(patchpanel_detail);
+
       $.ajax({
         type: "POST",
         url: "/cablingrequestmaterial/report",
@@ -235,7 +239,7 @@
           location.reload();
         },
         error: function (err) {
-          errmsg(err);
+          warning('Error',err);
         },
       });
     });

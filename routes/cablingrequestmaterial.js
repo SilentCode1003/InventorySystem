@@ -13,6 +13,7 @@ const {
 const {
   RequestEquipmentDetail,
   RequestEquipmentItem,
+  InventoryItem,
 } = require("./model/cablingmodel");
 const {
   ConvertToJson,
@@ -537,17 +538,31 @@ router.post("/report", (req, res) => {
     }
 
     let consupmtionModel = consumption_report.map(
-      (data) => new ConsumptionReportModel(data[1], data[2], data[3])
+      (data) =>
+        new ConsumptionReportModel(
+          data[0],
+          data[0],
+          data[1],
+          data[2],
+          data[3],
+          data[4],
+          data[5],
+          data[6],
+          data[7],
+          data[8],
+          data[9],        )
     );
+
     consupmtionModel.forEach((item, index) => {
-      var sql_select = `select ii_stocks as stocks from inventory_item where ii_itemdescription='${item.description}'`;
-      mysql.SelectResult(sql_select, (err, result) => {
+      var sql_select = `select * from inventory_item where ii_itemdescription='${item.description}'`;
+      mysql.Select(sql_select, (err, result) => {
         if (err) console.error("Error: ", err);
+        let inventoryItem = InventoryItem(result);
 
         console.log(`${item.description} ${result}`);
 
-        var stocks = result[0].stocks;
-        var count = item.count;
+        var stocks = inventoryItem[0].stocks;
+        var count = item.quantity;
         var description = item.description;
         var current_stock = parseFloat(stocks);
         var consumption = parseFloat(count);
