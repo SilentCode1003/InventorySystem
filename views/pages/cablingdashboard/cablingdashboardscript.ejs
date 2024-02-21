@@ -74,6 +74,8 @@
       ClearTable("patchpanel-dataTable");
       ClearTable("return-dataTable");
 
+      $("#modal-content").modal("hide");
+
       $("#cablingrequestmaterialreportModal").modal("show");
       console.log(detailid);
 
@@ -233,10 +235,9 @@
           patchpaneldetail: patchpanel_detail,
         },
         success: function (result) {
-          $("#cablingrequestmaterialreportModal").modal("toggle");
-          LoadTable();
+          $("#cablingrequestmaterialreportModal").modal("hide");
+          LoadTableRequest();
           success("Success", "Report Complete!");
-          location.reload();
         },
         error: function (err) {
           warning('Error',err);
