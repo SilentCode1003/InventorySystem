@@ -240,7 +240,7 @@
           success("Success", "Report Complete!");
         },
         error: function (err) {
-          warning('Error',err);
+          warning("Error", err);
         },
       });
     });
@@ -297,25 +297,49 @@
         );
         tableBody.append(tr);
       } else {
-        data.forEach(item => {
-          let action = '';
-          if (item.status === 'APPROVED') {
+        data.forEach((item) => {
+          let action = "";
+          if (item.status === "APPROVED") {
             action = `<button class="custom-btn shadow-sm cw-7rem" id="reportBtn" name="reportBtn" data-toggle="modal" data-target="#editModal">REPORT</button>`;
-          } else if (item.status === 'REQUEST') {
-            action = action = `<button class="custom-btn shadow-sm cw-7rem" id="approveBtn" name="approveBtn">APPROVE</button>`;
+          } else if (item.status === "REQUEST") {
+            action =
+              action = `<button class="custom-btn shadow-sm cw-7rem" id="approveBtn" name="approveBtn">APPROVE</button>`;
           }
           const statusBackground = getStatusBackground(item.status);
           const containerBackground = getContainerBackground(item.status);
 
-          const tr = $('<tr>').append(
-            $('<td>', { text: item.detailid, 'data-label': 'ID', class: 'custom-mobile-align' }),
-            $('<td>', { text: item.requestdate, 'data-label': 'Access', class: 'custom-mobile-align no-wrap' }),
-            $('<td>', { text: item.requestby, 'data-label': 'Created By', class: 'custom-mobile-align' }),
-            $('<td>', { html: item.detail, 'data-label': 'Created Date', class: 'custom-mobile-align' }),
-            $('<td>', { text: item.remarks, 'data-label': 'Created Date', class: 'custom-mobile-align' }),
-            $('<td>', { class: 'custom-mobile-align', 'data-label': 'Status' }).append(
-              $('<div>', { class: containerBackground }).append(
-                $('<span>', { text: item.status, class: statusBackground })
+          const tr = $("<tr>").append(
+            $("<td>", {
+              text: item.detailid,
+              "data-label": "ID",
+              class: "custom-mobile-align",
+            }),
+            $("<td>", {
+              text: item.requestdate,
+              "data-label": "Access",
+              class: "custom-mobile-align no-wrap",
+            }),
+            $("<td>", {
+              text: item.requestby,
+              "data-label": "Created By",
+              class: "custom-mobile-align",
+            }),
+            $("<td>", {
+              html: item.detail,
+              "data-label": "Created Date",
+              class: "custom-mobile-align",
+            }),
+            $("<td>", {
+              text: item.remarks,
+              "data-label": "Created Date",
+              class: "custom-mobile-align",
+            }),
+            $("<td>", {
+              class: "custom-mobile-align",
+              "data-label": "Status",
+            }).append(
+              $("<div>", { class: containerBackground }).append(
+                $("<span>", { text: item.status, class: statusBackground })
               )
             ),
             $("<td>", {
@@ -339,6 +363,7 @@
         searching: false,
         info: false,
         scrollCollapse: true,
+        scrollY: "250px",
         serverMethod: "GET",
         ajax: {
           url: "/cablingdashboard/getcurrentstocks",
