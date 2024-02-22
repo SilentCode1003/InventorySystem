@@ -92,7 +92,7 @@ router.post("/edit", (req, res) => {
 
     console.log(data);
 
-    mysql.Select(sql_check, "MasterItemPrice", (err, result) => {
+    mysql.Select(sql_check, (err, result) => {
       if (err) console.error("Error: ", err);
 
       if (result.length != 1) {
