@@ -42,18 +42,9 @@ class MasterItemPriceModel {
 }
 
 class MasterToolModel {
-  constructor(
-    toolcode,
-    tag,
-    serial,
-    description,
-    status,
-    createdby,
-    createddate
-  ) {
-    this.toolcode = toolcode;
-    this.tag = tag;
-    this.serial = serial;
+  constructor(id, brand, description, status, createdby, createddate) {
+    this.id = id;
+    this.brand = brand;
     this.description = description;
     this.status = status;
     this.createdby = createdby;
@@ -135,55 +126,6 @@ class RequestEquipmentItemModel {
     this.description = description;
     this.quantity = quantity;
     this.unit = unit;
-    this.status = status;
-    this.approvedby = approvedby;
-    this.approveddate = approveddate;
-  }
-}
-
-class RequestToolDetailModel {
-  constructor(
-    detailid,
-    requestby,
-    requestdate,
-    detail,
-    description,
-    remarks,
-    status,
-    approvedby,
-    approveddate
-  ) {
-    this.detailid = detailid;
-    this.requestby = requestby;
-    this.requestdate = requestdate;
-    this.detail = detail;
-    this.description = description;
-    this.remarks = remarks;
-    this.status = status;
-    this.approvedby = approvedby;
-    this.approveddate = approveddate;
-  }
-}
-
-class RequestToolItemModel {
-  constructor(
-    systemid,
-    detailid,
-    requestby,
-    requestdate,
-    description,
-    serialtag,
-    status,
-    approvedby,
-    approveddate
-  ) {
-    this.systemid = systemid;
-    this.detailid = detailid;
-    this.requestby = requestby;
-    this.requestdate = requestdate;
-    this.serialtag = serialtag;
-    this.description = description;
-    this.remarks = remarks;
     this.status = status;
     this.approvedby = approvedby;
     this.approveddate = approveddate;
@@ -393,6 +335,47 @@ class RepeatRequestModel {
   }
 }
 
+class InventoryToolModel {
+  constructor(id, toolid, serialtag, status, createdby, createddate) {
+    (this.id = id),
+      (this.toolid = toolid),
+      (this.serialtag = serialtag),
+      (this.status = status),
+      (this.createdby = createdby),
+      (this.createddate = createddate);
+  }
+}
+
+class RequestToolDetailModel {
+  constructor(
+    id,
+    requestdate,
+    requestby,
+    detail,
+    remarks,
+    status,
+    createdby,
+    createddate
+  ) {
+    (this.id = id),
+      (this.requestdate = requestdate),
+      (this.requestby = requestby),
+      (this.detail = detail),
+      (this.remarks = remarks),
+      (this.status = status),
+      (this.createdby = createdby),
+      (this.createddate = createddate);
+  }
+}
+
+class RequestToolItemModel {
+  constructor(id, detailid, toolid, serialtag) {
+    (this.id = id),
+      (this.detailid = detailid),
+      (this.toolid = toolid),
+      (this.serialtag = serialtag);
+  }
+}
 //#endregion
 
 //#region Data Models
@@ -560,5 +543,6 @@ module.exports = {
   RepeatRequestModel,
   MasterUserModel,
   MasterAccessTypeModel,
-  MasterItemPriceModel
+  MasterItemPriceModel,
+  InventoryToolModel,
 };
