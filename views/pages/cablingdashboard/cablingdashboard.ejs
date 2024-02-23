@@ -7,29 +7,25 @@
                 <h5 class="modal-title" id="exampleModalLabel">Report</h5>
             </div>
             <div class="modal-body">
-                <div class="row mb-2">
+                <div class="row">
                     <div class="col-md-6">
-                        <label class="form-label" for="detailidmodal">Detail ID: <span
-                                id="detailidmodal"></span></label>
+                        <label class="form-label pl-3" for="detailidmodal">Detail ID: <span id="detailidmodal"></span></label>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label" for="detailidmodal">Request By: <span
-                                id="requestbymodal"></span></label>
+                        <label class="form-label pl-3" for="detailidmodal">Request By: <span id="requestbymodal"></span></label>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row">
                     <div class="col-md-6">
-                        <label class="form-label" for="requestdatemodal">Date: <span
-                                id="requestdatemodal"></span></label>
+                        <label class="form-label pl-3" for="requestdatemodal">Date: <span id="requestdatemodal"></span></label>
                     </div>
-
+                
                     <div class="col-md-6">
-                        <label class="form-label" for="requestremarksmodal">Remarks: <span
-                                id="requestremarksmodal"></span></label>
+                        <label class="form-label pl-3" for="requestremarksmodal">Remarks: <span id="requestremarksmodal"></span></label>
                     </div>
                 </div>
 
-                <div class="row mb-2">
+                <div class="row">
                     <div class="col-lg-12">
                         <div class="card-body">
                             <!-- Request Table -->
@@ -41,22 +37,20 @@
                                                 Request Table
                                             </h6>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered table-hover table-sm"
-                                                    id="request-dataTable" width="100%" cellspacing="10">
-                                                    <thead class="table-dark">
-                                                        <tr>
-                                                            <th class="col-1 text-start">BRAND</th>
-                                                            <th class="col-3 text-center">DESCRIPTION</th>
-                                                            <th class="col-1 text-center">COUNT</th>
-                                                            <th class="col-1 text-end">UNIT</th>
-                                                        </tr>
-                                                    </thead>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover table-sm"
+                                                id="request-dataTable" width="100%" cellspacing="10">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th class="col-1 text-start">BRAND</th>
+                                                        <th class="col-3 text-center">DESCRIPTION</th>
+                                                        <th class="col-1 text-center">COUNT</th>
+                                                        <th class="col-1 text-end">UNIT</th>
+                                                    </tr>
+                                                </thead>
 
-                                                    <tbody class="table-light" id="request-body-table"></tbody>
-                                                </table>
-                                            </div>
+                                                <tbody class="table-light" id="request-body-table"></tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -66,14 +60,12 @@
                             <div class="row mb-2">
                                 <div class="col-md-6">
                                     <div class="card shadow mb-4">
-                                        <div class="card-header py-3">
-                                            <div class="row mb-4">
-                                                <div class="col-md-6">
-                                                    <div class="col-md-3 text-center pt-1 table-title">
-                                                        Report Table
-                                                    </div>
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-md-6 text-center pt-1 table-title">
+                                                    Report Table
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 pt-3">
                                                     <input id="reportdr" name="reportdr" type="text"
                                                         class="form-control" placeholder="Enter DR No."
                                                         aria-label="reportdr" aria-describedby="basic-addon1" />
@@ -92,7 +84,7 @@
                                                             <th class="col-1 text-end">UNIT</th>
                                                         </tr>
                                                     </thead>
-
+    
                                                     <tbody class="table-light" id="report-table-body"></tbody>
                                                 </table>
                                             </div>
@@ -119,7 +111,7 @@
                                                             <th class="col-1 text-end">UNIT</th>
                                                         </tr>
                                                     </thead>
-
+    
                                                     <tbody class="table-light" id="return-body-table"></tbody>
                                                 </table>
                                             </div>
@@ -129,17 +121,17 @@
                             </div>
 
                             <!-- Patch Panel Table -->
-                            <div class="row mb-2">
+                            <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card shadow mb-4">
+                                    <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <div class="row mb-4">
-                                                <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-6 pt-2">
                                                     <h6 class="m-0 font-weight-bold table-title">
                                                         Patch Panel Table
                                                     </h6>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 pt-2">
                                                     <input id="patchpaneldr" name="patchpaneldr" type="text"
                                                         class="form-control" placeholder="Enter DR No."
                                                         aria-label="patchpaneldr" aria-describedby="basic-addon1" />
@@ -253,7 +245,7 @@
             <!-- Card Header - Dropdown -->
             <div class="card-header d-flex flex-row align-items-center justify-content-between">
                 <div class="table-title">
-                    Stocks
+                    Stocks Graph
                 </div>
                 <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
