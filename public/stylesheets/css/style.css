@@ -748,7 +748,8 @@ span.subheading:first-letter{
   position: sticky;
   z-index: 1;
   top: 0;
-  background-color: white
+  background-color: #5a5c69;
+  color: white;
 }
 
 .custom-loader{

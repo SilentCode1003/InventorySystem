@@ -1,14 +1,6 @@
 <!-- Modal -->
-<div
-  class="modal fade bd-example-modal-lg"
-  id="cablingitemsModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
-  data-keyboard="false"
-  data-backdrop="static"
->
+<div class="modal fade bd-example-modal-lg" id="cablingitemsModal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -20,30 +12,16 @@
             <div class="card-body">
               <div class="row mb-2">
                 <div class="col-md-12">
-                  <label class="form-label" for="itemcodemodal"
-                    >Item Code</label
-                  >
-                  <input
-                    id="itemcodemodal"
-                    name="itemcodemodal"
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter new item code"
-                    aria-label="fullname"
-                    aria-describedby="basic-addon1"
-                    disabled
-                  />
+                  <label class="form-label" for="itemcodemodal">Item Code</label>
+                  <input id="itemcodemodal" name="itemcodemodal" type="text" class="form-control"
+                    placeholder="Enter new item code" aria-label="fullname" aria-describedby="basic-addon1" disabled />
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <div class="input-group">
-                    <input
-                      class="form-control text-center custom-input"
-                      placeholder="Input Item Description"
-                      name="itemnamemodal"
-                      id="itemnamemodal"
-                    />
+                    <input class="form-control text-center custom-input" placeholder="Input Item Description"
+                      name="itemnamemodal" id="itemnamemodal" />
                     <div class="input-group-append">
                       <span class="input-group-text">Item Description</span>
                     </div>
@@ -54,12 +32,8 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="input-group">
-                    <input
-                      class="form-control text-center custom-input"
-                      placeholder="Select/Input Brand"
-                      name="brandmodal"
-                      id="brandmodal"
-                    />
+                    <input class="form-control text-center custom-input" placeholder="Select/Input Brand"
+                      name="brandmodal" id="brandmodal" />
                     <div class="input-group-append">
                       <span class="input-group-text">Brand</span>
                     </div>
@@ -72,18 +46,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-          data-dismiss="modal"
-        >
+        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+          data-dismiss="modal">
           <i class="fa fa-times" aria-hidden="true"></i> Close
         </button>
-        <button
-          type="button"
-          id="saveBtn"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-        >
+        <button type="button" id="saveBtn" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm">
           <i class="fa fa-check" aria-hidden="true"></i> Save
         </button>
       </div>
@@ -92,23 +59,19 @@
 </div>
 
 <!-- PCreated by Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-3">
+<div class="d-sm-flex align-items-center justify-content-between mb-1">
   <h1 class="page-title">Cabling Tools</h1>
 </div>
 <!-- Content Row -->
 <div class="row mb-2">
-  <div class="col-lg-12">
+  <div class="col-lg-6">
     <div class="card">
       <div class="card-body">
         <div class="row mb-2">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="input-group">
-              <input
-                class="form-control text-center custom-input"
-                placeholder="Input Item Description"
-                name="description"
-                id="description"
-              />
+              <input class="form-control text-center custom-input" placeholder="Input Item Description"
+                name="description" id="description" />
               <div class="input-group-append">
                 <span class="input-group-text">Item Description</span>
               </div>
@@ -117,81 +80,59 @@
         </div>
 
         <div class="row mb-2 mt-3">
-          <div class="col-md-6">
+          <div class="col-md-12 d-flex">
             <div class="input-group">
-              <input
-                class="form-control text-center custom-input"
-                placeholder="Input Brand"
-                name="brand"
-                id="brand"
-              />
+              <input class="form-control text-center custom-input" placeholder="Input Brand" name="brand" id="brand" />
               <div class="input-group-append">
                 <span class="input-group-text">Brand</span>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4 text-center mt-1">
-            <button
-              id="addBtn"
-              name="addBtn"
-              class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
-            >
+            <button id="addBtn" name="addBtn" class="ml-2 custom-btn cw-7rem shadow-sm">
               <i class="fa fa-plus" aria-hidden="true"></i>
               Add
             </button>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 </div>
 
 <!-- DataTales Example -->
-<div class="card shadow mb-4">
+<div class="card shadow table-size">
+  <div class="progress progress-sm mb-2">
+    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+      aria-valuemax="100"></div>
+  </div>
   <div class="card-header py-3">
-    <div class="row mb-4">
-      <div class="col-md-3">
-        <h6 class="m-0 font-weight-bold table-title">Caling Item Table</h6>
+    <div class="row">
+      <div class="col-md-3 text-center pt-2">
+        <h5>Access Type Table</h5>
       </div>
       <div class="col-md-6">
-        <input
-          id="search"
-          name="search"
-          type="text"
-          class="form-control"
-          placeholder="Search Item Description"
-          aria-label="search"
-          aria-describedby="basic-addon1"
-        />
+        <input id="search" name="search" type="text" class="form-control" placeholder="Search roletype Name"
+          aria-label="search" aria-describedby="basic-addon1" />
       </div>
     </div>
   </div>
-
-  <div class="card-body">
-    <div class="table-responsive">
-      <table
-        class="table table-bordered"
-        id="datatable"
-        width="100%"
-        cellspacing="10"
-      >
-        <thead class="table-dark">
-          <tr>
-            <th class="col-1 text-start">Code</th>
-            <th class="col-3 text-center">Brand</th>
-            <th class="col-3 text-center">Description</th>
-            <th class="col-1 text-center">Status</th>
-            <th class="col-3 text-center">Created by</th>
-            <th class="col-3 text-center">Created date</th>
-            <th class="col-1 text-end">Action</th>
-          </tr>
-        </thead>
-
-        <tbody class="table-light"></tbody>
-      </table>
-    </div>
+  <div class="table-responsive scrollable-table-container">
+    <table class="table custom-mobile-table" id="datatable" width="100%">
+      <thead class="table-header" style="border: none;">
+        <tr>
+          <th>Code</th>
+          <th>Brand</th>
+          <th>Description</th>
+          <th>Created by</th>
+          <th>Created date</th>
+          <th class="col-1 text-center">Status</th>
+          <th class="col-1"></th>
+        </tr>
+      </thead>
+  
+      <tbody class="table-light">
+  
+      </tbody>
+    </table>
   </div>
 </div>
