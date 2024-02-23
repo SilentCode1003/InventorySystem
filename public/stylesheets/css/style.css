@@ -718,7 +718,7 @@ span.subheading:first-letter{
 }
 
 .scrollable-table-container {
-  height: 565px !important; 
+  height: 530px !important; 
   overflow-y: auto !important;
 }
 
@@ -728,7 +728,7 @@ span.subheading:first-letter{
 }
 
 .scrollable-table-container-m {
-  height: 665px !important; 
+  height: 645px !important; 
   overflow-y: auto !important;
 }
 
