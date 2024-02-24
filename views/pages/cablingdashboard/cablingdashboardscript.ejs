@@ -355,56 +355,100 @@
     }
 
     function LoadTableStocks() {
-      $("#cabling-equipment-stocks-dataTable").DataTable({
-        destroy: true,
-        processing: true,
-        serverSide: true,
-        paging: false,
-        searching: false,
-        info: false,
-        scrollCollapse: true,
-        scrollY: "250px",
-        serverMethod: "GET",
-        ajax: {
-          url: "/cablingdashboard/getcurrentstocks",
-          dataSrc: (json) => {
+      $(".progress").hide();
+      $(".progress").slideDown();
+
+      $.ajax({
+        url: "/cablingdashboard/getcurrentstocks",
+        method: "GET",
+        dataType: "json",
+        xhrFields: {
+          onprogress: function (e) {
+            if (e.lengthComputable) {
+              var percentComplete = (e.loaded / e.total) * 100;
+              $(".progress-bar").css("width", percentComplete + "%");
+            }
+          },
+        },
+        success: function (response) {
+          if (response.msg === "success") {
+            var data = response.data;
             var finalData = [];
-            var data = json.data;
-            let totalequipmentcost = 0;
+            var totalequipmentcost = 0;
 
-            console.log(data);
-            $.each(data, (key, item) => {
-              var action = "";
-
+            $.each(data, function (key, item) {
               totalequipmentcost += parseFloat(item.itemcost);
               finalData.push({
                 itemdescription: item.itemdescription,
                 stocks: item.stocks,
-                itemcost: ConvertToCurrency(item.itemcost),
+                itemcost: ConvertToCurrency(item.itemcost)
               });
             });
 
             createChart(finalData);
-            document.getElementById("totalequipmentcost").textContent =
-              ConvertToCurrency(totalequipmentcost);
-
-            return finalData;
-          },
+            document.getElementById("totalequipmentcost").textContent = ConvertToCurrency(totalequipmentcost);
+            $(".progress").slideUp();
+            populatestockstable(data);
+          } else {
+            console.error(response.msg);
+            $(".progress").slideUp();
+          }
         },
-        columnDefs: [
-          {
-            targets: 1,
-            className: "td-indent",
-          },
-        ],
-        columns: [
-          { data: "itemdescription" },
-          { data: "stocks" },
-          { data: "itemcost" },
-        ],
-        initComplete: function () {},
+        error: function (error) {
+          console.error(error);
+        },
       });
     }
+
+    function populatestockstable(data) {
+      console.log("reqeust", data);
+      const tableBody = $("#cabling-stocks-datatable tbody");
+      tableBody.empty();
+
+      if (data.length === 0) {
+        const tr = $("<tr>").append(
+          $("<td>", {
+            colspan: 7,
+            class: "text-center",
+            text: "No Data Matched",
+          })
+        );
+        tableBody.append(tr);
+      } else {
+        data.forEach((item) => {
+          let action = "";
+          if (item.status === "APPROVED") {
+            action = `<button class="custom-btn shadow-sm cw-7rem" id="reportBtn" name="reportBtn" data-toggle="modal" data-target="#editModal">REPORT</button>`;
+          } else if (item.status === "REQUEST") {
+            action =
+              action = `<button class="custom-btn shadow-sm cw-7rem" id="approveBtn" name="approveBtn">APPROVE</button>`;
+          }
+          const statusBackground = getStatusBackground(item.status);
+          const containerBackground = getContainerBackground(item.status);
+
+          const tr = $("<tr>").append(
+            $("<td>", {
+              text: item.itemdescription,
+              "data-label": "ID",
+              class: "custom-mobile-align",
+            }),
+            $("<td>", {
+              text: item.stocks,
+              "data-label": "Access",
+              class: "custom-mobile-align no-wrap",
+            }),
+            $("<td>", {
+              text: item.itemcost,
+              "data-label": "Created By",
+              class: "custom-mobile-align",
+            })
+          );
+
+          tableBody.append(tr);
+        });
+      }
+    }
+
 
     function LoadTableModal(detailid) {
       //Request Table Data
@@ -585,8 +629,8 @@
             {
               label: "Stock Counts",
               data: chartData,
-              backgroundColor: "rgb(216, 42, 39, 0.65)",
-              borderColor: "rgb(216, 42, 39",
+              backgroundColor: "rgb(216, 42, 39, .65)",
+              borderColor: "rgb(216, 42, 39, .65)",
               borderWidth: 1,
             },
           ],

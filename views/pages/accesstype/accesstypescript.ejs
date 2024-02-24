@@ -14,7 +14,7 @@
         </tr>`;
 
     const tbody = $('#datatable tbody');
-    for(let i = 0; i < 8; i++){
+    for(let i = 0; i < 7; i++){
       tbody.append(loader);
     }
 
@@ -164,9 +164,9 @@
       });
     });
 
-      //Search Table Functionality
-      $("#search").on("input", function () {
-      filterTableRows("#datatable", 6 , "#search");
+    //Search Table Functionality
+    $("#search").on("input", function () {
+      filterTableRows("#datatable", 6, "#search");
     });
 
     function LoadTable() {

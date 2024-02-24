@@ -53,7 +53,6 @@
 }
 
 html {
-    font-family: "Poppins", sans-serif;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent
@@ -74,7 +73,7 @@ section {
 
 body {
     margin: 0;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Share Tech', sans-serif;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -1829,8 +1828,7 @@ pre code {
 }
 
 .table-hover tbody tr:hover {
-    color: #858796;
-    background-color: rgba(0, 0, 0, .075)
+    color: var(--clr-table-title);
 }
 
 .table-primary,
@@ -12113,7 +12111,7 @@ a:focus {
 
 @media (min-width:768px) {
     .chart-bar {
-        height: 20rem
+        height: 33rem
     }
 }
 
