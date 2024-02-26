@@ -158,38 +158,43 @@
 </div>
 
 <!-- DataTales Example -->
-<div class="card shadow mb-4">
+<div class="card shadow table-size">
+  <div class="progress progress-sm mb-2">
+    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+      aria-valuemax="100"></div>
+  </div>
   <div class="card-header py-3">
-    <div class="row mb-4">
-      <div class="col-md-3">
-        <h6 class="m-0 font-weight-bold table-title">Request Table</h6>
+    <div class="row">
+      <div class="col-md-3 text-center pt-2">
+        <h6 class="m-0 font-weight-bold table-title">Request Material Table</h6>
       </div>
-      <div class="col-md-6">
-        <input id="search" name="search" type="text" class="form-control" placeholder="Search Item Description"
+      <div class="col-md-6 pt-2">
+        <input id="search" name="search" type="text" class="form-control" placeholder="Search roletype Name"
           aria-label="search" aria-describedby="basic-addon1" />
       </div>
     </div>
   </div>
-
   <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered" id="cablingrequestmaterial-dataTable" width="100%" cellspacing="10">
-        <thead class="table-dark">
+    <div class="table-responsive scrollable-table-container">
+      <table class="table custom-mobile-table" id="datatable" width="100%">
+        <thead class="table-header" style="border: none;">
           <tr>
-            <th class="col-1 text-start">ID</th>
-            <th class="col-2 text-center">Request By</th>
-            <th class="col-2 text-center">Date</th>
-            <th class="col-5 text-center">Details</th>
-            <th class="col-2 text-center">Remarks</th>
+            <th>ID</th>
+            <th>Request By</th>
+            <th>Date</th>
+            <th>Details</th>
+            <th>Remarks</th>
+            <th>Approved by</th>
+            <th>Approved date</th>
             <th class="col-1 text-center">Status</th>
-            <th class="col-2 text-center">Approved by</th>
-            <th class="col-2 text-center">Approved date</th>
-            <th class="col-1 text-end">Action</th>
+            <th class="col-1"></th>
           </tr>
         </thead>
-
-        <tbody class="table-light"></tbody>
+    
+        <tbody class="table-light">
+    
+        </tbody>
       </table>
-    </div>
+  </div>
   </div>
 </div>
