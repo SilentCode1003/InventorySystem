@@ -445,12 +445,12 @@
 
           const tr = $('<tr>').append(
             $('<td>', { text: item.detailid, 'data-label': 'ID', class: 'custom-mobile-align' }),
-            $('<td>', { text: item.requestby, 'data-label': 'Request By', class: 'custom-mobile-align' }),
-            $('<td>', { text: item.requestdate, 'data-label': 'Request Date', class: 'custom-mobile-align' }),
+            $('<td>', { text: item.requestby, 'data-label': 'Request By', class: 'custom-mobile-align no-wrap' }),
+            $('<td>', { text: item.requestdate, 'data-label': 'Request Date', class: 'custom-mobile-align no-wrap' }),
             $('<td>', { html: item.detail, 'data-label': 'Detail', class: 'custom-mobile-align no-wrap' }),
-            $('<td>', { text: item.remarks, 'data-label': 'Remarks', class: 'custom-mobile-align' }),
-            $('<td>', { text: item.approvedby, 'data-label': 'Approved By', class: 'custom-mobile-align' }),
-            $('<td>', { text: item.approvedate, 'data-label': 'Approved Date', class: 'custom-mobile-align' }),
+            $('<td>', { text: item.remarks, 'data-label': 'Remarks', class: 'custom-mobile-align no-wrap' }),
+            $('<td>', { text: item.approvedby, 'data-label': 'Approved By', class: 'custom-mobile-align no-wrap' }),
+            $('<td>', { text: item.approvedate, 'data-label': 'Approved Date', class: 'custom-mobile-align no-wrap' }),
             $('<td>', { class: 'custom-mobile-align', 'data-label': 'Status' }).append(
               $('<div>', { class: containerBackground }).append(
                 $('<span>', { text: item.status, class: statusBackground })
