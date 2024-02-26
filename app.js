@@ -31,6 +31,7 @@ var productionRouter = require("./routes/production");
 var productionmaterialRouter = require("./routes/productionmaterial");
 var repeatrequestRouter = require("./routes/repeatrequest");
 var cablingtoolRouter = require('./routes/cablingtool')
+var cablingrequesttoolRouter = require('./routes/cablingrequesttool')
 
 var app = express();
 
@@ -72,6 +73,7 @@ app.use("/production", productionRouter);
 app.use("/productionmaterial", productionmaterialRouter);
 app.use("/repeatrequest", repeatrequestRouter);
 app.use("/cablingtool", cablingtoolRouter);
+app.use("/cablingrequesttool", cablingrequesttoolRouter); //
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -47,7 +47,7 @@
                       <span class="input-group-text">Store</span>
                     </div>
                   </div>
-                  <div class="custom-dropdown" id="storelDropdown"></div>
+                  <div class="custom-dropdown" id="storeDropdown"></div>
                 </div>
               </div>
 
@@ -60,7 +60,7 @@
                       <span class="input-group-text">Type ex. SOF/RE-SOF/MIGRATION/TICKET</span>
                     </div>
                   </div>
-                  <div class="custom-dropdown" id="stypelDropdown"></div>
+                  <div class="custom-dropdown" id="typeDropdown"></div>
                 </div>
               </div>
             </div>
@@ -119,9 +119,9 @@
 </div>
 
 <!-- Requestlist Example -->
-<div class="card shadow mb-4">
+<div class="card shadow">
   <div class="card-header py-3">
-    <div class="row mb-4">
+    <div class="row">
       <div class="col-md-3">
         <h6 class="m-0 font-weight-bold table-title">Request List Table</h6>
       </div>
@@ -130,7 +130,7 @@
 
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table table-bordered" id="cablingrequestmateriallist-dataTable" width="100%" cellspacing="10">
+      <table class="table table-bordered" id="material-list-table" width="100%" cellspacing="10">
         <thead class="table-dark">
           <tr>
             <th class="col-1 text-start">Brand</th>
@@ -145,10 +145,10 @@
       </table>
     </div>
 
-    <div class="row">
-      <div class="col-md-4 text-center mt-1">
+    <div class="row justify-content-end">
+      <div class="col-md-4 text-right mt-1">
         <button id="submitBtn" name="submitBtn"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75">
+          class="shadow ml-2 custom-btn cw-7rem">
           <i class="fa fa-plus" aria-hidden="true"></i>
           Submit
         </button>

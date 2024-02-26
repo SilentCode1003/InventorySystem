@@ -315,21 +315,63 @@
         </div>
     </div>
 
-    <div class="table-responsive scrollable-table-container">
-        <table class="table custom-mobile-table" id="cabling-equipment-datable" width="100%">
-            <thead class="table-header" style="border: none">
-                <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th class="col-1">Personel</th>
-                    <th>Details</th>
-                    <th>Remarks</th>
-                    <th class="col-1">Status</th>
-                    <th class="col-1"></th>
-                </tr>
-            </thead>
+    <div class="card-body">
+        <div class="table-responsive scrollable-table-container">
+            <table class="table custom-mobile-table" id="cabling-equipment-datable" width="100%">
+                <thead class="table-header" style="border: none">
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th class="col-1">Personel</th>
+                        <th>Details</th>
+                        <th>Remarks</th>
+                        <th class="col-1">Status</th>
+                        <th class="col-1"></th>
+                    </tr>
+                </thead>
 
-            <tbody class="table-light"></tbody>
-        </table>
+                <tbody class="table-light"></tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+<!-- Request Tool Table -->
+<div class="card shadow table-size">
+    <div class="progress progress-sm mb-2">
+      <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+        aria-valuemax="100"></div>
+    </div>
+    <div class="card-header py-3">
+      <div class="row">
+        <div class="col-md-3 text-center pt-2">
+          <h6 class="m-0 font-weight-bold table-title">Request Tool Table</h6>
+        </div>
+        <div class="col-md-6 pt-2">
+          <input id="search-request-tool" name="search-request-tool" type="text" class="form-control" placeholder="Search roletype Name"
+            aria-label="search" aria-describedby="basic-addon1" />
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive scrollable-table-container">
+        <table class="table custom-mobile-table" id="request-tool-datatable" width="100%">
+          <thead class="table-header" style="border: none;">
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Personel</th>
+              <th>Details</th>
+              <th>Remarks</th>
+              <th class="col-1">Status</th>
+              <th class="col-1"></th>
+            </tr>
+          </thead>
+  
+          <tbody class="table-light">
+  
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
