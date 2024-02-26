@@ -1,149 +1,6 @@
-<!-- PCreated by Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-3">
-  <h1 class="page-title">Cabling Products</h1>
-</div>
-<!-- Content Row -->
-<div class="row mb-2">
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="card-body">
-        <div class="row mb-2">
-          <div class="col-md-6">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Item Serial</span>
-              </div>
-              <input
-                class="form-control text-center custom-input"
-                placeholder="Input Item Serial"
-                name="itemserial"
-                id="itemserial"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="row mb-2">
-          <div class="col-md-6">
-            <div class="input-group">
-              <input
-                class="form-control text-center custom-input"
-                placeholder="Select/Input Description"
-                name="description"
-                id="description"
-              />
-              <div class="input-group-append">
-                <span class="input-group-text">Description</span>
-              </div>
-            </div>
-            <div class="custom-dropdown" id="descriptionDropdown"></div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4 text-center mt-1">
-            <button
-              id="addBtn"
-              name="addBtn"
-              class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
-            >
-              <i class="fa fa-plus" aria-hidden="true"></i>
-              Add
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row mb-2">
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-sm-flex align-items-center justify-content-between mb-3">
-          <h1 class="page-title">Batch Upload</h1>
-        </div>
-        <div class="row mb-2">
-          <div class="col-md-6">
-            <input
-              type="file"
-              name="excelfile"
-              id="excelfile"
-              class="form-control d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-50"
-            />
-          </div>
-          <div class="col-md-4">
-            <button
-              id="uploadBtn"
-              name="uploadBtn"
-              class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-50"
-            >
-              <i class="fa fa-arrow-up" aria-hidden="true"></i>
-              Upload
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <div class="row mb-4">
-      <div class="col-md-3">
-        <h6 class="m-0 font-weight-bold table-title">Caling Item Table</h6>
-      </div>
-      <div class="col-md-6">
-        <input
-          id="search"
-          name="search"
-          type="text"
-          class="form-control"
-          placeholder="Search Product Serial"
-          aria-label="search"
-          aria-describedby="basic-addon1"
-        />
-      </div>
-    </div>
-  </div>
-
-  <div class="card-body">
-    <div class="table-responsive">
-      <table
-        class="table table-bordered"
-        id="cablingproducts-dataTable"
-        width="100%"
-        cellspacing="10"
-      >
-        <thead class="table-dark">
-          <th class="col-1 text-start">Serial</th>
-          <th class="col-3 text-center">Description</th>
-          <th class="col-1 text-center">Status</th>
-          <th class="col-3 text-center">Added By</th>
-          <th class="col-2 text-center">Added Date</th>
-          <th class="col-1 text-end">Action</th>
-        </thead>
-
-        <tbody class="table-light"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
 <!-- Modal -->
-<div
-  class="modal fade bd-example-modal-lg"
-  id="cablingitemsModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
-  data-keyboard="false"
-  data-backdrop="static"
->
+<div class="modal fade bd-example-modal-lg" id="cablingitemsModal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -159,13 +16,8 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Item Serial</span>
                     </div>
-                    <input
-                      class="form-control text-center custom-input"
-                      placeholder="Select/Input Position"
-                      name="itemserialmodal"
-                      id="itemserialmodal"
-                      disabled
-                    />
+                    <input class="form-control text-center custom-input" placeholder="Select/Input Position"
+                      name="itemserialmodal" id="itemserialmodal" disabled />
                   </div>
                 </div>
               </div>
@@ -173,11 +25,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <label class="form-label">Position</label>
-                  <select
-                    class="form-control text-center"
-                    name="descriptionlist"
-                    id="descriptionlist"
-                  >
+                  <select class="form-control text-center" name="descriptionlist" id="descriptionlist">
                     <option value="">-- Select here --</option>
                   </select>
                 </div>
@@ -187,18 +35,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-          data-dismiss="modal"
-        >
+        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+          data-dismiss="modal">
           <i class="fa fa-times" aria-hidden="true"></i> Close
         </button>
-        <button
-          type="button"
-          id="saveBtn"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-        >
+        <button type="button" id="saveBtn" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm">
           <i class="fa fa-check" aria-hidden="true"></i> Save
         </button>
       </div>
@@ -207,16 +48,8 @@
 </div>
 
 <!-- Modal Delivery-->
-<div
-  class="modal fade bd-example-modal-lg"
-  id="soldModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
-  data-keyboard="false"
-  data-backdrop="static"
->
+<div class="modal fade bd-example-modal-lg" id="soldModal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -226,19 +59,15 @@
         <div class="row mb-2">
           <div class="col-lg-12">
             <div class="card-body">
+
               <div class="row mb-2">
                 <div class="col-md-12">
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Item Serial</span>
                     </div>
-                    <input
-                      class="form-control text-center custom-input"
-                      placeholder="Select/Input Position"
-                      name="deployserialmodal"
-                      id="deployserialmodal"
-                      disabled
-                    />
+                    <input class="form-control text-center custom-input" placeholder="Select/Input Position"
+                      name="deployserialmodal" id="deployserialmodal" disabled />
                   </div>
                 </div>
               </div>
@@ -249,31 +78,18 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">DR No.</span>
                     </div>
-                    <input
-                      class="form-control text-center custom-input"
-                      placeholder="Select/Input DR Number"
-                      name="drnumbermodal"
-                      id="drnumbermodal"
-                    />
+                    <input class="form-control text-center custom-input" placeholder="Select/Input DR Number"
+                      name="drnumbermodal" id="drnumbermodal" />
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="input-group mb-2">
                     <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon2"
-                        >Deploy Date</span
-                      >
+                      <span class="input-group-text" id="basic-addon2">Deploy Date</span>
                     </div>
-                    <input
-                      id="datedeploy"
-                      name="datedeploy"
-                      type="date"
-                      class="form-control"
-                      placeholder="Enter Deploy Date"
-                      aria-label="datedeploy"
-                      aria-describedby="basic-addon1"
-                    />
+                    <input id="datedeploy" name="datedeploy" type="date" class="form-control"
+                      placeholder="Enter Deploy Date" aria-label="datedeploy" aria-describedby="basic-addon1" />
                   </div>
                 </div>
               </div>
@@ -284,12 +100,8 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Sold To</span>
                     </div>
-                    <input
-                      class="form-control text-center custom-input"
-                      placeholder="Select/Input Client"
-                      name="soldtomodal"
-                      id="soldtomodal"
-                    />
+                    <input class="form-control text-center custom-input" placeholder="Select/Input Client"
+                      name="soldtomodal" id="soldtomodal" />
                   </div>
                 </div>
 
@@ -298,12 +110,8 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Sold By</span>
                     </div>
-                    <input
-                      class="form-control text-center custom-input"
-                      placeholder="Select/Input Client"
-                      name="soldbymodal"
-                      id="soldbymodal"
-                    />
+                    <input class="form-control text-center custom-input" placeholder="Select/Input Client"
+                      name="soldbymodal" id="soldbymodal" />
                   </div>
 
                   <div class="custom-dropdown-modal" id="personelDropdown"></div>
@@ -314,21 +122,127 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-          data-dismiss="modal"
-        >
+        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+          data-dismiss="modal">
           <i class="fa fa-times" aria-hidden="true"></i> Close
         </button>
-        <button
-          type="button"
-          id="submitBtn"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-        >
+        <button type="button" id="submitBtn" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm">
           <i class="fa fa-check" aria-hidden="true"></i> Submit
         </button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- PCreated by Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-1">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-6">
+        <h1 class="page-title">Cabling Products</h1>
+      </div>
+      <div class="col-6">
+        <div class="d-sm-flex align-items-center justify-content-between">
+          <h1 class="page-title">Batch Upload</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Content Row -->
+<div class="row mb-2">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <div class="input-group">
+              <input class="form-control text-center custom-input" placeholder="Select/Input Description"
+                name="description" id="description" />
+              <div class="input-group-append">
+                <span class="input-group-text">Description</span>
+              </div>
+            </div>
+            <div class="custom-dropdown" id="descriptionDropdown"></div>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-12 d-flex">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Item Serial</span>
+              </div>
+              <input class="form-control text-center custom-input" placeholder="Input Item Serial" name="itemserial"
+                id="itemserial" />
+            </div>
+            <button id="addBtn" name="addBtn" class="ml-2 shadow-sm custom-btn cw-7rem">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8">
+            <input type="file" name="excelfile" id="excelfile"
+              class="form-control btn btn-inventory-clr shadow-sm w-100" />
+          </div>
+          <div class="col-md-4 text-center">
+            <button id="uploadBtn" name="uploadBtn"
+              class="cw-7rem custom-btn shadow-sm">
+              <i class="fa fa-arrow-up" aria-hidden="true"></i>
+              Upload
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-2">
+  
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow table-size">
+  <div class="progress progress-sm mb-2">
+    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+      aria-valuemax="100"></div>
+  </div>
+  <div class="card-header py-3">
+    <div class="row">
+      <div class="col-md-3 text-center pt-2">
+        <h6 class="m-0 font-weight-bold table-title">Access Type Table</h6>
+      </div>
+      <div class="col-md-6 pt-2">
+        <input id="search" name="search" type="text" class="form-control" placeholder="Search roletype Name"
+          aria-label="search" aria-describedby="basic-addon1" />
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive scrollable-table-container">
+      <table class="table custom-mobile-table" id="datatable" width="100%">
+        <thead class="table-header" style="border: none;">
+          <th>Serial</th>
+          <th>Description</th>
+          <th>Added By</th>
+          <th>Added Date</th>
+          <th class="col-1 text-center">Status</th>
+          <th></th>
+        </thead>
+    
+        <tbody class="table-light">
+    
+        </tbody>
+      </table>
+  </div>
   </div>
 </div>

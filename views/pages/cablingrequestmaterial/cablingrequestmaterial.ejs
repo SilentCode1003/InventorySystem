@@ -1,14 +1,6 @@
 <!-- Modal -->
-<div
-  class="modal fade bd-example-modal-lg"
-  id="cablingrequestsubmitModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
-  data-keyboard="false"
-  data-backdrop="static"
->
+<div class="modal fade bd-example-modal-lg" id="cablingrequestsubmitModal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -23,20 +15,12 @@
               <div class="row mb-2">
                 <div class="col-md-12">
                   <div class="input-group">
-                    <input
-                      class="form-control text-center custom-input"
-                      id="requestdate"
-                      name="requestdate"
-                      type="date"
-                      data-field="date"
-                      placeholder="Select Date"
-                      readonly
-                      autocomplete="off"
-                    />
+                    <input class="form-control text-center custom-input" id="requestdate" name="requestdate" type="date"
+                      data-field="date" placeholder="Select Date" readonly autocomplete="off" />
                     <div class="input-group-append">
                       <span class="input-group-text">Request Date</span>
                     </div>
-                   
+
                   </div>
                   <div id="dtbox"></div>
                 </div>
@@ -44,13 +28,8 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="input-group">
-                    <input
-                      class="form-control text-center custom-input"
-                      placeholder="Select/Input Personel"
-                      name="personel"
-                      id="personel"
-                      autocomplete="off"
-                    />
+                    <input class="form-control text-center custom-input" placeholder="Select/Input Personel"
+                      name="personel" id="personel" autocomplete="off" />
                     <div class="input-group-append">
                       <span class="input-group-text">Personel</span>
                     </div>
@@ -62,13 +41,8 @@
               <div class="row mt-2">
                 <div class="col-md-12">
                   <div class="input-group">
-                    <input
-                      class="form-control text-center custom-input"
-                      placeholder="Select/Input Store"
-                      name="store"
-                      id="store"
-                      autocomplete="off"
-                    />
+                    <input class="form-control text-center custom-input" placeholder="Select/Input Store" name="store"
+                      id="store" autocomplete="off" />
                     <div class="input-group-append">
                       <span class="input-group-text">Store</span>
                     </div>
@@ -80,17 +54,10 @@
               <div class="row mt-2">
                 <div class="col-md-12">
                   <div class="input-group">
-                    <input
-                      class="form-control text-center custom-input"
-                      placeholder="Select/Input Type"
-                      name="type"
-                      id="type"
-                      autocomplete="off"
-                    />
+                    <input class="form-control text-center custom-input" placeholder="Select/Input Type" name="type"
+                      id="type" autocomplete="off" />
                     <div class="input-group-append">
-                      <span class="input-group-text"
-                        >Type ex. SOF/RE-SOF/MIGRATION/TICKET</span
-                      >
+                      <span class="input-group-text">Type ex. SOF/RE-SOF/MIGRATION/TICKET</span>
                     </div>
                   </div>
                   <div class="custom-dropdown" id="stypelDropdown"></div>
@@ -101,18 +68,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-          data-dismiss="modal"
-        >
+        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+          data-dismiss="modal">
           <i class="fa fa-times" aria-hidden="true"></i> Close
         </button>
-        <button
-          type="button"
-          id="requestBtn"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-        >
+        <button type="button" id="requestBtn" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm">
           <i class="fa fa-check" aria-hidden="true"></i> Request
         </button>
       </div>
@@ -121,40 +81,19 @@
 </div>
 
 <!-- PCreated by Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-3">
+<div class="d-sm-flex align-items-center justify-content-between mb-1">
   <h1 class="page-title">Request Material</h1>
 </div>
 <!-- Content Row -->
 <div class="row mb-2">
-  <div class="col-lg-12">
+  <div class="col-lg-6">
     <div class="card">
       <div class="card-body">
         <div class="row mb-2">
-          <div class="col-md-6">
-            <label class="form-label" for="quantity">Quantity</label>
-            <input
-              id="quantity"
-              name="quantity"
-              type="number"
-              class="form-control"
-              placeholder="Enter Quantity"
-              aria-label="quantity"
-              aria-describedby="basic-addon1"
-              autocomplete="off"
-            />
-          </div>
-        </div>
-
-        <div class="row mb-2">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="input-group">
-              <input
-                class="form-control text-center custom-input"
-                placeholder="Select/Input Item Description"
-                name="itemname"
-                id="itemname"
-                autocomplete="off"
-              />
+              <input class="form-control text-center custom-input" placeholder="Select/Input Item Description"
+                name="itemname" id="itemname" autocomplete="off" />
               <div class="input-group-append">
                 <span class="input-group-text">Item Description</span>
               </div>
@@ -163,17 +102,16 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-4 text-center mt-1">
-            <button
-              id="addBtn"
-              name="addBtn"
-              class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
-            >
+        <div class="row mb-2">
+          <div class="col-md-12 d-flex">
+            <input id="quantity" name="quantity" type="number" class="form-control" placeholder="Enter Quantity"
+              aria-label="quantity" aria-describedby="basic-addon1" autocomplete="off" />
+            <button id="addBtn" name="addBtn" class="ml-2 custom-btn cw-7rem shadow-sm">
               <i class="fa fa-plus" aria-hidden="true"></i>
               Add
             </button>
           </div>
+
         </div>
       </div>
     </div>
@@ -192,12 +130,7 @@
 
   <div class="card-body">
     <div class="table-responsive">
-      <table
-        class="table table-bordered"
-        id="cablingrequestmateriallist-dataTable"
-        width="100%"
-        cellspacing="10"
-      >
+      <table class="table table-bordered" id="cablingrequestmateriallist-dataTable" width="100%" cellspacing="10">
         <thead class="table-dark">
           <tr>
             <th class="col-1 text-start">Brand</th>
@@ -214,11 +147,8 @@
 
     <div class="row">
       <div class="col-md-4 text-center mt-1">
-        <button
-          id="submitBtn"
-          name="submitBtn"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
-        >
+        <button id="submitBtn" name="submitBtn"
+          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75">
           <i class="fa fa-plus" aria-hidden="true"></i>
           Submit
         </button>
@@ -235,27 +165,15 @@
         <h6 class="m-0 font-weight-bold table-title">Request Table</h6>
       </div>
       <div class="col-md-6">
-        <input
-          id="search"
-          name="search"
-          type="text"
-          class="form-control"
-          placeholder="Search Item Description"
-          aria-label="search"
-          aria-describedby="basic-addon1"
-        />
+        <input id="search" name="search" type="text" class="form-control" placeholder="Search Item Description"
+          aria-label="search" aria-describedby="basic-addon1" />
       </div>
     </div>
   </div>
 
   <div class="card-body">
     <div class="table-responsive">
-      <table
-        class="table table-bordered"
-        id="cablingrequestmaterial-dataTable"
-        width="100%"
-        cellspacing="10"
-      >
+      <table class="table table-bordered" id="cablingrequestmaterial-dataTable" width="100%" cellspacing="10">
         <thead class="table-dark">
           <tr>
             <th class="col-1 text-start">ID</th>
