@@ -21,10 +21,14 @@
 
   /*Custom dropdown widths*/
   --adaptw-role: calc(100% - 4.6rem);
+  --adaptw-brand: calc(100% - 5.2rem);
   --adaptw-5-8rem: calc(100% - 5.8rem);
   --adaptw-access: calc(100% - 5.4rem);
   --adaptw-position: calc(100% - 6rem);
+  --adaptw-description: calc(100% - 7.2rem);
   --adaptw-department: calc(100% - 7.5rem);
+  --adaptw-itemdescription: calc(100% - 9.4rem);
+
 }
 
 .dashboard-icon{
@@ -283,6 +287,9 @@ body {
 .cdw-role{
   width: var(--adaptw-role);
 }
+.cdw-brand{
+  width: var(--adaptw-brand);
+}
 .cdw-5letter{
   width: var(--adaptw-5-8rem);
 }
@@ -292,6 +299,13 @@ body {
 .cdw-position{
   width: var(--adaptw-position);
 }
+.cdw-description{
+  width: var(--adaptw-description);
+}
+.cdw-itemdescription{
+  width: var(--adaptw-itemdescription);
+}
+
 .cdw-department{
   width: var(--adaptw-department);
 }
