@@ -1,6 +1,7 @@
 <script>
   $(document).ready(function () {
     let roletypecode = "";
+    let rolename = "";
     let status = "";
 
     const loader = `  
@@ -30,13 +31,15 @@
         });
       console.log(dataRow);
       roletypecode = dataRow[0];
+      rolename= dataRow[1];
       status = dataRow[4];
     });
 
     $(document).on("click", "#editBtn", function () {
       $("#roletypecodemodal").val(roletypecode);
+      $("#roletypenamemodal").val(rolename)
       $("#roletypeModal").modal("show");
-      console.log(roletypecode);
+      // console.log(roletypecode);
     });
 
     $(document).on("click", "#addBtn", function () {
@@ -98,6 +101,8 @@
             if (result.msg == "success") {
               LoadTable();
               success("Saved", "Successfully");
+              $("#roletypeModal").modal("hide");
+              $("#roletypenamemodal").val("")
             }
 
             if (result.msg == "exist") {
