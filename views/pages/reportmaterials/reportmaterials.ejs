@@ -1,14 +1,6 @@
 <!-- Modal -->
-<div
-  class="modal fade bd-example-modal-lg"
-  id="personelModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
-  data-keyboard="false"
-  data-backdrop="static"
->
+<div class="modal fade bd-example-modal-lg" id="personelModal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -20,35 +12,17 @@
             <div class="card-body">
               <div class="row mb-2">
                 <div class="col-md-12">
-                  <label class="form-label" for="systemidmodal"
-                    >System ID</label
-                  >
-                  <input
-                    id="systemidmodal"
-                    name="systemidmodal"
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter new department"
-                    aria-label="fullname"
-                    aria-describedby="basic-addon1"
-                    disabled
-                  />
+                  <label class="form-label" for="systemidmodal">System ID</label>
+                  <input id="systemidmodal" name="systemidmodal" type="text" class="form-control"
+                    placeholder="Enter new department" aria-label="fullname" aria-describedby="basic-addon1" disabled />
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <label class="form-label" for="personelnamemodal"
-                    >Personel Name</label
-                  >
-                  <input
-                    id="personelnamemodal"
-                    name="personelnamemodal"
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter new personel name"
-                    aria-label="personelnamemodal"
-                    aria-describedby="basic-addon1"
-                  />
+                  <label class="form-label" for="personelnamemodal">Personel Name</label>
+                  <input id="personelnamemodal" name="personelnamemodal" type="text" class="form-control"
+                    placeholder="Enter new personel name" aria-label="personelnamemodal"
+                    aria-describedby="basic-addon1" />
                 </div>
               </div>
             </div>
@@ -56,18 +30,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-          data-dismiss="modal"
-        >
+        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+          data-dismiss="modal">
           <i class="fa fa-times" aria-hidden="true"></i> Close
         </button>
-        <button
-          type="button"
-          id="saveBtn"
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
-        >
+        <button type="button" id="saveBtn" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm">
           <i class="fa fa-check" aria-hidden="true"></i> Save
         </button>
       </div>
@@ -81,47 +48,32 @@
 </div>
 <!-- Content Row -->
 <div class="row mb-2">
-  <div class="col-lg-12">
+  <div class="col-lg-6">
     <div class="card">
       <div class="card-body">
-        <div class="row">
-          <div class="col-md-4">
+        <div class="row mb-2">
+          <div class="col-md-12">
             <label class="form-label" for="startdate">Start Date</label>
-            <input
-              id="startdate"
-              name="startdate"
-              type="date"
-              class="form-control"
-              placeholder="Select Start Date"
-              aria-label="startdate"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-
-          <div class="col-md-4">
-            <label class="form-label" for="enddate">End Date</label>
-            <input
-              id="enddate"
-              name="enddate"
-              type="date"
-              class="form-control"
-              placeholder="Select End Date"
-              aria-label="enddate"
-              aria-describedby="basic-addon1"
-            />
+            <input id="startdate" name="startdate" type="date" class="form-control" placeholder="Select Start Date"
+              aria-label="startdate" aria-describedby="basic-addon1" />
           </div>
         </div>
-        <div class="row mt-4 justify-content-between">
-          <div class="col-md-8 text-center mt-1">
-            <button
-              id="searchBtn"
-              name="searchBtn"
-              class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
-            >
-              <i class="fa fa-search" aria-hidden="true"></i>
-              Search
-            </button>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label class="form-label" for="enddate">End Date</label>
+            <input id="enddate" name="enddate" type="date" class="form-control" placeholder="Select End Date"
+              aria-label="enddate" aria-describedby="basic-addon1" />
           </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-end">
+        <div class="col-md-4 text-center pr-2 pb-2">
+          <button id="searchBtn" name="searchBtn" class="shadow ml-2 custom-btn cw-7rem">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            Search
+          </button>
         </div>
       </div>
     </div>
@@ -129,62 +81,45 @@
 </div>
 
 <!-- DataTales Example -->
-<div class="card shadow mb-4">
+<div class="card shadow table-size">
+  <div class="progress progress-sm mb-2">
+    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+      aria-valuemax="100"></div>
+  </div>
   <div class="card-header py-3">
-    <div class="row mb-4">
-      <div class="col-md-3">
+    <div class="row">
+      <div class="col-md-3 text-center pt-2">
         <h6 class="m-0 font-weight-bold table-title">Report Table</h6>
       </div>
-      <div class="col-md-6">
-        <input
-          id="search"
-          name="search"
-          type="text"
-          class="form-control"
-          placeholder="Search DR No."
-          aria-label="search"
-          aria-describedby="basic-addon1"
-        />
-      </div>
-
-      <div class="col-md-2">
-        <button
-          class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm w-75"
-          id="exportBtn"
-          name="exportBtn"
-        >
-          <i class="fas fa-fw fa-arrow-up"></i> EXPORT
-        </button>
+      <div class="col-md-6 pt-2">
+        <input id="search" name="search" type="text" class="form-control" placeholder="Search roletype Name"
+          aria-label="search" aria-describedby="basic-addon1" />
       </div>
     </div>
-
-    <div class="card-body">
-      <div class="table-responsive">
-        <table
-          class="table table-bordered"
-          id="report-dataTable"
-          width="100%"
-          cellspacing="10"
-        >
-          <thead class="table-dark">
-            <tr>
-              <th class="col-1 text-start">ID</th>
-              <th class="col-3 text-center">Personel</th>
-              <th class="col-2 text-center">Date</th>
-              <th class="col-2 text-center">Brand</th>
-              <th class="col-3 text-center">Description</th>
-              <th class="col-1 text-center">Quantity</th>
-              <th class="col-3 text-center">Approved By</th>
-              <th class="col-2 text-center">Approved Date</th>
-              <th class="col-2 text-center">DR No.</th>
-              <th class="col-1 text-center">Consumed</th>
-              <th class="col-1 text-end">Total Returns</th>
-            </tr>
-          </thead>
-
-          <tbody class="table-light"></tbody>
-        </table>
-      </div>
-    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive scrollable-table-container">
+      <table class="table custom-mobile-table" id="datatable" width="100%">
+        <thead class="table-header" style="border: none;">
+          <tr>
+            <th>ID</th>
+            <th>Personel</th>
+            <th>Date</th>
+            <th>Brand</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Approved By</th>
+            <th>Approved Date</th>
+            <th>DR No.</th>
+            <th>Consumed</th>
+            <th>Total Returns</th>
+          </tr>
+        </thead>
+    
+        <tbody class="table-light">
+    
+        </tbody>
+      </table>
+  </div>
   </div>
 </div>

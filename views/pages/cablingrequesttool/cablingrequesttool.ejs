@@ -1,0 +1,208 @@
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="cablingrequestmaterialreportModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label pl-3" for="detailidmodal">Detail ID: <span id="detailidmodal"></span></label>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label pl-3" for="detailidmodal">Request By: <span id="requestbymodal"></span></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label pl-3" for="requestdatemodal">Date: <span id="requestdatemodal"></span></label>
+                    </div>
+                
+                    <div class="col-md-6">
+                        <label class="form-label pl-3" for="requestremarksmodal">Remarks: <span id="requestremarksmodal"></span></label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-body">
+                            <!-- Request Table -->
+                            <div class="row mb-2">
+                                <div class="col-md-12">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold table-title">
+                                                Request Table
+                                            </h6>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover table-sm"
+                                                id="request-dataTable" width="100%" cellspacing="10">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th class="col-1 text-start">BRAND</th>
+                                                        <th class="col-3 text-center">DESCRIPTION</th>
+                                                        <th class="col-1 text-center">COUNT</th>
+                                                        <th class="col-1 text-end">UNIT</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody class="table-light" id="request-body-table"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Report Table -->
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-md-6 text-center pt-1 table-title">
+                                                    Report Table
+                                                </div>
+                                                <div class="col-md-6 pt-3">
+                                                    <input id="reportdr" name="reportdr" type="text"
+                                                        class="form-control" placeholder="Enter DR No."
+                                                        aria-label="reportdr" aria-describedby="basic-addon1" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover table-sm"
+                                                    id="report-dataTable" width="100%" cellspacing="10">
+                                                    <thead class="table-dark">
+                                                        <tr>
+                                                            <th class="col-1 text-start">BRAND</th>
+                                                            <th class="col-3 text-center">DESCRIPTION</th>
+                                                            <th class="col-1 text-center">COUNT</th>
+                                                            <th class="col-1 text-end">UNIT</th>
+                                                        </tr>
+                                                    </thead>
+    
+                                                    <tbody class="table-light" id="report-table-body"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold table-title">
+                                                Return Table
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover table-sm"
+                                                    id="return-dataTable" width="100%" cellspacing="10">
+                                                    <thead class="table-dark">
+                                                        <tr>
+                                                            <th class="col-1 text-start">BRAND</th>
+                                                            <th class="col-3 text-center">DESCRIPTION</th>
+                                                            <th class="col-1 text-center">COUNT</th>
+                                                            <th class="col-1 text-end">UNIT</th>
+                                                        </tr>
+                                                    </thead>
+    
+                                                    <tbody class="table-light" id="return-body-table"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+                    data-dismiss="modal">
+                    <i class="fa fa-times" aria-hidden="true"></i> Close
+                </button>
+                <button type="button" id="submitBtn"
+                    class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm">
+                    <i class="fa fa-check" aria-hidden="true"></i> Submit
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PCreated by Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-1">
+  <h1 class="page-title">Cabling Request Tool</h1>
+</div>
+<!-- Content Row -->
+<div class="row mb-2">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <label class="form-label" for="typename">Type Name</label>
+        </div>
+        <div class="row">
+          <div class="col-md-12 d-flex">
+            <input id="typename" name="typename" type="text" class="form-control" placeholder="Enter your type name"
+              aria-label="typename" aria-describedby="basic-addon1" />
+            <button id="addBtn" name="addBtn"
+              class="ml-2 shadow-sm custom-btn cw-7rem">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow table-size">
+  <div class="progress progress-sm mb-2">
+    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+      aria-valuemax="100"></div>
+  </div>
+  <div class="card-header py-3">
+    <div class="row">
+      <div class="col-md-3 text-center pt-2">
+        <h6 class="m-0 font-weight-bold table-title">Request Tool Table</h6>
+      </div>
+      <div class="col-md-6 pt-2">
+        <input id="search" name="search" type="text" class="form-control" placeholder="Search roletype Name"
+          aria-label="search" aria-describedby="basic-addon1" />
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive scrollable-table-container">
+      <table class="table custom-mobile-table" id="datatable" width="100%">
+        <thead class="table-header" style="border: none;">
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Personel</th>
+            <th>Details</th>
+            <th>Remarks</th>
+            <th class="col-1">Status</th>
+            <th class="col-1"></th>
+          </tr>
+        </thead>
+
+        <tbody class="table-light">
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

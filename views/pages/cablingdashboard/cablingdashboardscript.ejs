@@ -20,7 +20,7 @@
         </tr>`;
 
     const tbody = $("#cabling-equipment-datable tbody");
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 7; i++) {
       tbody.append(loader);
     }
 
@@ -602,6 +602,7 @@
     }
 
     function createChart(data) {
+      $('#graph-loading').empty();
       // let allCategories = [
       //   ...new Set(data.map((item) => item.itemdescription, item.stocks)),
       // ];

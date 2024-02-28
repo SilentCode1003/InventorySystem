@@ -240,6 +240,7 @@
   }
 
   function setupCustomDropdown(inputId, dropdownId, optionClass) {
+    // console.log("Setting custom dropdown:", inputId, dropdownId, optionClass);
     const inputElement = document.getElementById(inputId);
     const dropdownElement = document.getElementById(dropdownId);
     const options = dropdownElement.getElementsByClassName(optionClass);
@@ -276,12 +277,14 @@
   }
 
   function populateDropdown(data, dropdownname, inputname) {
+    // console.log("To be added:", data, dropdownname, inputname);
     for (const item of data) {
       generateDropdown(dropdownname, item, inputname);
     }
   }
 
   function generateDropdown(dropdownId, optionText, inputname) {
+    // console.log("generate:", dropdownId, optionText, inputname)
     const dropdownElement = document.getElementById(dropdownId);
     const newOption = document.createElement("div");
     newOption.className = "dropdown-option";
