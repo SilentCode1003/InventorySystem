@@ -466,3 +466,8 @@ exports.SelectStatement = (str, data) => {
   return statement;
 };
 //#endregion
+
+exports.formatCurrency = (value) => {
+  var formattedValue = parseFloat(value).toFixed(2);
+  return "₱" + formattedValue.replace(/\d(?=(\d{3})+\.)/g, "$&,");
+};

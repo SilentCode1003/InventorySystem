@@ -649,5 +649,63 @@
         },
       });
     }
+
+    function groupDataByItemName(data) {
+      const groupedData = {};
+      data.forEach(item => {
+        const itemName = item.itemdescription;
+        groupedData[itemName] = groupedData[itemName] || {
+          stocks: 0,
+          totalPrice: 0,
+        };
+        groupedData[itemName].stocks += parseInt(item.stocks);
+        groupedData[itemName].totalPrice += item.itemcost;
+      });
+      // console.log("sample", groupedData)
+
+      return groupedData;
+    }
+
+    $('#convertopdf').on('click', function () {
+      console.log('Converting');
+      $.ajax({
+        type: "GET",
+        url: "/cablingdashboard/getcurrentstocks",
+        success: function (result) {
+          let container = result.data;
+
+          let groupedData = groupDataByItemName(container);
+          let template = 'STOCKS REPORT';
+          console.log("Current Stock: ", groupedData);
+          let data = {
+            pdfcontent: JSON.stringify(groupedData),
+            template: template
+          }
+          console.log("Data: ", data);
+          if (groupedData.length != 0) {
+            $.ajax({
+              type: "POST",
+              url: "/pdf/processpdfdata",
+              data,
+              success: function (result) {
+                let msg = result.msg;
+                if (msg == "success") {
+                  window.open(`/pdf/generatepdf`, "_blank");
+                  success("Success", "PDF generate successfully!");
+                }
+              },
+              error: function (err) {
+                errormsg(err);
+              },
+            });
+          }
+
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    });
+
   });
 </script>
