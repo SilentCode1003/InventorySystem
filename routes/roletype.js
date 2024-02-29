@@ -79,8 +79,10 @@ router.post("/edit", (req, res) => {
     let sql_check = `SELECT * FROM master_role_type WHERE mrt_roletypecode='${roletypecode}'`;
 
     console.log(data);
+    console.log(sql_Update);
+    console.log(sql_check);
 
-    mysql.Select(sql_check, "MasterRoleType", (err, result) => {
+    mysql.Select(sql_check, (err, result) => {
       if (err) console.error("Error: ", err);
 
       if (result.length != 1) {
