@@ -5,6 +5,7 @@
     $(document).ready(function () {
       let id = "";
       let status = "";
+      let brand = "";
   
       const loader = `  
           <tr>
@@ -33,11 +34,13 @@
           });
         console.log(dataRow);
         id = dataRow[0];
+        brand = dataRow[1];
         status = dataRow[4];
       });
   
       $(document).on("click", "#editBtn", function () {
-        $("#idmodal").val(id);
+        $("#id").val(id);
+        $("#brandmodal").val(brand);
         $("#editModal").modal("show");
         console.log(id);
       });
@@ -63,6 +66,7 @@
             success: function (result) {
               if (result.msg == "success") {
                 LoadTable();
+                $("#brand").val('');
                 success("Saved", "Successfully");
               }
   
@@ -80,33 +84,28 @@
       //Edit Update
       $(document).on("click", "#saveBtn", function () {
         let brandmodal = $("#brandmodal").val();
-        let descriptionmodal = $("#descriptionmodal").val();
   
         var message = "";
   
         if (brandmodal == "") {
           message += "Brand, ";
         }
-        
-        if (descriptionmodal == "") {
-          message += "Description";
-        }
-  
   
         if (message != "") {
           warning("Required", `Please fill up ${message}`);
         } else {
           $.ajax({
-            type: "POST",
+            type: "PUT",
             url: "/brand/edit",
             data: {
               brand: brandmodal,
-              description: descriptionmodal,
               id: id,
             },
             success: function (result) {
               if (result.msg == "success") {
                 LoadTable();
+                $("#brandmodal").val('');
+                $("#editModal").modal("hide");
                 success("Saved", "Successfully");
               }
   

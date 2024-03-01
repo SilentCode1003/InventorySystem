@@ -589,6 +589,22 @@ exports.InsertTable = (tablename, data, callback) => {
       callback(null, result);
     });
   }
+
+  if (tablename == "inventory_tool") {
+    let sql = `INSERT INTO inventory_tool(
+      it_toolid,
+      it_serialtag,
+      it_status,
+      it_createdby,
+      it_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
 };
 
 exports.isDataExist = (sql, tablename) => {

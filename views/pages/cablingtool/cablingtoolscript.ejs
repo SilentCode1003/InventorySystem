@@ -22,6 +22,7 @@
 
     LoadTable();
     LoadList();
+    LoadlistModal();
 
     $("#datatable tbody").on("click", "tr", function () {
       var dataRow = [];
@@ -33,7 +34,7 @@
         });
       console.log(dataRow);
       id = dataRow[0];
-      status = dataRow[4];
+      status = dataRow[5];
       description = dataRow[2];
     });
 
@@ -41,7 +42,6 @@
       $("#idmodal").val(id);
       $("#descriptionmodal").val(description);
       $("#editModal").modal("show");
-      LoadlistModal()
       console.log(id);
     });
 
@@ -76,6 +76,9 @@
           success: function (result) {
             if (result.msg == "success") {
               LoadTable();
+              $("#brandID").val('');
+              $("#brand").val('');
+              $("#description").val('');
               success("Saved", "Successfully");
             }
 
@@ -141,7 +144,7 @@
       // console.log(id);
       // console.log(status);
       $.ajax({
-        type: "POST",
+        type: "PUT",
         url: "/cablingtool/status",
         data: {
           status: status,
@@ -167,7 +170,7 @@
       console.log(id);
       console.log(status);
       $.ajax({
-        type: "POST",
+        type: "PUT",
         url: "/cablingtool/status",
         data: {
           status: status,

@@ -43,6 +43,47 @@ router.get("/load", (req, res) => {
   }
 });
 
+router.put("/edit", (req, res) => {
+  try {
+    let brand = req.body.brand;
+    let id = req.body.id;
+
+    let data = [brand, id];
+
+    let sql_Update = `UPDATE master_brand 
+                     SET mb_name = ?
+                     WHERE mb_id = ?`;
+
+    let sql_check = `SELECT * FROM master_brand WHERE mb_id='${id}'`;
+
+    console.log(data);
+
+    Select(sql_check, (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      if (result.length != 1) {
+        return res.json({
+          msg: "notexist",
+        });
+      } else {
+        UpdateMultiple(sql_Update, data, (err, result) => {
+          if (err) console.error("Error: ", err);
+
+          console.log(result);
+
+          res.json({
+            msg: "success",
+          });
+        });
+      }
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
 router.post("/save", (req, res) => {
   try {
     let name = req.body.brand;

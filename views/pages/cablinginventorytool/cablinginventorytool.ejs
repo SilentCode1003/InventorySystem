@@ -12,29 +12,29 @@
             <div class="card-body">
               <div class="row mb-2 justify-content-center">
                 <div class="col-md-6">
-                  <label class="form-label" for="id">Tool ID</label>
+                  <label class="form-label" for="id">Inventory Tool ID</label>
                   <input id="idmodal" name="idmodal" type="text" class="form-control" aria-label="fullname" aria-describedby="basic-addon1" disabled />
                 </div>
               </div>
               <div class="row mb-2">
                 <div class="col-md-6">
                   <div class="input-group">
-                    <input class="form-control text-center custom-input" placeholder="Input Item Description"
-                      name="descriptionmodal" id="descriptionmodal" />
+                    <input class="form-control text-center custom-input" placeholder="Edit Serial Tag"
+                      name="serialtagmodal" id="serialtagmodal" />
                     <div class="input-group-append">
-                      <span class="input-group-text">Description</span>
+                      <span class="input-group-text">Serial</span>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="input-group">
-                    <input class="form-control text-center custom-input" placeholder="Select Brand" name="brandmodal" id="brandmodal" />
-                    <input type="hidden" id="brandIDmodal" name="brandIDmodal" />
+                    <input class="form-control text-center custom-input" placeholder="Select Tool" name="toolmodal" id="toolmodal" />
+                    <input type="hidden" id="toolIDmodal" name="toolIDmodal" />
                     <div class="input-group-append">
-                      <span class="input-group-text">Brand</span>
+                      <span class="input-group-text">Tool</span>
                     </div>
                   </div>
-                  <div class="custom-dropdown cdw-brand" id="brandDropdownmodal"></div>
+                  <div class="custom-dropdown cdw-tool" id="toolDropdownmodal"></div>
                 </div>
               </div>
             </div>
@@ -63,7 +63,7 @@
 
 <!-- PCreated by Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-1">
-  <h1 class="page-title">Cabling Tools</h1>
+  <h1 class="page-title">Inventory Tools</h1>
 </div>
 <!-- Content Row -->
 <div class="row mb-2">
@@ -73,23 +73,23 @@
         <div class="row mb-2">
           <div class="col-md-12">
             <div class="input-group">
-              <input class="form-control text-center custom-input" placeholder="Select Brand" name="brand" id="brand" />
-              <input type="hidden" id="brandID" name="brandID" />
+              <input class="form-control text-center custom-input" placeholder="Select Tool" name="tool" id="tool" />
+              <input type="hidden" id="toolID" name="toolID" />
               <div class="input-group-append">
-                <span class="input-group-text">Brand</span>
+                <span class="input-group-text">Tool</span>
               </div>
             </div>
-            <div class="custom-dropdown cdw-brand" id="brandDropdown"></div>
+            <div class="custom-dropdown cdw-tool" id="toolDropdown"></div>
           </div>
         </div>
 
         <div class="row mb-2 mt-3">
           <div class="col-md-12 d-flex">
             <div class="input-group">
-              <input class="form-control text-center custom-input" placeholder="Input Item Description"
-                name="description" id="description" />
+              <input class="form-control text-center custom-input" placeholder="Input Tool Serial"
+                name="serialtag" id="serialtag" />
               <div class="input-group-append">
-                <span class="input-group-text">Description</span>
+                <span class="input-group-text">Serial Tag</span>
               </div>
             </div>
 
@@ -121,7 +121,7 @@
   <div class="card-header py-3">
     <div class="row">
       <div class="col-md-4 text-center pt-2">
-        <h6 class="m-0 font-weight-bold table-title">Cabling Tool Table</h6>
+        <h6 class="m-0 font-weight-bold table-title">Inventory Tool Table</h6>
       </div>
       <div class="col-md-6 pt-2">
         <input id="search" name="search" type="text" class="form-control" placeholder="Search roletype Name"
@@ -134,9 +134,9 @@
       <table class="table custom-mobile-table" id="datatable" width="100%">
         <thead class="table-header" style="border: none;">
           <tr>
-            <th>Code</th>
-            <th>Brand</th>
-            <th>Description</th>
+            <th>ID</th>
+            <th>Tool</th>
+            <th>Serial Tag</th>
             <th>Created by</th>
             <th>Created date</th>
             <th class="col-1 text-center">Status</th>
