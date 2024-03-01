@@ -284,7 +284,7 @@ exports.InsertTable = (tablename, data, callback) => {
 
   if (tablename == "master_brand") {
     let sql = `INSERT INTO master_brand(
-        mb_brandname,
+        mb_name,
         mb_status,
         mb_createdby,
         mb_createddate) VALUES ?`;

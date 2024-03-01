@@ -135,6 +135,17 @@ exports.UpdateMultiple = async (sql, data, callback) => {
   }
 };
 
+exports.SelectParameter = (sql, condition, callback) => {
+  connection.query(sql, [condition], (error, results, fields) => {
+    if (error) {
+      return callback(error, null);
+    }
+    // console.log(results);
+
+    callback(null, results);
+  });
+};
+
 exports.CloseConnect = () => {
   connection.end();
 };
@@ -266,6 +277,23 @@ exports.InsertTable = (tablename, data, callback) => {
         ms_status,
         ms_createdby,
         ms_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  
+  if (tablename == "master_tool") {
+    let sql = `INSERT INTO master_tool(
+        mt_brand,
+        mt_description,
+        mt_status,
+        mt_createdby,
+        mt_createddate) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {
