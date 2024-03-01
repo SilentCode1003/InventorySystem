@@ -1,10 +1,8 @@
 <script>
-  $(document).ready(function () {});
-</script>
-<script>
   $(document).ready(function () {
     let id = "";
     let status = "";
+    let description = "";
 
     const loader = `  
         <tr>
@@ -23,6 +21,7 @@
     }
 
     LoadTable();
+    LoadList();
 
     $("#datatable tbody").on("click", "tr", function () {
       var dataRow = [];
@@ -35,18 +34,25 @@
       console.log(dataRow);
       id = dataRow[0];
       status = dataRow[4];
+      description = dataRow[2];
     });
 
     $(document).on("click", "#editBtn", function () {
       $("#idmodal").val(id);
+      $("#descriptionmodal").val(description);
       $("#editModal").modal("show");
+      LoadlistModal()
       console.log(id);
     });
 
-    $(document).on("click", "#addBtn", function () {
-      let brand = $("#brand").val();
-      let description = $("#description").val();
+    $(document).on("input", "#brand", function () {
+      $("#brandID").val("");
+    });
 
+    $(document).on("click", "#addBtn", function () {
+      let brand = $("#brandID").val();
+      let description = $("#description").val();
+      console.log(brand, description);
       var message = "";
 
       if (brand == "") {
@@ -58,10 +64,11 @@
 
       if (message != "") {
         warning("Required", `Please fill up ${message}`);
-      } else {
+      } 
+      else {
         $.ajax({
           type: "POST",
-          url: "/cabling/save",
+          url: "/cablingtool/save",
           data: {
             brand: brand,
             description: description
@@ -83,27 +90,25 @@
       }
     });
 
+    $(document).on("input", "#brandmodal", function () {
+      $("#brandIDmodal").val("");
+    });
     //Edit Update
     $(document).on("click", "#saveBtn", function () {
-      let brandmodal = $("#brandmodal").val();
+      let brandmodal = $("#brandIDmodal").val();
       let descriptionmodal = $("#descriptionmodal").val();
 
       var message = "";
 
-      if (brandmodal == "") {
-        message += "Brand, ";
+      if (brandmodal == "" && descriptionmodal == "") {
+        message += "Fill atleast one field";
       }
-      
-      if (descriptionmodal == "") {
-        message += "Description";
-      }
-
 
       if (message != "") {
-        warning("Required", `Please fill up ${message}`);
+        warning("Required", `${message}`);
       } else {
         $.ajax({
-          type: "POST",
+          type: "PUT",
           url: "/cablingtool/edit",
           data: {
             brand: brandmodal,
@@ -113,6 +118,10 @@
           success: function (result) {
             if (result.msg == "success") {
               LoadTable();
+              $("#descriptionmodal").val("");
+              $("#brandIDmodal").val("");
+              $("#brandmodal").val("");
+              $("#editModal").modal("hide");
               success("Saved", "Successfully");
             }
 
@@ -263,5 +272,62 @@
         });
       }
     }
+
+    function LoadList() {
+      // console.log("triggered");
+      $.ajax({
+        type: "GET",
+        url: "/brand/load",
+        success: function (result) {
+          let activeBrand = [];
+          let dropdownID = "brandDropdown";
+          let inputID = "brand";
+          let hiddenID = "brandID";
+          let container = result.data;
+          // console.log(container)
+          $.each(container, (key, item) => {
+            let name = item.name;
+            let id = item.id;
+            activeBrand.push({
+              display: name,
+              value: id,
+            });
+          });
+          AddDropdownData(dropdownID, activeBrand, inputID, hiddenID)
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+
+    function LoadlistModal() {
+      // console.log("triggered");
+      $.ajax({
+        type: "GET",
+        url: "/brand/load",
+        success: function (result) {
+          let activeBrand = [];
+          let dropdownID = "brandDropdownmodal";
+          let inputID = "brandmodal";
+          let hiddenID = "brandIDmodal";
+          let container = result.data;
+          // console.log(container)
+          $.each(container, (key, item) => {
+            let name = item.name;
+            let id = item.id;
+            activeBrand.push({
+              display: name,
+              value: id,
+            });
+          });
+          AddDropdownData(dropdownID, activeBrand, inputID, hiddenID)
+        },
+        error: function (err) {
+          errormsg(err);
+        },
+      });
+    }
+
   });
 </script>

@@ -115,7 +115,7 @@ router.put("/status", (req, res) => {
   }
 });
 
-//#region 
+//#region Function
 
 function Check_brand(name) {
   return new Promise((resolve, reject) => {

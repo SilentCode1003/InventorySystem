@@ -7,41 +7,45 @@
         <h5 class="modal-title" id="exampleModalLabel">Edit Cabling Items</h5>
       </div>
       <div class="modal-body">
-        <div class="row mb-2">
+        <div class="row mb-3">
           <div class="col-lg-12">
             <div class="card-body">
-              <div class="row mb-2">
-                <div class="col-md-12">
+              <div class="row mb-2 justify-content-center">
+                <div class="col-md-6">
                   <label class="form-label" for="id">Tool ID</label>
-                  <input id="id" name="id" type="text" class="form-control" aria-label="fullname" aria-describedby="basic-addon1" disabled />
+                  <input id="idmodal" name="idmodal" type="text" class="form-control" aria-label="fullname" aria-describedby="basic-addon1" disabled />
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
+              <div class="row mb-2">
+                <div class="col-md-6">
                   <div class="input-group">
                     <input class="form-control text-center custom-input" placeholder="Input Item Description"
                       name="descriptionmodal" id="descriptionmodal" />
                     <div class="input-group-append">
-                      <span class="input-group-text">Item Description</span>
+                      <span class="input-group-text">Description</span>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="input-group">
-                    <input class="form-control text-center custom-input" placeholder="Select/Input Brand"
-                      name="brandmodal" id="brandmodal" />
+                    <input class="form-control text-center custom-input" placeholder="Select Brand" name="brandmodal" id="brandmodal" />
+                    <input type="hidden" id="brandIDmodal" name="brandIDmodal" />
                     <div class="input-group-append">
                       <span class="input-group-text">Brand</span>
                     </div>
                   </div>
-                  <div class="custom-dropdown" id="brandmodalDropdown"></div>
+                  <div class="custom-dropdown cdw-brand" id="brandDropdownmodal"></div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div class="wave-header">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path
+              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+              class="shape-fill"></path>
+          </svg>
         </div>
       </div>
       <div class="modal-footer">
@@ -69,23 +73,26 @@
         <div class="row mb-2">
           <div class="col-md-12">
             <div class="input-group">
-              <input class="form-control text-center custom-input" placeholder="Input Item Description"
-                name="description" id="description" />
+              <input class="form-control text-center custom-input" placeholder="Select Brand" name="brand" id="brand" />
+              <input type="hidden" id="brandID" name="brandID" />
               <div class="input-group-append">
-                <span class="input-group-text">Item Description</span>
+                <span class="input-group-text">Brand</span>
               </div>
             </div>
+            <div class="custom-dropdown cdw-brand" id="brandDropdown"></div>
           </div>
         </div>
 
         <div class="row mb-2 mt-3">
           <div class="col-md-12 d-flex">
             <div class="input-group">
-              <input class="form-control text-center custom-input" placeholder="Input Brand" name="brand" id="brand" />
+              <input class="form-control text-center custom-input" placeholder="Input Item Description"
+                name="description" id="description" />
               <div class="input-group-append">
-                <span class="input-group-text">Brand</span>
+                <span class="input-group-text">Description</span>
               </div>
             </div>
+
             <button id="addBtn" name="addBtn" class="ml-2 custom-btn cw-7rem shadow-sm">
               <i class="fa fa-plus" aria-hidden="true"></i>
               Add
@@ -113,7 +120,7 @@
   </div>
   <div class="card-header py-3">
     <div class="row">
-      <div class="col-md-3 text-center pt-2">
+      <div class="col-md-4 text-center pt-2">
         <h6 class="m-0 font-weight-bold table-title">Cabling Tool Table</h6>
       </div>
       <div class="col-md-6 pt-2">

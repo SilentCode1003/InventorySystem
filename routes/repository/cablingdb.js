@@ -247,11 +247,10 @@ exports.InsertTable = (tablename, data, callback) => {
       callback(null, result);
     });
   }
-
+  
   if (tablename == "master_tool") {
     let sql = `INSERT INTO master_tool(
-        mt_tag,
-        mt_serial,
+        mt_brand,
         mt_description,
         mt_status,
         mt_createdby,
