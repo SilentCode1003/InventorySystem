@@ -33,6 +33,7 @@ var repeatrequestRouter = require("./routes/repeatrequest");
 var cablingtoolRouter = require('./routes/cablingtool')
 var cablingrequesttoolRouter = require('./routes/cablingrequesttool');
 var pdfRouter = require('./routes/pdf');
+var cablingInventorytoolRouter = require('./routes/cablinginventorytool');
 
 var app = express();
 
@@ -76,6 +77,7 @@ app.use("/repeatrequest", repeatrequestRouter);
 app.use("/cablingtool", cablingtoolRouter);
 app.use("/cablingrequesttool", cablingrequesttoolRouter); //
 app.use("/pdf", pdfRouter); //
+app.use("/cablinginventorytool", cablingInventorytoolRouter); //
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

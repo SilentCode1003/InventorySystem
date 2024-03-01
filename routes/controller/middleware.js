@@ -77,6 +77,9 @@ var roleacess = [
       {
         layout: "cablingrequesttool"
       },
+      {
+        layout: "cablinginventorytool"
+      },
     ],
   },
   {
@@ -114,6 +117,9 @@ var roleacess = [
       },
       {
         layout: "cablingrequesttool"
+      },
+      {
+        layout: "cablinginventorytool"
       },
     ],
   },
@@ -155,6 +161,9 @@ var roleacess = [
       },
       {
         layout: "cablingrequesttool"
+      },
+      {
+        layout: "cablinginventorytool"
       },
     ],
   },
