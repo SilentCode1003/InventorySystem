@@ -286,12 +286,14 @@
           let container = result.data;
           // console.log(container)
           $.each(container, (key, item) => {
-            let name = item.name;
-            let id = item.id;
-            activeBrand.push({
-              display: name,
-              value: id,
-            });
+            if(item.status === "ACTIVE") {
+              let name = item.name;
+              let id = item.id;
+              activeBrand.push({
+                display: name,
+                value: id,
+              });
+            }
           });
           AddDropdownData(dropdownID, activeBrand, inputID, hiddenID)
         },
@@ -314,12 +316,14 @@
           let container = result.data;
           // console.log(container)
           $.each(container, (key, item) => {
-            let name = item.name;
-            let id = item.id;
-            activeBrand.push({
-              display: name,
-              value: id,
-            });
+            if(item.status === "ACTIVE") {
+              let name = item.name;
+              let id = item.id;
+              activeBrand.push({
+                display: name,
+                value: id,
+              });
+            }
           });
           AddDropdownData(dropdownID, activeBrand, inputID, hiddenID)
         },
