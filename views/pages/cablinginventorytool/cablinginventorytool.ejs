@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" id="cablingitemsModal" tabindex="-1" role="dialog"
+<div class="modal fade bd-example-modal-lg" id="editModal" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -7,50 +7,53 @@
         <h5 class="modal-title" id="exampleModalLabel">Edit Cabling Items</h5>
       </div>
       <div class="modal-body">
-        <div class="row mb-2">
+        <div class="row mb-3">
           <div class="col-lg-12">
             <div class="card-body">
+              <div class="row mb-2 justify-content-center">
+                <div class="col-md-6">
+                  <label class="form-label" for="id">Inventory Tool ID</label>
+                  <input id="idmodal" name="idmodal" type="text" class="form-control" aria-label="fullname" aria-describedby="basic-addon1" disabled />
+                </div>
+              </div>
               <div class="row mb-2">
-                <div class="col-md-12">
-                  <label class="form-label" for="itemcodemodal">Item Code</label>
-                  <input id="itemcodemodal" name="itemcodemodal" type="text" class="form-control"
-                    placeholder="Enter new item code" aria-label="fullname" aria-describedby="basic-addon1" disabled />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="input-group">
-                    <input class="form-control text-center custom-input" placeholder="Input Item Description"
-                      name="itemnamemodal" id="itemnamemodal" />
+                    <input class="form-control text-center custom-input" placeholder="Edit Serial Tag"
+                      name="serialtagmodal" id="serialtagmodal" />
                     <div class="input-group-append">
-                      <span class="input-group-text">Item Description</span>
+                      <span class="input-group-text">Serial</span>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="input-group">
-                    <input class="form-control text-center custom-input" placeholder="Select Brand" name="brandmodal" id="brandmodal" />
-                    <input type="hidden" id="brandIDmodal" name="brandIDmodal" />
+                    <input class="form-control text-center custom-input" placeholder="Select Tool" name="toolmodal" id="toolmodal" />
+                    <input type="hidden" id="toolIDmodal" name="toolIDmodal" />
                     <div class="input-group-append">
-                      <span class="input-group-text">Brand</span>
+                      <span class="input-group-text">Tool</span>
                     </div>
                   </div>
-                  <div class="custom-dropdown cdw-brand" id="brandDropdownmodal"></div>
+                  <div class="custom-dropdown cdw-tool" id="toolDropdownmodal"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="wave-header">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path
+              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+              class="shape-fill"></path>
+          </svg>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
+        <button type="button" class="custom-btn cw-7rem clr-warning shadow-sm"
           data-dismiss="modal">
           <i class="fa fa-times" aria-hidden="true"></i> Close
         </button>
-        <button type="button" id="saveBtn" class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm">
+        <button type="button" id="saveBtn" class="custom-btn cw-7rem clr-success shadow-sm">
           <i class="fa fa-check" aria-hidden="true"></i> Save
         </button>
       </div>
@@ -60,7 +63,7 @@
 
 <!-- PCreated by Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-1">
-  <h1 class="page-title">Cabling Items</h1>
+  <h1 class="page-title">Inventory Tools</h1>
 </div>
 <!-- Content Row -->
 <div class="row mb-2">
@@ -70,26 +73,33 @@
         <div class="row mb-2">
           <div class="col-md-12">
             <div class="input-group">
-              <input class="form-control text-center custom-input" placeholder="Select Brand" name="brand" id="brand" />
-              <input type="hidden" id="brandID" name="brandID" />
+              <input class="form-control text-center custom-input" placeholder="Select Tool" name="tool" id="tool" />
+              <input type="hidden" id="toolID" name="toolID" />
               <div class="input-group-append">
-                <span class="input-group-text">Brand</span>
+                <span class="input-group-text">Tool</span>
               </div>
             </div>
-            <div class="custom-dropdown cdw-brand" id="brandDropdown"></div>
+            <div class="custom-dropdown cdw-tool" id="toolDropdown"></div>
           </div>
         </div>
 
-        <div class="row mb-2">
+        <div class="row mb-2 mt-3">
           <div class="col-md-12 d-flex">
-            <input id="itemdescription" name="itemdescription" type="text" class="form-control"
-              placeholder="Enter Item Description" aria-label="itemdescription" aria-describedby="basic-addon1" />
-            <button id="addBtn" name="addBtn" class="ml-2 d-none d-sm-inline-block custom-btn cw-7rem shadow-sm">
+            <div class="input-group">
+              <input class="form-control text-center custom-input" placeholder="Input Tool Serial"
+                name="serialtag" id="serialtag" />
+              <div class="input-group-append">
+                <span class="input-group-text">Serial Tag</span>
+              </div>
+            </div>
+
+            <button id="addBtn" name="addBtn" class="ml-2 custom-btn cw-7rem shadow-sm">
               <i class="fa fa-plus" aria-hidden="true"></i>
               Add
             </button>
           </div>
         </div>
+
       </div>
       <div class="wave-header">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -110,8 +120,8 @@
   </div>
   <div class="card-header py-3">
     <div class="row">
-      <div class="col-md-3 text-center pt-2">
-        <h6 class="m-0 font-weight-bold table-title">Cabling Item Table</h6>
+      <div class="col-md-4 text-center pt-2">
+        <h6 class="m-0 font-weight-bold table-title">Inventory Tool Table</h6>
       </div>
       <div class="col-md-6 pt-2">
         <input id="search" name="search" type="text" class="form-control" placeholder="Search roletype Name"
@@ -124,12 +134,12 @@
       <table class="table custom-mobile-table" id="datatable" width="100%">
         <thead class="table-header" style="border: none;">
           <tr>
-            <th>Code</th>
-            <th>Brand</th>
-            <th>Name</th>
+            <th>ID</th>
+            <th>Tool</th>
+            <th>Serial Tag</th>
             <th>Created by</th>
             <th>Created date</th>
-            <th class="col-1">Status</th>
+            <th class="col-1 text-center">Status</th>
             <th class="col-1"></th>
           </tr>
         </thead>

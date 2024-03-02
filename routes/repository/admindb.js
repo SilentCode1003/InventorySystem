@@ -135,6 +135,17 @@ exports.UpdateMultiple = async (sql, data, callback) => {
   }
 };
 
+exports.SelectParameter = (sql, condition, callback) => {
+  connection.query(sql, [condition], (error, results, fields) => {
+    if (error) {
+      return callback(error, null);
+    }
+    // console.log(results);
+
+    callback(null, results);
+  });
+};
+
 exports.CloseConnect = () => {
   connection.end();
 };

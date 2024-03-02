@@ -18,6 +18,8 @@ const {
   ReturnMaterialModel,
   RepeatRequestModel,
   MasterItemPriceModel,
+  InventoryToolModel,
+  MasterBrandModel,
 } = require("./modelclass");
 
 exports.MasterItem = (data) => {
@@ -108,9 +110,8 @@ exports.MasterTool = (data) => {
 
   data.forEach((key, item) => {
     dataResult.push({
-      toolcode: key.mt_toolcode,
-      tag: key.mt_tag,
-      serial: key.mt_serial,
+      id: key.mt_id,
+      brand: key.mt_brand,
       description: key.mt_description,
       status: key.mt_status,
       createdby: key.mt_createdby,
@@ -121,9 +122,8 @@ exports.MasterTool = (data) => {
   return dataResult.map(
     (key) =>
       new MasterToolModel(
-        key["toolcode"],
-        key["tag"],
-        key["serial"],
+        key["id"],
+        key["brand"],
         key["description"],
         key["status"],
         key["createdby"],
@@ -154,31 +154,6 @@ exports.MasterStock = (data) => {
         key["itemcode"],
         key["minimum"],
         key["maximum"],
-        key["status"],
-        key["createdby"],
-        key["createddate"]
-      )
-  );
-};
-
-exports.MasterBrand = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      brandcode: key.mb_brandcode,
-      brandname: key.mb_brandname,
-      status: key.mb_status,
-      createdby: key.mb_createdby,
-      createddate: key.mb_createddate,
-    });
-  });
-
-  return dataResult.map(
-    (key) =>
-      new MasterBranchModel(
-        key["brandcode"],
-        key["brandname"],
         key["status"],
         key["createdby"],
         key["createddate"]
@@ -247,71 +222,6 @@ exports.RequestEquipmentItem = (data) => {
         key["description"],
         key["quantity"],
         key["unit"],
-        key["status"],
-        key["approvedby"],
-        key["approveddate"]
-      )
-  );
-};
-
-exports.RequestToolDetail = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      detailid: key.rtd_detailid,
-      requestby: key.rtd_requestby,
-      requestdate: key.rtd_requestdate,
-      detail: key.rtd_detail,
-      remarks: key.rtd_remarks,
-      status: key.rtd_status,
-      approvedby: key.rtd_approvedby,
-      approveddate: key.rtd_approveddate,
-    });
-  });
-
-  return dataResult.map(
-    (key) =>
-      new RequestToolDetailModel(
-        key["detailid"],
-        key["requestby"],
-        key["requestdate"],
-        key["detail"],
-        key["remarks"],
-        key["status"],
-        key["approvedby"],
-        key["approveddate"]
-      )
-  );
-};
-
-exports.RequestToolItem = (data) => {
-  let dataResult = [];
-
-  data.forEach((key, item) => {
-    dataResult.push({
-      systemid: key.rti_systemid,
-      detailid: key.rti_detailid,
-      requestby: key.rti_requestby,
-      requestdate: key.rti_requestdate,
-      description: key.rti_description,
-      serialtag: key.rti_serialtag,
-      status: key.rti_status,
-      approvedby: key.rti_approvedby,
-      approveddate: key.rti_approveddate,
-    });
-  });
-
-  return dataResult.map(
-    (key) =>
-      new RequestToolItemModel(
-        key["systemid"],
-        key["detailid"],
-        key["requestby"],
-        key["requestdate"],
-        key["description"],
-        key["description"],
-        key["serialtag"],
         key["status"],
         key["approvedby"],
         key["approveddate"]
@@ -614,6 +524,112 @@ exports.RepeatRequest = (data) => {
         key["status"],
         key["createdby"],
         key["createddate"]
+      )
+  );
+};
+
+exports.InventoryTool = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      id: key.it_id,
+      toolid: key.it_toolid,
+      serialtag: key.it_serialtag,
+      status: key.it_status,
+      createdby: key.it_createdby,
+      createddate: key.it_createddate,
+    });
+  });
+
+  return dataResult.map(
+    (key) =>
+      new InventoryToolModel(
+        key["id"],
+        key["toolid"],
+        key["serialtag"],
+        key["status"],
+        key["createdby"],
+        key["createddate"]
+      )
+  );
+};
+
+exports.RequestToolDetail = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      id: key.rtd_id,
+      requestdate: key.rtd_requestdate,
+      requestby: key.rtd_requestby,
+      detail: key.rtd_detail,
+      remarks: key.rtd_remarks,
+      status: key.rtd_status,
+      approvedby: key.rtd_approvedby,
+      approveddate: key.rtd_approveddate,
+    });
+  });
+
+  return dataResult.map(
+    (key) =>
+      new RequestToolDetailModel(
+        key["id"],
+        key["requestdate"],
+        key["requestby"],
+        key["detail"],
+        key["remarks"],
+        key["status"],
+        key["approvedby"],
+        key["approveddate"]
+      )
+  );
+};
+
+exports.RequestToolItem = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      id: key.rti_id,
+      detailid: key.rti_detailid,
+      toolid: key.rti_toolid,
+      serialtag: key.rti_serialtag,
+    });
+  });
+
+  return dataResult.map(
+    (key) =>
+      new RequestToolItemModel(
+        key["id"],
+        key["detailid"],
+        key["toolid"],
+        key["serialtag"],
+      )
+  );
+};
+
+exports.MasterBrand = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      id: key.mb_id,
+      name: key.mb_name,
+      status: key.mb_status,
+      createdby: key.mb_createdby,
+      createddate: key.mb_createddate,
+    });
+  });
+
+  return dataResult.map(
+    (key) =>
+      new MasterBrandModel(
+        key["id"],
+        key["name"],
+        key["status"],
+        key["createdby"],
+        key["createddate"],
       )
   );
 };
