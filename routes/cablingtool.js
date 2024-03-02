@@ -171,7 +171,6 @@ router.put("/status", (req, res) => {
 });
 
 //#region Function
-
 function Check_Name(name) {
   return new Promise((resolve, reject) => {
     console.log("Check_brand", name)
