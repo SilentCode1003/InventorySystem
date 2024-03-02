@@ -20,6 +20,7 @@
   --content-height: calc(100vh - 10rem);
 
   /*Custom dropdown widths*/
+  --adaptw-tool: calc(100% - 4.5rem);
   --adaptw-role: calc(100% - 4.6rem);
   --adaptw-brand: calc(100% - 5.2rem);
   --adaptw-5-8rem: calc(100% - 5.8rem);
@@ -289,6 +290,9 @@ body {
 }
 .cdw-brand{
   width: var(--adaptw-brand);
+}
+.cdw-tool{
+  width: var(--adaptw-tool);
 }
 .cdw-5letter{
   width: var(--adaptw-5-8rem);
