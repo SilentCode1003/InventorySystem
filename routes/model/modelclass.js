@@ -104,6 +104,26 @@ class RequestEquipmentDetailModel {
   }
 }
 
+class CablingMinMaxModel {
+  constructor(
+    id,
+    itemcode,
+    min,
+    max,
+    status,
+    createdby,
+    createddate,
+  ) {
+    this.id = id;
+    this.itemcode = itemcode;
+    this.min = min;
+    this.max = max;
+    this.status = status;
+    this.createdby = createdby;
+    this.createddate = createddate;
+  }
+}
+
 class RequestEquipmentItemModel {
   constructor(
     systemid,
@@ -558,4 +578,5 @@ module.exports = {
   MasterAccessTypeModel,
   MasterItemPriceModel,
   InventoryToolModel,
+  CablingMinMaxModel
 };

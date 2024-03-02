@@ -80,6 +80,9 @@ var roleacess = [
       {
         layout: "cablinginventorytool"
       },
+      {
+        layout: "cablingstocksminmax"
+      },
     ],
   },
   {
@@ -120,6 +123,9 @@ var roleacess = [
       },
       {
         layout: "cablinginventorytool"
+      },
+      {
+        layout: "cablingstocksminmax"
       },
     ],
   },
@@ -164,6 +170,9 @@ var roleacess = [
       },
       {
         layout: "cablinginventorytool"
+      },
+      {
+        layout: "cablingstocksminmax"
       },
     ],
   },

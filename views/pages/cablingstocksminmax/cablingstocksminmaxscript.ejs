@@ -1,0 +1,350 @@
+<script>
+    $(document).ready(function () {
+        let id = "";
+        let status = "";
+        let item = "";
+
+        const loader = `  
+          <tr>
+            <td><div class="custom-loader"></div></td>
+            <td><div class="custom-loader"></div></td>
+            <td><div class="custom-loader"></div></td>
+            <td><div class="custom-loader"></div></td>
+            <td><div class="custom-loader"></div></td>
+            <td><div class="custom-loader"></div></td>
+            <td><div class="custom-loader"></div></td>
+          </tr>`;
+
+        const tbody = $('#datatable tbody');
+        for (let i = 0; i < 7; i++) {
+            tbody.append(loader);
+        }
+
+        LoadTable();
+        LoadList();
+        //   LoadlistModal();
+
+        $("#datatable tbody").on("click", "tr", function () {
+            var dataRow = [];
+            $(this)
+                .closest("tr")
+                .find("td")
+                .each(function () {
+                    dataRow.push($(this).text());
+                });
+            console.log(dataRow);
+            id = dataRow[0];
+            status = dataRow[6];
+            item = dataRow[1];
+        });
+
+        $(document).on("click", "#editBtn", function () {
+            $("#idmodal").val(id);
+            $("#itemmodal").val(item);
+            $("#editModal").modal("show");
+            console.log(id);
+        });
+
+        $(document).on("input", "#brand", function () {
+            $("#itemID").val("");
+        });
+
+        $(document).on("click", "#addBtn", function () {
+            let item = $("#itemID").val();
+            let min = $("#min").val();
+            let max = $("#max").val();
+            console.log(item, min);
+            var message = "";
+
+            if (item == "") {
+                message += "Please fill up Item, ";
+            }
+            if (min == "") {
+                message += "Please fill up Min, ";
+            }
+            if (max == "") {
+                message += "Please fill up Max, ";
+            }
+            if(min >= max) {
+                message += "Min must be less than Max";
+            }
+            if(min == 0 || max == 0) {
+                message += "Min or Max cannot be 0";
+            }
+
+            if (message != "") {
+                warning("Required", `${message}`);
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/cablingstocksminmax/save",
+                    data: {
+                        itemcode: item,
+                        min: min,
+                        max: max,
+                    },
+                    success: function (result) {
+                        if (result.msg == "success") {
+                            LoadTable();
+                            $("#itemID").val('');
+                            $("#item").val('');
+                            $("#min").val('');
+                            $("#max").val('');
+                            success("Saved", "Successfully");
+                        }
+
+                        if (result.msg == "exist") {
+                            warning("Notice!", `Selected Item is already registered!`);
+                        }
+                    },
+                    error: function (err) {
+                        errormsg(err);
+                    },
+                });
+            }
+        });
+
+
+        //Edit Update
+        $(document).on("click", "#saveBtn", function () {
+            let min = $("#minmodal").val();
+            let max = $("#maxmodal").val();
+
+            var message = "";
+
+            if (min == "" && max == "") {
+                message += "Fill atleast one field";
+            }
+
+            if (message != "") {
+                warning("Required", `${message}`);
+            } else {
+                $.ajax({
+                    type: "PUT",
+                    url: "/cablingstocksminmax/edit",
+                    data: {
+                        min: min,
+                        max: max,
+                        id: id,
+                    },
+                    success: function (result) {
+                        if (result.msg == "success") {
+                            LoadTable();
+                            $("#minmodal").val("");
+                            $("#maxmodal").val("");
+                            $("#editModal").modal("hide");
+                            success("Saved", "Successfully");
+                        }
+
+                        // if (result.msg == "exist") {
+                        //     warning("Exist", `${descriptionmodal} already exist!`);
+                        // }
+                    },
+                    error: function (err) {
+                        errormsg(err);
+                    },
+                });
+            }
+        });
+
+        //Status Update
+        $(document).on("click", "#activeBtn", function () {
+            // console.log(id);
+            // console.log(status);
+            $.ajax({
+                type: "PUT",
+                url: "/cablingstocksminmax/status",
+                data: {
+                    status: status,
+                    id: id,
+                },
+                success: function (result) {
+                    if (result.msg == "success") {
+                        LoadTable();
+                        success("Saved", "Successfully");
+                    }
+
+                    if (result.msg == "notexist") {
+                        warning(`${id} does not exist!`);
+                    }
+                },
+                error: function (err) {
+                    errormsg(err);
+                },
+            });
+        });
+
+        $(document).on("click", "#inactiveBtn", function () {
+            console.log(id);
+            console.log(status);
+            $.ajax({
+                type: "PUT",
+                url: "/cablingstocksminmax/status",
+                data: {
+                    status: status,
+                    id: id,
+                },
+                success: function (result) {
+                    if (result.msg == "success") {
+                        LoadTable();
+                        success("Saved", "Successfully");
+                    }
+
+                    if (result.msg == "notexist") {
+                        warning(`${id} does not exist!`);
+                    }
+                },
+                error: function (err) {
+                    errormsg(err);
+                },
+            });
+        });
+
+        //Search Table Functionality
+        $("#search").on("input", function () {
+            filterTableRows("#datatable", 8, "#search");
+        });
+
+        function LoadTable() {
+            $(".progress").hide();
+            $(".progress").slideDown();
+
+            $.ajax({
+                url: '/cablingstocksminmax/load',
+                method: 'GET',
+                dataType: 'json',
+                xhrFields: {
+                    onprogress: function (e) {
+                        if (e.lengthComputable) {
+                            var percentComplete = (e.loaded / e.total) * 100;
+                            $(".progress-bar").css("width", percentComplete + "%");
+                        }
+                    }
+                },
+                success: function (data) {
+                    setTimeout(function () {
+                        $(".progress").slideUp(function () {
+                            if (data.msg === 'success') {
+                                populatedatatable(data.data);
+                            } else {
+                                console.error(data.msg);
+                            }
+                        });
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        function populatedatatable(data) {
+            console.log(data);
+            const tableBody = $('#datatable tbody');
+            tableBody.empty();
+
+            if (data.length === 0) {
+                const tr = $('<tr>').append($('<td>', {
+                    colspan: 8,
+                    class: 'text-center',
+                    text: 'No Data Matched'
+                }));
+                tableBody.append(tr);
+            } else {
+                data.forEach(item => {
+                    let action = '';
+                    if (item.status === 'ACTIVE') {
+                        action = `
+                    <span class="editbutton" id="editBtn" name="editBtn" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit" style="color: rgb(99, 115, 129);"></i></span>
+                    <span class="editbutton" id="inactiveBtn"><i class="fas fa-eye-slash" style="color: rgb(99, 115, 129);"></i></span>`;
+                    } else if (item.status === 'INACTIVE') {
+                        action = `
+                  <span class="editbutton" id="editBtn" name="editBtn" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit" style="color: rgb(99, 115, 129);"></i></span>
+                  <span class="editbutton" id="activeBtn"><i class="fas fa-eye" style="color: rgb(99, 115, 129);"></i></span>`;
+                    }
+                    const statusBackground = item.status === 'ACTIVE' ? 'status-success' : 'status-warning';
+                    const containerBackground = item.status === 'ACTIVE' ? 'status-container-sc' : 'status-container-wr';
+
+                    const tr = $('<tr>').append(
+                        $('<td>', { text: item.id, 'data-label': 'ID', class: 'custom-mobile-align' }),
+                        $('<td>', { text: item.itemcode, 'data-label': 'Item', class: 'custom-mobile-align' }),
+                        $('<td>', { text: item.min, 'data-label': 'Min', class: 'custom-mobile-align' }),
+                        $('<td>', { text: item.max, 'data-label': 'Max', class: 'custom-mobile-align' }),
+                        $('<td>', { text: item.createdby, 'data-label': 'Created By', class: 'custom-mobile-align' }),
+                        $('<td>', { text: item.createddate, 'data-label': 'Created Date', class: 'custom-mobile-align' }),
+                        $('<td>', { class: 'custom-mobile-align', 'data-label': 'Status' }).append(
+                            $('<div>', { class: containerBackground }).append(
+                                $('<span>', { text: item.status, class: statusBackground })
+                            )
+                        ),
+                        $('<td>', { html: action, 'data-label': 'Action', class: 'actionWidth' })
+                    );
+
+                    tableBody.append(tr);
+                });
+            }
+        }
+
+        function LoadList() {
+            // console.log("triggered");
+            $.ajax({
+                type: "GET",
+                url: "/cablingitems/load",
+                success: function (result) {
+                    let activeData = [];
+                    let dropdownID = "itemDropdown";
+                    let inputID = "item";
+                    let hiddenID = "itemID";
+                    let container = result.data;
+                    // console.log(container)
+                    $.each(container, (key, item) => {
+                        if (item.status === "ACTIVE") {
+                            let name = item.description;
+                            let id = item.itemcode;
+                            activeData.push({
+                                display: name,
+                                value: id,
+                            });
+                        }
+                    });
+                    AddDropdownData(dropdownID, activeData, inputID, hiddenID)
+                },
+                error: function (err) {
+                    errormsg(err);
+                },
+            });
+        }
+
+        function LoadlistModal() {
+            // console.log("triggered");
+            $.ajax({
+                type: "GET",
+                url: "/brand/load",
+                success: function (result) {
+                    let activeBrand = [];
+                    let dropdownID = "brandDropdownmodal";
+                    let inputID = "brandmodal";
+                    let hiddenID = "brandIDmodal";
+                    let container = result.data;
+                    // console.log(container)
+                    $.each(container, (key, item) => {
+                        if (item.status === "ACTIVE") {
+                            let name = item.name;
+                            let id = item.id;
+                            activeBrand.push({
+                                display: name,
+                                value: id,
+                            });
+                        }
+                    });
+                    AddDropdownData(dropdownID, activeBrand, inputID, hiddenID)
+                },
+                error: function (err) {
+                    errormsg(err);
+                },
+            });
+        }
+
+    });
+</script>

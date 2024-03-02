@@ -605,6 +605,23 @@ exports.InsertTable = (tablename, data, callback) => {
       callback(null, result);
     });
   }
+
+  if (tablename == "master_min_max") {
+    let sql = `INSERT INTO master_min_max(
+      mmm_itemcode,
+      mmm_min,
+      mmm_max,
+      mmm_status,
+      mmm_createdby,
+      mmm_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
 };
 
 exports.isDataExist = (sql, tablename) => {

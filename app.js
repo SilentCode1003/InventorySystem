@@ -34,6 +34,7 @@ var cablingtoolRouter = require('./routes/cablingtool')
 var cablingrequesttoolRouter = require('./routes/cablingrequesttool');
 var pdfRouter = require('./routes/pdf');
 var cablingInventorytoolRouter = require('./routes/cablinginventorytool');
+var cablingstocksminmax = require('./routes/cablingstocksminmax');
 
 var app = express();
 
@@ -78,6 +79,7 @@ app.use("/cablingtool", cablingtoolRouter);
 app.use("/cablingrequesttool", cablingrequesttoolRouter); //
 app.use("/pdf", pdfRouter); //
 app.use("/cablinginventorytool", cablingInventorytoolRouter); //
+app.use("/cablingstocksminmax", cablingstocksminmax); //
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

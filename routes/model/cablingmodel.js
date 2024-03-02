@@ -20,6 +20,7 @@ const {
   MasterItemPriceModel,
   InventoryToolModel,
   MasterBrandModel,
+  CablingMinMaxModel,
 } = require("./modelclass");
 
 exports.MasterItem = (data) => {
@@ -627,6 +628,35 @@ exports.MasterBrand = (data) => {
       new MasterBrandModel(
         key["id"],
         key["name"],
+        key["status"],
+        key["createdby"],
+        key["createddate"],
+      )
+  );
+};
+
+exports.CablingMinMax = (data) => {
+  let dataResult = [];
+
+  data.forEach((key, item) => {
+    dataResult.push({
+      id: key.mmm_id,
+      itemcode: key.mmm_itemcode,
+      min: key.mmm_min,
+      max: key.mmm_max,
+      status: key.mmm_status,
+      createdby: key.mmm_createdby,
+      createddate: key.mmm_createddate,
+    });
+  });
+
+  return dataResult.map(
+    (key) =>
+      new CablingMinMaxModel(
+        key["id"],
+        key["itemcode"],
+        key["min"],
+        key["max"],
         key["status"],
         key["createdby"],
         key["createddate"],
