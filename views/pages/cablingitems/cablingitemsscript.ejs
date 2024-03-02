@@ -48,9 +48,13 @@
       console.log(itemcode);
     });
 
+    $(document).on("input", "#brand", function () {
+      $("#brandID").val("");
+    });
+
     $(document).on("click", "#addBtn", function () {
       let itemdescription = $("#itemdescription").val();
-      let brandname = $("#brand").val();
+      let brandname = $("#brandID").val();
 
       var message = "";
 
@@ -69,8 +73,8 @@
           type: "POST",
           url: "/cablingitems/save",
           data: {
-            itemdescription: itemdescription,
-            brandname: brandname,
+            description: itemdescription,
+            brand: brandname,
           },
           success: function (result) {
             if (result.msg == "success") {
@@ -274,20 +278,23 @@
         type: "GET",
         url: "/brand/load",
         success: function (result) {
-          var data = result.data;
-          let brandActive = [];
-
-          $.each(data, function (key, item) {
-            if (item.status == "ACTIVE") {
-              brandActive.push(item.brandname);
-              var options = new Option(item.brandname, item.brandname);
-              $(options).html(item.brandname);
-              // $("#fruits").append(options);
-              // $("#brandnamelist").append(options);
+          let activeBrand = [];
+          let dropdownID = "brandDropdown";
+          let inputID = "brand";
+          let hiddenID = "brandID";
+          let container = result.data;
+          // console.log(container)
+          $.each(container, (key, item) => {
+            if(item.status === "ACTIVE") {
+              let name = item.name;
+              let id = item.id;
+              activeBrand.push({
+                display: name,
+                value: id,
+              });
             }
           });
-
-          populateDropdown(brandActive, "brandDropdown", "brand");
+          AddDropdownData(dropdownID, activeBrand, inputID, hiddenID)
         },
         error: function (err) {
           errormsg(err);
@@ -300,20 +307,23 @@
         type: "GET",
         url: "/brand/load",
         success: function (result) {
-          var data = result.data;
-          let brandActive = [];
-
-          $.each(data, function (key, item) {
-            if (item.status == "ACTIVE") {
-              brandActive.push(item.brandname);
-              var options = new Option(item.brandname, item.brandname);
-              $(options).html(item.brandname);
-              // $("#fruits").append(options);
-              // $("#brandnamelistmodal").append(options);
+          let activeBrand = [];
+          let dropdownID = "brandDropdownmodal";
+          let inputID = "brandmodal";
+          let hiddenID = "brandIDmodal";
+          let container = result.data;
+          // console.log(container)
+          $.each(container, (key, item) => {
+            if(item.status === "ACTIVE") {
+              let name = item.name;
+              let id = item.id;
+              activeBrand.push({
+                display: name,
+                value: id,
+              });
             }
           });
-
-          populateDropdown(brandActive, "brandmodalDropdown", "brandmodal");
+          AddDropdownData(dropdownID, activeBrand, inputID, hiddenID);
         },
         error: function (err) {
           errormsg(err);
@@ -321,7 +331,5 @@
       });
     }
 
-    setupCustomDropdown("brand", "brandDropdown", "dropdown-option");
-    setupCustomDropdown("brandmodal", "brandmodalDropdown", "dropdown-option");
   });
 </script>

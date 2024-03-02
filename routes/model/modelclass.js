@@ -512,8 +512,21 @@ class MasterStoreModel {
       (this.createddate = createddate);
   }
 }
+
+
+class MasterBrandModel {
+  constructor(id, name, status, createdby, createddate) {
+    (this.id = id),
+      (this.name = name),
+      (this.status = status),
+      (this.createdby = createdby),
+      (this.createddate = createddate);
+  }
+}
+
 //#endregion
 module.exports = {
+  MasterBrandModel,
   MasterStoreModel,
   MasterDepartmentModel,
   MasterRoleTypeModel,

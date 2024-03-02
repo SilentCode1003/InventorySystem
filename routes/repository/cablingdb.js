@@ -247,11 +247,10 @@ exports.InsertTable = (tablename, data, callback) => {
       callback(null, result);
     });
   }
-
+  
   if (tablename == "master_tool") {
     let sql = `INSERT INTO master_tool(
-        mt_tag,
-        mt_serial,
+        mt_brand,
         mt_description,
         mt_status,
         mt_createdby,
@@ -284,7 +283,7 @@ exports.InsertTable = (tablename, data, callback) => {
 
   if (tablename == "master_brand") {
     let sql = `INSERT INTO master_brand(
-        mb_brandname,
+        mb_name,
         mb_status,
         mb_createdby,
         mb_createddate) VALUES ?`;
@@ -582,6 +581,22 @@ exports.InsertTable = (tablename, data, callback) => {
       rr_status,
       rr_createdby,
       rr_createddate) VALUES ?`;
+
+    this.Insert(sql, data, (err, result) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, result);
+    });
+  }
+
+  if (tablename == "inventory_tool") {
+    let sql = `INSERT INTO inventory_tool(
+      it_toolid,
+      it_serialtag,
+      it_status,
+      it_createdby,
+      it_createddate) VALUES ?`;
 
     this.Insert(sql, data, (err, result) => {
       if (err) {
